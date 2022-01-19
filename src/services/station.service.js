@@ -1,5 +1,5 @@
 const fs = require('fs');
-let gStations = require('../data/stations.json')
+let gStations = require('../../data/station.json')
 
 
 import {storageService} from './async-storage.service.js'
@@ -39,7 +39,7 @@ async function remove(stationId){
 
 function _saveStationssToFile() {
     return new Promise((resolve, reject) => {
-        fs.writeFile('data/station.json', JSON.stringify(stations, null, 2), (err) => {
+        fs.writeFile('data/station.json', JSON.stringify(gStations, null, 2), (err) => {
             if (err) {
                 console.log(err);
                 reject('Cannot write to file')

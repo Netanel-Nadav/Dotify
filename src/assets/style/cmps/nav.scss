@@ -2,9 +2,9 @@
 
 .nav-container {
    
-    background-color: $clr4;
+    background-color: $clr5;
     padding: 0.750rem;
-    border-right: 1px solid $clr3;
+    border-right: 1px solid $clr4;
     padding-top: rem(25px);
     
     .logo-container {
@@ -20,15 +20,15 @@
     }
 
     .link-container {
-        color: rgba($color: $clr5, $alpha: .6);
+        color: rgba($color: $clr6, $alpha: .6);
         transition: color .3s;
 
         .icon {
-            font-size: rem(20px);
+            font-size: rem(18px);
         }
 
         &:hover {
-            color: $clr5;
+            color: $clr6;
         }
     }
 

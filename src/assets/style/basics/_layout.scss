@@ -1,0 +1,24 @@
+#root {
+    height: 100vh;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: 225px 1fr;
+    width: 100%;
+    min-height: 100%;
+    
+
+    header {
+        grid-column: 2 / -1;
+        height: 65px;
+        padding: $base-padding;
+        border-bottom: 1px solid black;
+    }
+
+    .nav-container {
+        grid-column: 1 / 2;
+        grid-row: 1 / -1;
+        height: 100%;
+    }
+}

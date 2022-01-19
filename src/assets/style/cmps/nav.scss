@@ -1,0 +1,36 @@
+
+
+.nav-container {
+   
+    background-color: $clr4;
+    padding: 0.750rem;
+    border-right: 1px solid $clr3;
+    padding-top: rem(25px);
+    
+    .logo-container {
+        margin-bottom: 2rem;
+        padding: 0 16px;
+        
+    }
+
+    ul li {
+        padding: 0px 16px;
+        height: 40px;
+        gap: 15px;
+    }
+
+    .link-container {
+        color: rgba($color: $clr5, $alpha: .6);
+        transition: color .3s;
+
+        .icon {
+            font-size: rem(20px);
+        }
+
+        &:hover {
+            color: $clr5;
+        }
+    }
+
+  
+}

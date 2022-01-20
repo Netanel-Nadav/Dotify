@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { UserModal } from './UserModal';
 import { login, logout, signup } from '../store/user.action'
 
-export function _Header({ user, logout}) {
+export function _Header({ user, logout, history}) {
 
     const [isUserModalShown, setIsUserModalOpen] = useState(false);
 
@@ -14,10 +14,14 @@ export function _Header({ user, logout}) {
         setIsUserModalOpen(!isUserModalShown)
     }
 
+    const onGoBack = () => {
+        this.props.history.push('/')
+    }
+   
     return (
         <header className='app-header flex space-between align-center'>
             <div className='back-foword-container flex'>
-                <button className='back-btn'>&lt;</button>
+                <button onClick={onGoBack} className='back-btn'>&lt;</button>
                 <button className='back-btn'>&gt;</button>
             </div>
             <div className='user-login-container'>

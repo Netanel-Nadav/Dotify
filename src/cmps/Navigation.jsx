@@ -18,7 +18,7 @@ export function Navigation() {
                         <div className='title'>Home</div>
                     </li>
                 </NavLink>
-                <NavLink to="#">
+                <NavLink to="/search">
                     <li className='link-container flex align-center'>
                         <div className='icon'><i className="fas fa-search"></i></div>
                         <div className='title'>Search</div>

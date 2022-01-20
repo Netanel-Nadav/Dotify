@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom'
-// import { Provider } from 'react-redux';
-// import {store} from './store/store.js'
+import { Provider } from 'react-redux';
+import {store} from './store/store.js'
 
 
 import './assets/style/styles.scss';
@@ -14,11 +14,11 @@ import { RootCmp } from './RootCmp';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Provider store={store}> */}
+    <Provider store={store}>
       <Router>
         <RootCmp />
       </Router>
-    {/* </Provider> */}
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

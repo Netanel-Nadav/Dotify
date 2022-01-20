@@ -1,4 +1,4 @@
-import { stationService } from "../service/station.service.js";
+import { stationService } from "../services/station.service";
 
 export function loadStation(stationId) {
   return async (dispatch) => {
@@ -11,3 +11,11 @@ export function loadStation(stationId) {
     }
   };
 }
+
+// export function addStation(station) {
+//   return async (dispatch) => {
+//     try {
+      
+//     }
+//   }
+// }

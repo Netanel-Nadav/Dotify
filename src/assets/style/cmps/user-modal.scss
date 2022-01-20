@@ -1,0 +1,28 @@
+.user-modal {
+    position: fixed;
+    right: 30px;
+    top: 60px;
+    background-color: $clr4;
+    width: 180px;
+    height: 150px;
+    border-radius: 5px;
+    box-shadow: -2px 7px 20px 2px rgb(0 0 0 / 42%);
+    padding: $base-padding;
+    z-index: 10;
+
+    button {
+        background: none;
+        border: none;
+        color: $clr6;
+        padding: 10px;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        height: 40px;
+        // border-bottom: 1px solid $clr3;
+
+        &:hover {
+            background-color: $clr3;
+        }
+    }
+}

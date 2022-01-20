@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { UserModal } from './UserModal';
 import { login, logout, signup } from '../store/user.action'
 
-export function _Header({ user, logout, history}) {
+export function _Header({ user, logout}) {
 
     const [isUserModalShown, setIsUserModalOpen] = useState(false);
 

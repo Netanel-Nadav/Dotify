@@ -12,10 +12,3 @@ export function loadStation(stationId) {
   };
 }
 
-// export function addStation(station) {
-//   return async (dispatch) => {
-//     try {
-      
-//     }
-//   }
-// }

@@ -12,13 +12,13 @@ export function Home() {
         setStations(stations)
     }, [])
 
-    
+
     return (
         <section className='stations-lists-container'>
             {stations ?
                 <section >
-
-                    <StationList stations={stations}/>
+                    <h1>Hello dotify</h1>
+                    <StationList stations={stations} />
 
                     {/* stations lists by labels */}
                 </section> : <h1>Loading...</h1>}

@@ -1,15 +1,18 @@
 import { NavLink } from 'react-router-dom'
+import { stationService } from '../services/station.service'
 
 
 
 export function Navigation() {
+
+
     return (
         <nav className="nav-container flex column">
             <NavLink to="/">
                 <div className='logo-container'>Dotify.</div>
             </NavLink>
             <ul className='clean-list'>
-                <NavLink to="#">
+                <NavLink to="/">
                     <li className='link-container flex align-center'>
                         <div className='icon'><i className="fas fa-home"></i></div>
                         <div className='title'>Home</div>
@@ -21,13 +24,13 @@ export function Navigation() {
                         <div className='title'>Search</div>
                     </li>
                 </NavLink>
-                <NavLink to="#">
+                <NavLink to="/library">
                     <li className='link-container flex align-center'>
                         <div className='icon'>||\</div>
                         <div className='title'>Your Library</div>
                     </li>
                 </NavLink>
-                <NavLink to="#">
+                <NavLink to="/newStation">
                     <li className='link-container flex align-center'>
                         <div className='icon'><i className="fas fa-plus-square"></i></div>
                         <div className='title'>Creat Playlist</div>

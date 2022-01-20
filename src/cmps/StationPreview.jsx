@@ -8,14 +8,26 @@ import { Link } from 'react-router-dom'
 
 export function StationPreview({ station }) {
 
-    if(!station.songs.length) return <React.Fragment></React.Fragment>
+    if (!station.songs.length) return <React.Fragment></React.Fragment>
     return (
         <Link to='#'>
-            <section className='station-preview card'>
-                <img src={station.songs[0].imgUrl} />
-                <h1>{station.name}</h1>
-                <h3>{station.createdBy.fullname}</h3>
-                <span>{station.likesCount}</span>
+            <section className='station-preview card flex'>
+
+                <div className='img-container'>
+                    <img src={station.songs[0].imgUrl} />
+                </div>
+
+
+                <div className='wrraper flex'>
+                    <div className='info-container'>
+                        <h3>{station.createdBy.fullname}</h3>
+                        <small>{station.name}</small>
+                    </div>
+                    <div className='likes-count flex column align-center space-between'>
+                        <i className="fas fa-thumbs-up"></i>
+                        <small>{station.likesCount}</small>
+                    </div>
+                </div>
                 {/* <span>{station.songs.map(song => <p key={song._id}>{song.url}</p>)}</span> */}
             </section>
         </Link>

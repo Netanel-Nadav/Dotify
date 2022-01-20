@@ -18,7 +18,6 @@ export function Home() {
         <section className='stations-lists-container'>
             {stations ?
                 <section >
-                    <h1>Hello dotify</h1>
                     <StationList stations={stations} />
 
                     {/* stations lists by labels */}

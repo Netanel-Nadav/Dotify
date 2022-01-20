@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Hero({ user }) {
+export function UserHero({ user }) {
 
     const { imgUrl, username } = user
     return (

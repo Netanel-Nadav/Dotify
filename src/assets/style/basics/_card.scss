@@ -1,0 +1,46 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 280px;
+    width: 200px;
+    background-color: darken($clr4, 5%) ;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background .2s;
+
+    .img-container {
+        margin-bottom: $base-margin;
+        display: flex;
+        justify-content: center;
+
+        img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+        }   
+    }
+
+    .info-container {
+        h3 {
+            font-size: rem(16px);
+            margin-bottom: 5px;
+        }
+
+    }
+
+    .wrraper {
+        gap: 15px;
+        justify-content: space-between;
+
+        .likes-count {
+            align-items: flex-end;
+        }
+    }
+
+    &:hover {
+        background-color: $clr4;
+    }
+}

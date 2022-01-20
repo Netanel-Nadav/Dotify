@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Hero } from "../cmps/Hero";
+import { UserHero } from "../cmps/UserHero";
 
 
 export class _UserProfile extends React.Component {
@@ -11,7 +11,7 @@ export class _UserProfile extends React.Component {
         const { user } = this.props
         return (
             <section className="user-profile">
-                <Hero user={user} />
+                <UserHero user={user} />
 
             </section>
         )

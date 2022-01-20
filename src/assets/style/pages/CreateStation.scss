@@ -1,0 +1,39 @@
+
+
+.new-station-search{
+
+    .search-results{
+        gap: 20px;
+       
+        .song-container {
+            padding: $base-padding;
+            align-items: center;
+            justify-content: space-between;
+
+            .song-info {
+                align-items: center;
+                gap: 15px;
+                flex-basis: 60%;
+            }
+            
+            .img-container{
+
+                img {
+                    width: 60px;
+                    height: 60px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+            }
+
+            .song-duration {
+                flex-basis: 20%;
+            }
+
+            .add-song-btn {
+                flex-basis: 20%;
+            }
+        }
+    }
+}
+

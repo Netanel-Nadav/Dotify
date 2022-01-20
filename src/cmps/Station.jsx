@@ -32,12 +32,14 @@ export function Station(stationId = null){
                 <span>Duration</span>
             </section>
             <hr />
-            {station.songs.map(song => {
+            {station.songs.map((song,idx) => {
                         return (
                             <section key={song._id} className='station-song-details'>
+                                <span>{idx+1}</span>
+                                <img src={song.imgUrl} />
                                 <span>{song.title}</span>
                                 <span>date</span>
-                                <span>time</span>
+                                <span>{song.duration}</span>
                             </section>
                         )
                     })}

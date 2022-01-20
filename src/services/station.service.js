@@ -1,4 +1,5 @@
 import { storageService } from './async-storage.service.js'
+import { utilService } from './util.service.js'
 
 
 const gStations = require('../data/station.json')
@@ -33,6 +34,7 @@ const stationsGenre = [
 
 const STORAGE_KEY = 'station'
 
+const debouncedSearch = utilService.debounce(searchYouTube,500)
 
 export const stationService = {
     query,
@@ -41,7 +43,8 @@ export const stationService = {
     getById,
     makeNewStation,
     formatNewSong,
-    getStationsGenre
+    getStationsGenre,
+    searchYouTube
 }
 
 
@@ -83,6 +86,7 @@ function formatNewSong(song) {
             fullname: 'Sahar Gar Onne',
             imgUrl: '#'
         },
+        duration: song.duration,
         addedAt: Date.now(),
         likesCount: 0
     }
@@ -113,6 +117,23 @@ function makeNewStation() {
     station = storageService.post(STORAGE_KEY, station)
     return Promise.resolve(station)
 }
+
+async function searchYouTube(q) {
+    q = encodeURIComponent(q);
+    const response = await fetch("https://youtube-search-results.p.rapidapi.com/youtube-search/?q=" + q, {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
+        "x-rapidapi-key": '6f5320ed11msh859c70eb983b0edp158967jsnc3a93be7fd34'
+      }
+    });
+    const body = await response.json();
+    console.log(body);
+    return body.items.filter(item => item.type === 'video');
+  }
+
+
+  
 
 
 

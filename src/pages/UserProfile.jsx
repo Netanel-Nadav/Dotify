@@ -19,7 +19,7 @@ export class _UserProfile extends React.Component {
 
 
     render() {
-        console.log(this.props.history.goBack);
+        // console.log(this.props.history.goBack);
         const { user } = this.props
         const { stations } = this.state
 

@@ -16,7 +16,7 @@ export function Library() {
 
     if(!stations) return <h1>Loading...</h1>
     return (
-        <section className='station-list-library'>
+        <section className='station-list-library flex'>
             {stations.map(station => {
                 return (
                  <StationPreview key={station._id} station={station}/>

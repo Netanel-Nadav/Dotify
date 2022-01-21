@@ -21,12 +21,15 @@
 
 @import "./pages/login-page.scss";
 @import "./pages/CreateStation.scss";
+@import "./pages/library";
 
 // CMPS
 
 
 
-@import "./cmps/hero";
+@import "./cmps/DragDrop.scss";
+@import "./cmps/station-list";
+@import "./cmps/user-hero";
 @import "./cmps/user-modal";
 @import "./cmps/music-player";
 @import "./cmps/header";

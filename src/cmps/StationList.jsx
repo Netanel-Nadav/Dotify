@@ -1,16 +1,19 @@
 import { StationPreview } from "./StationPreview"
+import { DragDrop } from "./DragDrop"
 
+export function StationList({ stations }) {
 
-export function StationList({stations}) {
-
-    if(!stations) return <h1>Loading...</h1>
-    return(
-        <section className="station-list">
-            {stations.map(station => {
-                return (
-                        <StationPreview key={station._id} station={station}/>
-                )
-            })}
+    if (!stations) return <h1>Loading...</h1>
+    return (
+        <section className="">
+            <div className="station-list flex">
+                {stations.map(station => {
+                    return (
+                        <StationPreview key={station._id} station={station} />
+                    )
+                })}
+            </div>
+            <DragDrop />
         </section>
     )
 }

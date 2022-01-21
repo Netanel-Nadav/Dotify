@@ -1,0 +1,46 @@
+.drag-drop-container {
+
+    h1 {
+        margin-bottom: $base-margin;
+    }
+    .songs-list {
+     list-style-type: none;
+     padding: 0;
+     margin: 0;
+
+    .drag-song-container {
+        
+        position: relative;
+        padding: 0px 16px;
+        height: 65px;
+        margin-bottom: $base-margin;
+        border-radius: 5px;
+
+        .idx-img-title {
+            gap: 10px;
+
+            .img-container {
+                width: 40px;
+                height: 40px;
+            }
+
+        }
+
+        small {
+            position: absolute;
+        }
+
+        .play-icon {
+            opacity: 0;
+        }
+
+        &:hover {
+            background-color: $clr3;
+
+            .play-icon {
+                opacity: 1;
+            }
+        }
+    }
+}
+}

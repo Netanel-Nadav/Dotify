@@ -95,7 +95,7 @@ export class CreateStation extends React.Component {
                             })}
                         </section>}
                 </section>
-            </section >
+            </section>
         )
 
     }

@@ -14,7 +14,7 @@ export function StationPreview({ station }) {
 
     if (!station.songs.length) return <React.Fragment></React.Fragment>
     return (
-        <Link to='#'>
+        <Link to={`/station/${station._id}`}>
             <section className='station-preview card flex'>
                 <div className='img-container'>
                     <img src={station.songs[0].imgUrl} />

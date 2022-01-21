@@ -20,12 +20,11 @@
 
 
 @import "./pages/login-page.scss";
-@import "./pages/CreateStation.scss";
+@import "./pages/create-station.scss";
 @import "./pages/library";
 
+
 // CMPS
-
-
 
 @import "./cmps/DragDrop.scss";
 @import "./cmps/station-list";
@@ -34,3 +33,4 @@
 @import "./cmps/music-player";
 @import "./cmps/header";
 @import "./cmps/nav";
+@import "./pages/playlist.scss";

@@ -1,0 +1,55 @@
+
+.playlist {
+    padding: 0px 20px;
+
+    .station-song-info-title{
+        justify-content: space-between;
+
+        .title {
+            flex-basis: 60%;
+        }
+
+        .date-addedAt {
+            flex-basis: 20%;
+        }
+
+        .duration {
+            flex-basis: 20%;
+        }
+    }
+    .songs-container{
+        gap: 20px;
+
+
+    
+        .station-song-details {
+            align-items: center;
+            justify-content: space-between;
+        }
+    
+        .song-info {
+            align-items: center;
+            gap: 15px;
+            flex-basis: 45%;
+        }
+    
+        .img-container{
+    
+            img {
+                width: 60px;
+                height: 60px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+        }
+    
+        .song-duration {
+            flex-basis: 20%;
+        }
+    
+        .add-addedAt {
+            flex-basis: 20%;
+        }
+    }
+
+}

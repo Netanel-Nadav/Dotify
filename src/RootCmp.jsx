@@ -11,6 +11,7 @@ import { MusicPlayer } from './cmps/MusicPlayer';
 import { Navigation } from './cmps/Navigation';
 import { LoginPage } from './pages/LoginPage';
 import { UserProfile } from './pages/UserProfile';
+import { StationDetails } from './pages/StationDetails';
 
 
 
@@ -23,6 +24,7 @@ export function RootCmp() {
         <Switch>
             <Route component={UserProfile} path="/user/:id"/>
             <Route component={LoginPage} path="/login"/>
+            <Route component={StationDetails} path='/station/:id'/>
             <Route component={CreateStation} path='/newStation'/>
             <Route component={Search} path='/search'/>
             <Route component={Library} path='/library'/>

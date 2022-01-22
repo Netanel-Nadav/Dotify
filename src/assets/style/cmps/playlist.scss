@@ -1,0 +1,87 @@
+
+.playlist {
+    margin-bottom: rem(50px);
+    padding: 0px 50px;
+
+    .station-song-info-title{
+        justify-content: space-between;
+
+        .title {
+            // flex-basis: 65%;
+            width: 300px;
+            text-align: right;
+        }
+        .wrraper { 
+            flex-basis: 35%;
+        }
+
+        
+    }
+    .songs-container{
+        gap: 20px;
+        
+        
+        
+        .station-song-details {
+            padding: $base-padding;
+            align-items: center;
+            border-radius: 10px;
+
+            .play-icon {
+                opacity: 0;
+            }
+
+            .delete-btn {
+                opacity: 0;
+            }
+            
+            .like-btn {
+                opacity: 0;
+            }
+            
+            &:hover {           
+                background-color: $clr3;
+                        
+                .play-icon {
+                    opacity: 1;
+                }
+
+                .delete-btn {
+                    opacity: 1;
+                }
+
+                .like-btn {
+                    opacity: 1;
+                }
+            }
+            
+            .song-info {
+                align-items: center;
+                gap: 15px;
+                flex-basis: 65%;
+
+                .img-container{
+                    padding-left: 30px;
+                    img {
+                        width: 60px;
+                        height: 60px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        
+    
+            .wrraper { 
+                flex-basis: 35%;
+
+                .song-duration {
+                    width: 10px;
+                    gap: 10px;
+                }
+            }
+        }
+    
+    }
+
+}

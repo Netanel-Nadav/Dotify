@@ -23,8 +23,8 @@ export function RootCmp() {
       <main>
         <Switch>
             <Route component={UserProfile} path="/user/:id"/>
-            <Route component={LoginPage} path="/login"/>
             <Route component={StationDetails} path='/station/:id'/>
+            <Route component={LoginPage} path="/login"/>
             <Route component={CreateStation} path='/newStation'/>
             <Route component={Search} path='/search'/>
             <Route component={Library} path='/library'/>

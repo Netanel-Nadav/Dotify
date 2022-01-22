@@ -12,3 +12,30 @@ export function loadStation(stationId) {
   };
 }
 
+
+export function addSong (stationId,song) {
+  return async (dispatch) => {
+    try {
+      const savedStation = await stationService.addSongToStation(stationId,song)
+      return Promise.resolve(savedStation)
+    } catch (err) {
+      console.log("Couldn't add song", err)
+    }
+  }
+}
+
+export function makeNewStation() {
+  return async (dispatch) => {
+    try {
+      const newStation = await stationService.makeNewStation()
+      return Promise.resolve(newStation)
+    } catch (err) {
+      console.log("Couldn't make new station", err)
+    }
+  }
+}
+
+
+
+
+

@@ -22,6 +22,7 @@
 @import "./pages/login-page.scss";
 @import "./pages/create-station.scss";
 @import "./pages/library";
+@import "./pages/search.scss";
 
 
 // CMPS
@@ -36,4 +37,5 @@
 @import "./cmps/music-player";
 @import "./cmps/header";
 @import "./cmps/nav";
-@import "./pages/playlist.scss";
+@import "./cmps/playlist.scss";
+@import "./cmps/recommandations.scss";

@@ -1,0 +1,111 @@
+
+.search-container{
+
+    padding: $base-padding;
+
+    
+
+    .img-container {
+
+        img { 
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 50%; 
+        }
+    }
+
+    .search-by-text {
+        margin-bottom: 30px;
+
+        input {
+            height: 40px;
+            padding: 8px 36px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            border: none;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        .list-container {
+            margin-top: 30px;
+            padding: 0px 100px;
+            gap: 20px;
+            
+            h1 {
+                font-size: rem(20px);
+                margin-bottom: 10px;
+            }
+
+            .song{
+                justify-content: space-between;
+                padding-left: 50px;
+
+                button {
+                    opacity: 0;
+                }
+        
+                &:hover {
+                    button {
+                        opacity: 1;
+                    }
+                }
+
+                .song-info{
+                    align-items: center;
+                    gap: 15px;
+                    flex-basis: 65%;
+                }
+
+                .play-icon {
+                    opacity: 0;
+                }
+                
+                &:hover {           
+                    background-color: $clr3;
+                            
+                    .play-icon {
+                        opacity: 1;
+                    }
+                }
+
+                .btns-and-like {
+                    align-items: center;
+                    gap: 20px;
+                    flex-basis: 20%;
+
+                    .duration {
+                        width: 50px;
+                    }
+                }
+            }
+        }
+    }
+
+    .stations-by-genre {
+        padding: 0px 100px;
+        flex-wrap: wrap;
+        gap: 20px;
+
+        .genre {
+            width: 250px;
+            height: 250px;
+            border-radius: 10px;
+
+            &:hover {
+                cursor: pointer;
+                opacity: 0.8;
+
+            }
+            
+            h1 {
+                padding: 20px;
+                font-size: rem( 30px);
+            }
+        }
+    }
+}

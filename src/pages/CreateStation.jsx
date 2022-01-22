@@ -1,12 +1,19 @@
 import React from "react";
+import { connect } from 'react-redux'
 
 import { stationService } from "../services/station.service";
 import { utilService } from "../services/util.service";
 import { StationHero } from "../cmps/StationHero";
+import { PlayList } from "../cmps/PlayList";
+import { Recommendations } from "../cmps/Recommendations";
 
-export class CreateStation extends React.Component {
+import { makeNewStation, addSong } from "../store/station.action"
+
+class _CreateStation extends React.Component {
   state = {
-    newStation: null,
+    newStation: {
+      songs: []
+    },
     query: "",
     list: null
   };
@@ -31,22 +38,19 @@ export class CreateStation extends React.Component {
 
   search = async (ev) => {
     ev.preventDefault();
-    const list = await stationService.searchYouTube(this.state.query);
-    this.setState({ list });
+    const searchRes = await stationService.searchYouTube(this.state.query);
+    this.setState({ list: searchRes });
   };
 
   onAddSong = async (song) => {
-    if (!this.state.newStation) await this.onMakeNewStation();
-    const { newStation } = this.state;
-    const stationToEdit = { ...newStation };
-    const newSong = await stationService.formatNewSong(song);
-    stationToEdit.songs = [...stationToEdit.songs, newSong];
-    const savedStation = await stationService.update(stationToEdit);
-    this.setState({ newStation: savedStation });
-  };
+    if (!this.state.newStation._id) await this.onMakeNewStation()
+    const { newStation } = this.state
+    const savedStation = await this.props.addSong(newStation._id, song)
+    this.setState({ newStation: savedStation })
+  }
 
   onMakeNewStation = async () => {
-    const newStation = await stationService.makeNewStation();
+    const newStation = await this.props.makeNewStation();
     this.setState({ newStation });
     return Promise.resolve();
   };
@@ -55,19 +59,11 @@ export class CreateStation extends React.Component {
     const { newStation, list, query } = this.state;
     return (
       <section className="new-station">
-        <StationHero />
-        <hr />
-        {newStation && newStation.songs.length && (
-          <section className="song-list">
-            {newStation.songs.map((song) => {
-              return (
-                <section key={song._id} className="song">
-                  <span>{song.title}</span>
-                </section>
-              );
-            })}
-          </section>
-        )}
+        <StationHero station={newStation} />
+
+        {newStation.songs && <PlayList station={newStation} />}
+
+
         <section className="new-station-search">
           <p>Let's find something for your playlist</p>
           <div className="form-container">
@@ -76,46 +72,61 @@ export class CreateStation extends React.Component {
                 autoFocus
                 value={query}
                 onChange={this.setQuery}
-                placeholder="Search for songs"
+                placeholder="Enter song or artist name"
               />
-              <button className="search-btn">Add</button>
+              <button className="search-btn">Search</button>
             </form>
           </div>
 
           {list && (
             <section className="search-results flex column">
-              {list.map((item, idx) => {
-                return (
-                  <section key={idx} className="song-container flex">
-                    
-                    
-                    <section className="song-info flex">
-                      <span>{idx + 1}</span>
-                      <section className="img-container">
-                        <img src={item.bestThumbnail.url} />
+              {list.songs.map((item, idx) => {
+                if (newStation.songs.every(currSong => currSong._id !== item.id)) {
+                  return (
+                    <section key={idx} className="song-container flex">
+                      <section className="song-info flex">
+                        <section className="img-container">
+                          <img src={item.bestThumbnail.url} />
+                        </section>
+                        <p className="title">{item.title}</p>
                       </section>
-                      <span className="title">{item.title}</span>
+
+                      <section className="wrraper flex space-around">
+                        <section className="song-duration">
+                          <p className="duration">{item.duration}</p>
+                        </section>
+                        <section className="add-song-btn">
+                          <button onClick={() => this.onAddSong(item)}>
+                            Add
+                          </button>
+                        </section>
+                      </section>
                     </section>
-
-                    <section className="wrraper flex space-between">
-                      <section className="song-duration">
-                        <span>{item.duration}</span>
-                      </section>
-                      <section className="add-song-btn">
-                        <button onClick={() => this.onAddSong(item)}>
-                          Add
-                        </button>
-                      </section>
-                    </section>
-
-
-                  </section>
-                );
+                  );
+                }
               })}
             </section>
           )}
         </section>
+        { list?.recommendations && 
+        <section>
+          <hr />
+          <Recommendations list={list.recommendations} />
+        </section>}
       </section>
     );
   }
 }
+
+function mapStateToProps() {
+  return {
+  }
+}
+
+const mapDispatchToProps = {
+  makeNewStation,
+  addSong
+}
+
+
+export const CreateStation = connect(mapStateToProps, mapDispatchToProps)(_CreateStation)

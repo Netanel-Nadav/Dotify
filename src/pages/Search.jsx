@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Recommendations } from '../cmps/Recommendations';
 
 import { stationService } from '../services/station.service';
 
@@ -6,58 +7,69 @@ export function Search() {
 
     const [genres, setGenres] = useState(null)
     const [query, setQuery] = useState('');
-    const [list, setList] = useState(null)
+    const [list, setList] = useState({ songs: [] })
 
     useEffect(async () => {
         const allGenres = await stationService.getStationsGenre()
         setGenres(allGenres)
     }, [])
 
-    const search = (ev) => {
+    const search = async (ev) => {
         ev.preventDefault();
-        stationService.searchYouTube(query).then(setList);
-    };
+        const searchRes = await stationService.searchYouTube(query)
+        setList(searchRes)
 
+    };
 
 
     return (
         <section className='search-container'>
             <section className='search-by-text'>
                 <form onSubmit={search}>
-                    <input autoFocus value={query} onChange={ e => setQuery(e.target.value)} />
+                    <input autoFocus value={query} placeholder='Enter song or artist name'
+                        onChange={e => setQuery(e.target.value)} />
                     <button>search</button>
                 </form>
-                {list && <section>
-                    {list.map((item, idx) => {
+                {list.songs.length > 0 && <section className='list-container flex column'>
+                    <h1>Search Results</h1>
+                    {list.songs.map((item, idx) => {
                         return (
-                            <section key={item.id}>
-                                <section>
-                                    <span>{idx + 1}</span>
-                                    <img src={item.bestThumbnail.url} />
-                                    <span>{item.title}</span>
+                            <section key={item.id} className='song flex'>
+                                <section className='song-info flex'>
+                                    <p>{idx + 1}</p>
+                                    <span className="play-icon absolute"><i className="fas fa-play"></i></span>
+                                    <section className='img-container'>
+                                        <img src={item.bestThumbnail.url} />
+                                    </section>
+                                    <p>{item.title}</p>
                                 </section>
-                                <section>
-                                    <span>{item.duration}</span>
+                                <section className='btns-and-like flex'>
                                     <button>like</button>
+                                    <p className='duration'>{item.duration}</p>
+                                    <button>add</button>
                                 </section>
                             </section>
                         )
                     })}
+                    <hr />
                 </section>
                 }
-
-                {genres && !list &&
-                    <section className='stations-by-genre'>
-                        {genres.map(genre => {
-                            return (
-                                <section key={genre.name}>
-                                    <h1>{genre.name}</h1>
-                                    {/* <img src={genre.imgUrl} /> */}
-                                </section>
-                            )
-                        })}
-                    </section>}
+                {list.recommendations && <Recommendations list={list.recommendations} />}
             </section>
-        </section>
+
+            {
+                genres && !list.songs.length &&
+                <section className='stations-by-genre flex'>
+                    {genres.map(genre => {
+                        return (
+                            <section key={genre.name} className='genre' style={{ backgroundColor: genre.backgroundColor }}>
+                                <h1>{genre.name}</h1>
+                                {/* <img src={genre.imgUrl} /> */}
+                            </section>
+                        )
+                    })}
+                </section>
+            }
+        </section >
     )
 }

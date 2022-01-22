@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PlayList } from '../cmps/PlayList';
+import { StationHero } from '../cmps/StationHero';
 
 import { stationService } from "../services/station.service";
 
@@ -16,7 +17,7 @@ export function StationDetails({ match }) {
     if (!station) return <h1>Loading...</h1>
     return (
         <section className='station'>
-            {/* HERO COMPONENT */}
+            <StationHero station={station} />
             <PlayList station={station}/>
         </section>
     )

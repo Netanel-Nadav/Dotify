@@ -7,34 +7,41 @@ const gStations = require('../data/station.json')
 const stationsGenre = [
     {
         name: 'All',
-        imgUrl: '#'
+        imgUrl: '#',
+        backgroundColor: '#A239EA'
     },
     {
         name: 'Pop',
-        imgUrl: '#'
+        imgUrl: '#',
+        backgroundColor: '#8B8B8B'
+
     },
     {
         name: 'Hip Hop',
-        imgUrl: '#'
+        imgUrl: '#',
+        backgroundColor: '#77E4D4'
     },
     {
         name: 'Rock',
-        imgUrl: '#'
+        imgUrl: '#',
+        backgroundColor: '#77D970'
     },
     {
         name: 'Metal',
-        imgUrl: '#'
+        imgUrl: '#',
+        backgroundColor: '#FF8E00'
     },
     {
         name: 'Jazz',
-        imgUrl: '#'
+        imgUrl: '#',
+        backgroundColor: '#FF1700'
     }
 ]
 
 
 const STORAGE_KEY = 'station'
 
-const debouncedSearch = utilService.debounce(searchYouTube,500)
+const debouncedSearch = utilService.debounce(searchYouTube, 500)
 
 export const stationService = {
     query,
@@ -44,7 +51,8 @@ export const stationService = {
     makeNewStation,
     formatNewSong,
     getStationsGenre,
-    searchYouTube
+    searchYouTube,
+    addSongToStation
 }
 
 
@@ -63,7 +71,7 @@ async function getById(stationId) {
 }
 
 async function remove(stationId) {
-    const removedStation = storageService.remove(STORAGE_KEY, stationId)
+    await storageService.remove(STORAGE_KEY, stationId)
     return console.log('Station has Been Removed');
 }
 
@@ -71,7 +79,16 @@ function update(station) {
     return storageService.put(STORAGE_KEY, station)
 }
 
-function getStationsGenre() { 
+async function addSongToStation(stationId, song) {
+    const station = await getById(stationId)
+    const editedStation = { ...station }
+    const newSong = await formatNewSong(song)
+    editedStation.songs = [...editedStation.songs, newSong]
+    const savedStation = await update(editedStation)
+    return Promise.resolve(savedStation)
+}
+
+function getStationsGenre() {
     return Promise.resolve(stationsGenre)
 }
 
@@ -121,19 +138,23 @@ function makeNewStation() {
 async function searchYouTube(q) {
     q = encodeURIComponent(q);
     const response = await fetch("https://youtube-search-results.p.rapidapi.com/youtube-search/?q=" + q, {
-      "method": "GET",
-      "headers": {
-        "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
-        "x-rapidapi-key": '6f5320ed11msh859c70eb983b0edp158967jsnc3a93be7fd34'
-      }
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
+            "x-rapidapi-key": '6600944e0amsh06bd5834aeedf3ap12c401jsn549127d55af9'
+        }
     });
     const body = await response.json();
     console.log(body);
-    return body.items.filter(item => item.type === 'video');
-  }
+    const searchRes = {
+        songs: body.items.filter(item => item.type === 'video'),
+        recommendations: body.refinements
+    }
+    return searchRes
+}
 
 
-  
+
 
 
 

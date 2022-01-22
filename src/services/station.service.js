@@ -1,5 +1,6 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
+import { userService } from './user.service.js'
 
 
 const gStations = require('../data/station.json')
@@ -118,8 +119,8 @@ function makeNewStation() {
         tags: 'Rock',
         createdAt: Date.now(),
         createdBy: {
-            _id: 'a1',
-            fullname: 'Sahar Gar Onne',
+            _id:userService.getLogedinUser()?._id || utilService.makeId() ,
+            fullname: userService.getLogedinUser()?.username || 'Guest',
             imgUrl: '#'
         },
         likedByUsers: [

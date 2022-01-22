@@ -7,7 +7,7 @@ import { CreateStation } from './pages/CreateStation';
 import { Library } from './pages/Library';
 import { Search } from './pages/Search';
 import { Header } from './cmps/Header';
-import { MusicPlayer } from './cmps/MusicPlayer';
+import { AudioPlayer } from './cmps/AudioPlayer';
 import { Navigation } from './cmps/Navigation';
 import { LoginPage } from './pages/LoginPage';
 import { UserProfile } from './pages/UserProfile';
@@ -31,7 +31,7 @@ export function RootCmp() {
             <Route component={Home} path="/"/>
         </Switch>
       </main>
-      <MusicPlayer />
+      <AudioPlayer id={'_nBlN9yp9R8'}/>
     </div>
   );
 }

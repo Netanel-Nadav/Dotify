@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
+
 import { StationPreview } from '../cmps/StationPreview';
 
 import { stationService } from '../services/station.service';
+import { loadStations } from '../store/station.action';
 
 
-export function Library() {
+function _Library({loadStations, stations}) {
 
-    const [stations, setStations] = useState(null)
+    const [initDone, setInitiDone] = useState(false)
 
-    useEffect ( async () => {
-        const allStations = await stationService.query()
-        setStations(allStations)
-    })
-
+    useEffect(async () => {
+        if(!stations.length && !initDone) {
+            loadStations()
+            setInitiDone(true)
+        }
+    }, [])
 
     if(!stations) return <h1>Loading...</h1>
     return (
@@ -25,3 +29,17 @@ export function Library() {
         </section>
     )
 }
+
+
+function mapStateToProps({ stationModule }) {
+    return {
+       stations: stationModule.stations
+    }
+}
+
+const mapDispatchToProps = {
+    loadStations
+}
+
+
+export const Library = connect(mapStateToProps, mapDispatchToProps)(_Library)

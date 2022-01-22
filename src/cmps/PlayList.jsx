@@ -1,6 +1,14 @@
 
+import { useEffect } from 'react'
+import { connect } from 'react-redux'
 
-export function PlayList({ station }) {
+import {setSongs, setStation} from '../store/media.action'
+
+function _PlayList({ station, setSongs, setStation }) {
+
+    useEffect (() => {
+        setStation(station)
+    }, [])
 
 
     return (
@@ -19,7 +27,7 @@ export function PlayList({ station }) {
                         <section key={song._id} className='station-song-details flex'>
                             <section className='song-info flex'>
                                 <p className="absolute">{idx + 1}</p>
-                                <span className="play-icon absolute"><i className="fas fa-play"></i></span>
+                                <span className="play-icon absolute" onClick={() => setSongs(station,idx)}><i className="fas fa-play"></i></span>
                                 <section className='img-container'>
                                     <img src={song.imgUrl} />
                                 </section>
@@ -45,3 +53,16 @@ export function PlayList({ station }) {
         </section>
     )
 }
+
+function mapStateToProps({ }) {
+    return {
+    }
+}
+
+const mapDispatchToProps = {
+    setSongs,
+    setStation
+}
+
+
+export const PlayList = connect(mapStateToProps, mapDispatchToProps)(_PlayList)

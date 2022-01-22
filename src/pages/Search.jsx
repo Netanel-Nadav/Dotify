@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
+
 import { Recommendations } from '../cmps/Recommendations';
 
 import { stationService } from '../services/station.service';
+import {setSongs} from '../store/media.action'
 
-export function Search() {
+function _Search({setSongs}) {
 
     const [genres, setGenres] = useState(null)
     const [query, setQuery] = useState('');
@@ -21,6 +24,14 @@ export function Search() {
 
     };
 
+    const onSetSongs = async (idx) => {
+        list.songs.forEach( song => {
+            song._id = song.id
+            delete song.id
+        })
+        setSongs(list,idx)
+    }
+
 
     return (
         <section className='search-container'>
@@ -37,7 +48,7 @@ export function Search() {
                             <section key={item.id} className='song flex'>
                                 <section className='song-info flex'>
                                     <p>{idx + 1}</p>
-                                    <span className="play-icon absolute"><i className="fas fa-play"></i></span>
+                                    <span className="play-icon absolute" onClick={() => onSetSongs(idx)}><i className="fas fa-play"></i></span>
                                     <section className='img-container'>
                                         <img src={item.bestThumbnail.url} />
                                     </section>
@@ -73,3 +84,15 @@ export function Search() {
         </section >
     )
 }
+
+function mapStateToProps({  }) {
+    return {
+    }
+}
+
+const mapDispatchToProps = {
+    setSongs
+}
+
+
+export const Search = connect(mapStateToProps, mapDispatchToProps)(_Search)

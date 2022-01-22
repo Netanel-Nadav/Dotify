@@ -2,10 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import { setStation } from '../store/media.action'
 
 
 
-export function StationPreview({ station }) {
+
+function _StationPreview({ station, setStation }) {
 
 
     const onStartPlay = () => {
@@ -15,7 +17,7 @@ export function StationPreview({ station }) {
     if (!station.songs.length) return <React.Fragment></React.Fragment>
     return (
         <Link to={`/station/${station._id}`}>
-            <section className='station-preview card flex'>
+            <section className='station-preview card flex' onClick={() => setStation(station)} >
                 <div className='img-container'>
                     <img src={station.songs[0].imgUrl} />
                 </div>
@@ -36,3 +38,15 @@ export function StationPreview({ station }) {
     )
 }
 
+
+function mapStateToProps({ mediaModule }) {
+    return {
+    }
+}
+
+const mapDispatchToProps = {
+    setStation
+}
+
+
+export const StationPreview = connect(mapStateToProps, mapDispatchToProps)(_StationPreview)

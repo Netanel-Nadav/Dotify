@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
 import { StationList } from '../cmps/StationList';
+import { loadStations } from '../store/station.action';
 
-import { stationService } from '../services/station.service';
 
-export function Home() {
+function _Home({loadStations, stations}) {
 
-    const [stations, setStations] = useState(null)
+    const [initDone, setInitiDone] = useState(false)
 
     useEffect(async () => {
-        const stations = await stationService.query()
-        setStations(stations)
-        // userService.setUser()
+        if(!stations.length && !initDone) {
+            loadStations()
+            setInitiDone(true)
+        }
     }, [])
 
 
@@ -28,3 +30,17 @@ export function Home() {
         </section>
     )
 }
+
+
+function mapStateToProps({ stationModule }) {
+    return {
+       stations: stationModule.stations
+    }
+}
+
+const mapDispatchToProps = {
+    loadStations
+}
+
+
+export const Home = connect(mapStateToProps, mapDispatchToProps)(_Home)

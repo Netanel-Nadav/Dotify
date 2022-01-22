@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route, Switch } from "react-router";
+import React from 'react';
+import { Route, Switch } from 'react-router'
 // import routes from './routes'
 
 import { Home } from "./pages/Home";
@@ -31,7 +31,7 @@ export function RootCmp() {
           <Route component={Home} path="/" />
         </Switch>
       </main>
-      {/* <AudioPlayer id={"_nBlN9yp9R8"} /> */}
+      <AudioPlayer />
     </div>
   );
 }

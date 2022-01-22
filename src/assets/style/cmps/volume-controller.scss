@@ -1,0 +1,12 @@
+.volume-container {
+    gap: 10px;
+    margin: auto;
+    
+    button {
+        background: none;
+        border: none;
+        color: $clr3;
+        font-size: rem(16px);
+        cursor: pointer;
+    }
+}

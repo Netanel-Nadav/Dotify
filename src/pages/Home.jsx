@@ -21,12 +21,8 @@ function _Home({loadStations, stations}) {
             {stations ?
                 <section >
                     <StationList stations={stations} />
-
                     {/* stations lists by labels */}
                 </section> : <h1>Loading...</h1>}
-
-
-
         </section>
     )
 }

@@ -19,7 +19,7 @@ export function RootCmp() {
     <div className="App main-container">
       <Header />
       <Navigation />
-      <HomeScreenModal />
+      {/* <HomeScreenModal /> */}
       <main>
         <Switch>
           <Route component={UserProfile} path="/user/:id" />

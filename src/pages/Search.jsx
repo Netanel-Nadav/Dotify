@@ -81,7 +81,7 @@ function _Search({setSongs}) {
                     })}
                 </section>
             }
-        </section >
+        </section>
     )
 }
 

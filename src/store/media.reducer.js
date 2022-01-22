@@ -1,10 +1,12 @@
 
 
 const initialState = {
+    isPlaying: false,
     currStation: null,
     currSongList: [],
     currSongIdx: 0,
-    alreadyPlayedIdx: []
+    currSongId: null,
+    alreadyPlayedId: []
 }
 
 export function mediaReducer(state = initialState, action) {
@@ -18,6 +20,14 @@ export function mediaReducer(state = initialState, action) {
         case "SET_SONGS":
             newState = { ...state, currSongList: action.songs };
             break;
+        
+        case "TOGGLE_IS_PLAYING":
+            newState = { ...state, isPlaying: action.isPlaying };
+            break;
+
+        case "SET_CURR_SONG_ID":
+            newState = { ...state, currSongId: action.songId };
+            break;
 
         case "SET_CURR_SONG_IDX":
             newState = { ...state, currSongIdx: action.songIdx };
@@ -28,15 +38,15 @@ export function mediaReducer(state = initialState, action) {
             break;
 
         case "SET_ALREADY_PLAYED":
-            newState = { ...state, alreadyPlayedIdx: [action.newSongIdx] };
+            newState = { ...state, alreadyPlayedId: [action.songId] };
             break;
 
         case "UPDATE_ALREADY_PLAYED":
-            newState = { ...state, alreadyPlayedIdx: [...state.alreadyPlayedIdx, action.newIdx] };
+            newState = { ...state, alreadyPlayedId: [...state.alreadyPlayedId, action.newId] };
             break;
 
         case "RESET_ALREADY_PLAYED":
-            newState = { ...state, alreadyPlayedIdx: [] };
+            newState = { ...state, alreadyPlayedId: [] };
             break;
 
 

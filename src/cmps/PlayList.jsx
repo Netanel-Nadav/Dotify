@@ -27,7 +27,7 @@ function _PlayList({ station, setSongs, setStation }) {
                         <section key={song._id} className='station-song-details flex'>
                             <section className='song-info flex'>
                                 <p className="absolute">{idx + 1}</p>
-                                <span className="play-icon absolute" onClick={() => setSongs(station,idx)}><i className="fas fa-play"></i></span>
+                                <span className="play-icon absolute" onClick={() => setSongs(station,song._id)}><i className="fas fa-play"></i></span>
                                 <section className='img-container'>
                                     <img src={song.imgUrl} />
                                 </section>

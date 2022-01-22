@@ -24,12 +24,12 @@ function _Search({setSongs}) {
 
     };
 
-    const onSetSongs = async (idx) => {
+    const onSetSongs = async (songId) => {
         list.songs.forEach( song => {
             song._id = song.id
             delete song.id
         })
-        setSongs(list,idx)
+        setSongs(list,songId)
     }
 
 
@@ -48,7 +48,7 @@ function _Search({setSongs}) {
                             <section key={item.id} className='song flex'>
                                 <section className='song-info flex'>
                                     <p>{idx + 1}</p>
-                                    <span className="play-icon absolute" onClick={() => onSetSongs(idx)}><i className="fas fa-play"></i></span>
+                                    <span className="play-icon absolute" onClick={() => onSetSongs(item.id)}><i className="fas fa-play"></i></span>
                                     <section className='img-container'>
                                         <img src={item.bestThumbnail.url} />
                                     </section>

@@ -5,7 +5,8 @@ import { AudioControllers } from "./AudioControllers";
 import { VolumeController } from "./VolumeController";
 import { SongData } from "./SongData";
 
-import { changeSong, setRandomSong, resetAlreadyPlayed, toggleIsPlaying } from '../store/media.action'
+import { changeSong, setRandomSong, resetAlreadyPlayed, toggleIsPlaying, setShuffleState } from '../store/media.action'
+import { GiTigerHead } from "react-icons/gi";
 
 class _AudioPlayer extends React.Component {
   state = {
@@ -37,15 +38,21 @@ class _AudioPlayer extends React.Component {
   };
 
 
-  onPlay = () => {
-    this.state.player.playVideo()
-    this.props.toggleIsPlaying()
+  onPlayPause = () => {
+    const { player } = this.state;
+    if (this.props.currSongId) {
+      this.props.toggleIsPlaying()
+      if (this.props.isPlaying) {
+        player.playVideo()
+      } else player.pauseVideo()
+    }
   }
 
-  onPause = () => {
-    this.state.player.pauseVideo()
-    this.props.toggleIsPlaying()
-  }
+  // onPause = () => {
+  //   if (this.props.currSongId) {
+  //     this.state.player.pauseVideo()
+  //     this.props.toggleIsPlaying()
+  //   }
 
   onNextSong = () => {
     if (this.state.isRepeatOn) {
@@ -65,7 +72,9 @@ class _AudioPlayer extends React.Component {
       this.state.player.stopVideo()
       this.state.player.playVideo()
     }
-    else if (this.state.isShuffleOn) this.props.setRandomSong()
+    else if (this.state.isShuffleOn) {
+      this.props.setRandomSong()
+    }
     else {
       if (this.props.currSongIdx === 0) return
       this.props.changeSong(-1)
@@ -74,23 +83,29 @@ class _AudioPlayer extends React.Component {
 
   onToggleShuffle = () => {
     this.setState({ isShuffleOn: !this.state.isShuffleOn }, () => {
-      if (!this.state.isShuffleOn) this.props.resetAlreadyPlayed()
-  
+      if (this.state.isRepeatOn && this.state.isShuffleOn) this.setState({ isRepeatOn: false }); //turn off repeat if its on
+      if (this.state.isShuffleOn) { // if shuffle working
+        this.props.setShuffleState();
+      }
+      else this.props.resetAlreadyPlayed() // if shuffle not working
+
     })
   }
 
   onToggleRepeat = () => {
-    this.setState({ isRepeatOn: !this.state.isRepeatOn })
+    this.setState({ isRepeatOn: !this.state.isRepeatOn }, () => {
+      if (this.state.isShuffleOn && this.state.isRepeatOn) this.setState({ isShuffleOn: false }); //turn off shuffle if its on
+    })
+  }
+
+  onStateChange = () => {
+
   }
 
   render() {
     const opts = {
       height: "0",
       width: "0",
-      playerVars: {
-        // https://developers.google.com/youtube/player_parameters
-        autoplay: 1,
-      }
     };
     const { volume } = this.state;
     const { currSongList, currSongIdx, currSongId, isPlaying } = this.props;
@@ -104,12 +119,13 @@ class _AudioPlayer extends React.Component {
             opts={opts}
             onReady={this.onReady}
             onEnd={this.onNextSong}
+            onStateChange={this.onStateChange}
           />
         </div>
         <AudioControllers
           isPlaying={isPlaying}
-          onPlay={this.onPlay}
-          onPause={this.onPause}
+          onPlay={this.onPlayPause}
+          onPause={this.onPlayPause}
           onNextSong={this.onNextSong}
           onPrevSong={this.onPrevSong}
           onToggleShuffle={this.onToggleShuffle}
@@ -139,7 +155,8 @@ const mapDispatchToProps = {
   changeSong,
   setRandomSong,
   resetAlreadyPlayed,
-  toggleIsPlaying
+  toggleIsPlaying,
+  setShuffleState
 }
 
 export const AudioPlayer = connect(mapStateToProps, mapDispatchToProps)(_AudioPlayer)

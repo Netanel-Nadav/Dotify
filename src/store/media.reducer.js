@@ -1,5 +1,3 @@
-
-
 const initialState = {
     isPlaying: false,
     currStation: null,
@@ -10,6 +8,7 @@ const initialState = {
 }
 
 export function mediaReducer(state = initialState, action) {
+    const notPlayedId = initialState.notPlayedId;
     let newState = state;
 
     switch (action.type) {
@@ -20,7 +19,7 @@ export function mediaReducer(state = initialState, action) {
         case "SET_SONGS":
             newState = { ...state, currSongList: action.songs };
             break;
-        
+
         case "TOGGLE_IS_PLAYING":
             newState = { ...state, isPlaying: action.isPlaying };
             break;
@@ -37,16 +36,15 @@ export function mediaReducer(state = initialState, action) {
             newState = { ...state, currSongIdx: action.newSongIdx };
             break;
 
-        case "SET_ALREADY_PLAYED":
-            newState = { ...state, alreadyPlayedId: [action.songId] };
+        case "SET_ALREADY_PLAYED": //set curr playlist in shuffle
+            newState = { ...state, notPlayedId: [...action.playlist] };
             break;
 
-        case "UPDATE_ALREADY_PLAYED":
-            newState = { ...state, alreadyPlayedId: [...state.alreadyPlayedId, action.newId] };
+        case "UPDATE_ALREADY_PLAYED": //slice a song played
+            newState = { ...state, notPlayedId: [...(notPlayedId.filter(id => id !== action.newId))] };
             break;
-
         case "RESET_ALREADY_PLAYED":
-            newState = { ...state, alreadyPlayedId: [] };
+            newState = { ...state, notPlayedId: [] };
             break;
 
 

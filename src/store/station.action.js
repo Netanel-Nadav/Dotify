@@ -31,7 +31,9 @@ export function addSong (stationId,song) {
   return async (dispatch) => {
     try {
       const updatedStation = await stationService.addSongToStation(stationId,song)
-      const action = {type: 'UPDATE_STATION', updatedStation}
+      let action = {type: 'UPDATE_STATION', updatedStation}
+      dispatch(action)
+      action = {type: 'UPDATE_DISPLAYED_SONGS', songs: updatedStation.songs}
       dispatch(action)
       return Promise.resolve(updatedStation)
     } catch (err) {

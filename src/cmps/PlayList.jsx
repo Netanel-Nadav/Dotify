@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { setSongs, setStation } from "../store/media.action";
 import { deleteSong, setDisplayedSongs } from "../store/station.action";
 import { DragDrop } from "./DragDrop";
+import { Equalizer } from "./Equalizer";
+
 
 function _PlayList({
   station,
@@ -11,7 +13,8 @@ function _PlayList({
   setStation,
   deleteSong,
   setDisplayedSongs,
-  displayedSongs
+  displayedSongs,
+  currSongId
 }) {
   useEffect(() => {
     setStation(station);
@@ -20,6 +23,7 @@ function _PlayList({
 
   return (
     <section className="playlist">
+    
       <section className="station-song-info-title flex">
         <p className="title">Title</p>
         <section className="wrraper flex space-around">
@@ -33,20 +37,20 @@ function _PlayList({
       <section className="songs-container flex column">
         {displayedSongs.map((song, idx) => {
           return (
-            <section key={song._id} className="station-song-details flex">
+            <section key={song._id} className={`station-song-details flex`}>
             {/* <DragDrop displayedSongs={displayedSongs}/> */}
-              <section className="song-info flex">
-                <p className="absolute">{idx + 1}</p>
+              <section className={`song-info flex ${song._id === currSongId ? 'playing' : ''}`}>
+                {song._id !== currSongId ? <p className="absolute">{idx + 1}</p> : <Equalizer />}
                 <span
-                  className="play-icon absolute"
+                  className={`play-icon absolute ${song._id === currSongId ? 'dont-show' : ''}`}
                   onClick={() => setSongs(station, song._id)}
                 >
-                  <i className="fas fa-play"></i>
+                  <i className={`fas fa-play ${song._id === currSongId ? 'equalizer' : ''}`}></i>
                 </span>
-                <section className="img-container">
+                <section className={`img-container ${song._id === currSongId ? 'playing' : ''}`}>
                   <img src={song.imgUrl} />
                 </section>
-                <p>{song.title}</p>
+                <p className=''>{song.title}</p>
               </section>
               <section className="wrraper flex space-around">
                 <section className="song-addedAt">
@@ -76,9 +80,11 @@ function _PlayList({
   );
 }
 
-function mapStateToProps({ stationModule }) {
+function mapStateToProps({ stationModule, mediaModule }) {
   return {
-    displayedSongs: stationModule.displayedSongs
+    displayedSongs: stationModule.displayedSongs,
+    currSongId: mediaModule.currSongId
+
   };
 }
 

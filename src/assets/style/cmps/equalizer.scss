@@ -1,0 +1,19 @@
+.bars-7 {
+  width:20px;
+  height:30px;
+  --c:linear-gradient(currentColor 0 0);
+  background: 
+    var(--c) 0%   50%,
+    var(--c) 50%  50%,
+    var(--c) 100% 50%;
+  background-size:3px 50%;
+  color: $clr1;
+  background-repeat: no-repeat;
+  animation:b7 1s infinite linear alternate;
+}
+@keyframes b7 {
+    20% {background-size:3px 20% ,3px 30% ,3px 30% }
+    40% {background-size:3px 100%,3px 20% ,3px 30% }
+    60% {background-size:3px 30% ,3px 100%,3px 20% }
+    80% {background-size:3px 30% ,3px 30% ,3px 100%}
+}

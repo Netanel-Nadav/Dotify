@@ -1,6 +1,6 @@
 
 
-export function AudioControllers ({isPlaying, onPlay, onPause, onNextSong, onPrevSong, onToggleShuffle}) {
+export function AudioControllers ({isPlaying, onPlay, onPause, onNextSong, onPrevSong, onToggleShuffle, onToggleRepeat}) {
 
     return (
         <section className="audio-controller flex align-center justify-center">
@@ -8,7 +8,7 @@ export function AudioControllers ({isPlaying, onPlay, onPause, onNextSong, onPre
             <button className='prev-btn' onClick={onPrevSong}><i className="fas fa-backward"></i></button>
             <button className={`play-btn ${isPlaying ? 'playing' : ''}`} onClick={isPlaying ? onPause : onPlay}><i className="fas fa-play"></i></button>
             <button className='next-btn' onClick={onNextSong}><i className="fas fa-forward"></i></button>
-            <button className='repeat-btn'><i className="fas fa-redo"></i></button>
+            <button className='repeat-btn' onClick={onToggleRepeat}><i className="fas fa-redo"></i></button>
         </section>
     )
 }

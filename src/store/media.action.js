@@ -13,15 +13,32 @@ export function setStation(station) {
     };
 }
 
-export function setSongs(station, songIdx) {
+export function toggleIsPlaying() {
+    return async (dispatch,getState) => {
+        try {
+            const {isPlaying} = getState().mediaModule
+            const action = {type: "TOGGLE_IS_PLAYING", isPlaying: !isPlaying}
+            dispatch(action)
+        } catch (err) {
+            console.log("Couldnt toggle isPlaying", err)
+        }
+    }
+}
+
+export function setSongs(station, songId) {
     return async (dispatch) => {
         try {
             const songs = station.songs
             let action = { type: "SET_SONGS", songs };
             dispatch(action);
+            action = {type: 'SET_CURR_SONG_ID', songId}
+            dispatch(action)
+            const songIdx = songs.findIndex(song => song._id === songId)
             action = { type: 'SET_CURR_SONG_IDX', songIdx }
             dispatch(action)
-            action = { type: 'SET_ALREADY_PLAYED', newSongIdx: songIdx }
+            action = { type: 'SET_ALREADY_PLAYED', songId }
+            dispatch(action)
+            action = {type: "TOGGLE_IS_PLAYING", isPlaying: true}
             dispatch(action)
         } catch (err) {
             console.log("Got an Error in SetSong", err);
@@ -32,11 +49,14 @@ export function setSongs(station, songIdx) {
 export function changeSong(diff) {
     return async (dispatch, getState) => {
         try {
-            const { currSongIdx } = getState().mediaModule
+            const { currSongId, currSongList} = getState().mediaModule
+            const currSongIdx = currSongList.findIndex(song => currSongId === song._id)
             const newSongIdx = currSongIdx + diff
-            let action = { type: 'CHANGE_SONG', newSongIdx }
+            let action = { type: 'SET_CURR_SONG_IDX', songIdx: newSongIdx }
             dispatch(action)
-            action = { type: 'SET_ALREADY_PLAYED', newSongIdx }
+            action = {type: 'SET_CURR_SONG_ID', songId: currSongList[newSongIdx]._id}
+            dispatch(action)
+            action = { type: 'SET_ALREADY_PLAYED', songId: currSongList[newSongIdx]._id }
             dispatch(action)
         } catch (err) {
             console.log("Couldn't change song", err)
@@ -47,13 +67,16 @@ export function changeSong(diff) {
 export function setRandomSong() {
     return async (dispatch, getState) => {
         try {
-            const { currSongList, alreadyPlayedIdx } = getState().mediaModule
-            let newIdx = await getNewSongIdx(alreadyPlayedIdx,currSongList.length-1)
+            const { currSongList, alreadyPlayedId } = getState().mediaModule
+            let newIdx = await getNewSongIdx(alreadyPlayedId,currSongList)
+            const newId = currSongList[newIdx]._id
             let action = { type: 'SET_CURR_SONG_IDX', songIdx: newIdx }
             dispatch(action)
-            action = {type: 'UPDATE_ALREADY_PLAYED', newIdx}
+            action = { type: 'SET_CURR_SONG_ID', songId: newId}
             dispatch(action)
-            if(currSongList.length === alreadyPlayedIdx.length) resetAlreadyPlayed()
+            action = {type: 'UPDATE_ALREADY_PLAYED', newId}
+            dispatch(action)
+            if(currSongList.length === alreadyPlayedId.length) resetAlreadyPlayed()
 
         } catch (err) {
             console.log("Couldn't get random song", err)
@@ -61,8 +84,21 @@ export function setRandomSong() {
     }
 }
 
+export function repeatSong() {
+    return async (dispatch,getState) => {
+        try {
+            const {currSongId} = getState().mediaModule
+            let action = {type: 'SET_CURR_SONG_ID', songId: ''}
+            dispatch(action)
+            // action = { type: 'SET_CURR_SONG_ID', songId: currSongId}
+            // dispatch(action)
+        } catch (err) {
+            console.log("Couldn't load song", err)
+        }
+    }
+}
+
 export function resetAlreadyPlayed() {
-    console.log('check')
     return async (dispatch) => {
         try {
             const action = {type: 'RESET_ALREADY_PLAYED'}
@@ -73,9 +109,12 @@ export function resetAlreadyPlayed() {
     }
 }
 
-function getNewSongIdx (alreadyPlayed, listLength) {
-    const newIdx = utilService.getRandomIntInclusive(0,listLength)
-    console.log('songIdx',newIdx)
-    if(alreadyPlayed.includes(newIdx)) getNewSongIdx(alreadyPlayed,listLength)
+function getNewSongIdx (alreadyPlayed, list) {
+    const newIdx = utilService.getRandomIntInclusive(0,list.length -1)
+    const newId = list[newIdx]._id
+    // console.log('alreadyPlayed', alreadyPlayed)
+    // console.log('songIdx',newIdx)
+    // console.log('songId',newId)
+    if(alreadyPlayed.includes(newId)) getNewSongIdx(alreadyPlayed,list.length-1)
     else return Promise.resolve(newIdx)
 }

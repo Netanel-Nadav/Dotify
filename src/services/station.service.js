@@ -125,7 +125,7 @@ function makeNewStation() {
     let station = {
         name: 'New Playlist',
         imgUrl: null,
-        likesCount: 0,
+        likesCount: utilService.getRandomIntInclusive(300,2000),
         tags: 'Rock',
         createdAt: Date.now(),
         createdBy: {

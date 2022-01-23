@@ -13,7 +13,6 @@ export function StationList({ stations }) {
                     )
                 })}
             </div>
-            {/* <DragDrop /> */}
         </section>
     )
 }

@@ -18,7 +18,7 @@ export function stationReducer(state = initialState, action) {
       break;
 
     case "UPDATE_STATION":
-      newState = { ...state, stations: state.stations.map(station => station._id === action.savedStation._id ? action.savedStation : station ) };
+      newState = { ...state, stations: state.stations.map(station => station._id === action.updatedStation._id ? action.updatedStation : station ) };
       break;
 
     case "ADD_STATION":

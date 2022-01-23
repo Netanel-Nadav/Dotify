@@ -19,12 +19,25 @@ export function loadStations () {
 export function addSong (stationId,song) {
   return async (dispatch) => {
     try {
-      const savedStation = await stationService.addSongToStation(stationId,song)
-      const action = {type: 'UPDATE_STATION', savedStation}
+      const updatedStation = await stationService.addSongToStation(stationId,song)
+      const action = {type: 'UPDATE_STATION', updatedStation}
       dispatch(action)
-      return Promise.resolve(savedStation)
+      return Promise.resolve(updatedStation)
     } catch (err) {
       console.log("Couldn't add song", err)
+    }
+  }
+}
+
+export function deleteSong (stationId,songId) {
+  return async (dispatch) => {
+    try {
+      const updatedStation = await stationService.deleteSongFromStation(stationId,songId)
+      const action = {type: 'UPDATE_STATION', updatedStation}
+      dispatch(action)
+      return Promise.resolve(updatedStation)
+    } catch (err) {
+      console.log("Couldn't remove song", err)
     }
   }
 }

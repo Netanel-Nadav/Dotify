@@ -36,6 +36,11 @@ class _CreateStation extends React.Component {
     this.setState({ query: ev.target.value });
   };
 
+  onSetQuery = (query) => {
+    this.setState({query})
+    window.scrollTo(0,0)
+  }
+
   search = async (ev) => {
     ev.preventDefault();
     const searchRes = await stationService.searchYouTube(this.state.query);
@@ -112,7 +117,7 @@ class _CreateStation extends React.Component {
         {list?.recommendations && (
           <section>
             <hr />
-            <Recommendations list={list.recommendations} />
+            <Recommendations list={list.recommendations} onSetQuery={this.onSetQuery} />
           </section>
         )}
       </section>

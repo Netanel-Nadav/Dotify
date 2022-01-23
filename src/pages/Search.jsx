@@ -32,6 +32,10 @@ function _Search({setSongs}) {
         setSongs(list,songId)
     }
 
+    const setQueryOnSearch = (query) => {
+        setQuery(query)
+        window.scrollTo(0,0)
+    }
 
     return (
         <section className='search-container'>
@@ -65,7 +69,7 @@ function _Search({setSongs}) {
                     <hr />
                 </section>
                 }
-                {list.recommendations && <Recommendations list={list.recommendations} />}
+                {list.recommendations && <Recommendations list={list.recommendations} setQueryOnSearch={setQueryOnSearch}/>}
             </section>
 
             {

@@ -10,10 +10,6 @@ import { setStation } from '../store/media.action'
 function _StationPreview({ station, setStation }) {
 
 
-    const onStartPlay = () => {
-        console.log('Start Playing');
-    }
-
     if (!station.songs.length) return <React.Fragment></React.Fragment>
     return (
         <Link to={`/station/${station._id}`}>
@@ -21,7 +17,7 @@ function _StationPreview({ station, setStation }) {
                 <div className='img-container'>
                     <img src={station.songs[0].imgUrl} />
                 </div>
-                <button className='play-btn' onClick={onStartPlay}><i className="fas fa-play-circle"></i></button>
+                <button className='play-btn' ><i className="fas fa-play-circle"></i></button>
                 <div className='wrraper flex'>
                     <div className='info-container'>
                         <h3>{station.createdBy.fullname}</h3>
@@ -39,13 +35,13 @@ function _StationPreview({ station, setStation }) {
 }
 
 
-function mapStateToProps({ mediaModule }) {
+function mapStateToProps({ }) {
     return {
     }
 }
 
 const mapDispatchToProps = {
-    setStation
+    setStation,
 }
 
 

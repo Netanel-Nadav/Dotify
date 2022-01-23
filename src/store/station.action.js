@@ -15,6 +15,17 @@ export function loadStations () {
   }
 }
 
+export function setDisplayedSongs(station) {
+  return async (dispatch) => {
+    try {
+      const songs = station.songs
+      const action = {type: 'SET_DISPLAYED_SONGS', songs}
+      dispatch(action)
+    } catch (err) {
+      console.log("Couldn't set songs", err)
+    }
+  } 
+}
 
 export function addSong (stationId,song) {
   return async (dispatch) => {
@@ -33,9 +44,13 @@ export function deleteSong (stationId,songId) {
   return async (dispatch) => {
     try {
       const updatedStation = await stationService.deleteSongFromStation(stationId,songId)
-      const action = {type: 'UPDATE_STATION', updatedStation}
+      let action = {type: 'UPDATE_STATION', updatedStation}
       dispatch(action)
-      return Promise.resolve(updatedStation)
+      action = {type: 'UPDATE_STATION', updatedStation}
+      dispatch(action)
+      action = {type: 'UPDATE_DISPLAYED_SONGS', songs: updatedStation.songs}
+      dispatch(action)
+      return Promise.resolve()
     } catch (err) {
       console.log("Couldn't remove song", err)
     }

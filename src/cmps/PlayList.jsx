@@ -3,11 +3,14 @@ import { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import {setSongs, setStation} from '../store/media.action'
+import {deleteSong, setDisplayedSongs} from '../store/station.action'
 
-function _PlayList({ station, setSongs, setStation }) {
+
+function _PlayList({ station, setSongs, setStation, deleteSong, setDisplayedSongs ,displayedSongs }) {
 
     useEffect (() => {
         setStation(station)
+        setDisplayedSongs(station)
     }, [])
 
 
@@ -22,7 +25,7 @@ function _PlayList({ station, setSongs, setStation }) {
             </section>
             <hr />
             <section className="songs-container flex column">
-                {station.songs.map((song, idx) => {
+                {displayedSongs.map((song, idx) => {
                     return (
                         <section key={song._id} className='station-song-details flex'>
                             <section className='song-info flex'>
@@ -40,7 +43,7 @@ function _PlayList({ station, setSongs, setStation }) {
                                 <section className='song-duration btns flex'>
                                     <p>{song.duration}</p>
                                     <button className="like-btn">Like</button>
-                                    <button className="delete-btn">Delete</button>
+                                    <button className="delete-btn" onClick={() => deleteSong(station._id,song._id)}>Delete</button>
                                 </section>
                             </section>
                         </section>
@@ -54,14 +57,17 @@ function _PlayList({ station, setSongs, setStation }) {
     )
 }
 
-function mapStateToProps({ }) {
+function mapStateToProps({ stationModule }) {
     return {
+        displayedSongs: stationModule.displayedSongs
     }
 }
 
 const mapDispatchToProps = {
     setSongs,
-    setStation
+    setStation,
+    deleteSong,
+    setDisplayedSongs
 }
 
 

@@ -42,13 +42,8 @@ function _PlayList({ station, setSongs, setStation, deleteSong, setDisplayedSong
                                 </section>
                                 <section className='song-duration btns flex'>
                                     <p>{song.duration}</p>
-<<<<<<< HEAD
-                                    {/* <button className="like-btn">Like</button>
-                                    <button className="delete-btn">Delete</button> */}
-=======
                                     <button className="like-btn">Like</button>
                                     <button className="delete-btn" onClick={() => deleteSong(station._id,song._id)}>Delete</button>
->>>>>>> e4f801df87019be075a934dbc979a78c3d0d1e79
                                 </section>
                             </section>
                         </section>

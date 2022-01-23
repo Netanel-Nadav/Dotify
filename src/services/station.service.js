@@ -53,7 +53,8 @@ export const stationService = {
     formatNewSong,
     getStationsGenre,
     searchYouTube,
-    addSongToStation
+    addSongToStation,
+    deleteSongFromStation
 }
 
 
@@ -85,8 +86,16 @@ async function addSongToStation(stationId, song) {
     const editedStation = { ...station }
     const newSong = await formatNewSong(song)
     editedStation.songs = [...editedStation.songs, newSong]
-    const savedStation = await update(editedStation)
-    return Promise.resolve(savedStation)
+    const updatedStation = await update(editedStation)
+    return Promise.resolve(updatedStation)
+}
+
+async function deleteSongFromStation(stationId,songId) {
+    const station = await getById(stationId)
+    const editedStation = { ...station }
+    editedStation.songs = editedStation.songs.filter(song => song._id !== songId)
+    const updatedStation = await update(editedStation)
+    return Promise.resolve(updatedStation)
 }
 
 function getStationsGenre() {
@@ -106,6 +115,7 @@ function formatNewSong(song) {
         },
         duration: song.duration,
         addedAt: Date.now(),
+        addedAtForShow: utilService.formatTime(),
         likesCount: 0
     }
     return Promise.resolve(newSong)
@@ -115,7 +125,7 @@ function makeNewStation() {
     let station = {
         name: 'New Playlist',
         imgUrl: null,
-        likesCount: 0,
+        likesCount: utilService.getRandomIntInclusive(300,2000),
         tags: 'Rock',
         createdAt: Date.now(),
         createdBy: {

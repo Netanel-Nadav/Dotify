@@ -3,11 +3,14 @@ import { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import {setSongs, setStation} from '../store/media.action'
+import {deleteSong, setDisplayedSongs} from '../store/station.action'
 
-function _PlayList({ station, setSongs, setStation }) {
+
+function _PlayList({ station, setSongs, setStation, deleteSong, setDisplayedSongs ,displayedSongs }) {
 
     useEffect (() => {
         setStation(station)
+        setDisplayedSongs(station)
     }, [])
 
 
@@ -22,7 +25,7 @@ function _PlayList({ station, setSongs, setStation }) {
             </section>
             <hr />
             <section className="songs-container flex column">
-                {station.songs.map((song, idx) => {
+                {displayedSongs.map((song, idx) => {
                     return (
                         <section key={song._id} className='station-song-details flex'>
                             <section className='song-info flex'>
@@ -35,12 +38,17 @@ function _PlayList({ station, setSongs, setStation }) {
                             </section>
                             <section className="wrraper flex space-around">
                                 <section className='song-addedAt'>
-                                    <p>some date</p>
+                                    <p>{song.addedAtForShow}</p>
                                 </section>
                                 <section className='song-duration btns flex'>
                                     <p>{song.duration}</p>
+<<<<<<< HEAD
                                     {/* <button className="like-btn">Like</button>
                                     <button className="delete-btn">Delete</button> */}
+=======
+                                    <button className="like-btn">Like</button>
+                                    <button className="delete-btn" onClick={() => deleteSong(station._id,song._id)}>Delete</button>
+>>>>>>> e4f801df87019be075a934dbc979a78c3d0d1e79
                                 </section>
                             </section>
                         </section>
@@ -54,14 +62,17 @@ function _PlayList({ station, setSongs, setStation }) {
     )
 }
 
-function mapStateToProps({ }) {
+function mapStateToProps({ stationModule }) {
     return {
+        displayedSongs: stationModule.displayedSongs
     }
 }
 
 const mapDispatchToProps = {
     setSongs,
-    setStation
+    setStation,
+    deleteSong,
+    setDisplayedSongs
 }
 
 

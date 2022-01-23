@@ -8,7 +8,7 @@ const [isModalShown, setIsModalShown] = useState(false)
 
 const onToggleModal = () => {
     setIsModalShown(!isModalShown)
-    console.log(isModalShown);
+    // sessionStorage.setItem('homeModal','dontShow' )
 }
 
 

@@ -15,11 +15,12 @@ import { StationDetails } from "./pages/StationDetails";
 import { HomeScreenModal } from "./cmps/HomeScreenModal";
 
 export function RootCmp() {
+
   return (
     <div className="App main-container">
       <Header />
       <Navigation />
-      <HomeScreenModal />
+      {/* <HomeScreenModal /> */}
       <main>
         <Switch>
           <Route component={UserProfile} path="/user/:id" />

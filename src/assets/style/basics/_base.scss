@@ -11,7 +11,8 @@ body {
     margin: 0;
     padding: 0;
     background-color: $clr2;
-    font-size: rem(16px)
+    font-size: rem(16px);
+    // overflow-x: hidden;
 }
 
 h1 {
@@ -32,6 +33,5 @@ a {
 }
 
 hr {
-    margin: 10px 20px;
     border: 1px solid $clr3;
 }

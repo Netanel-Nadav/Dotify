@@ -39,8 +39,8 @@ function _PlayList({ station, setSongs, setStation }) {
                                 </section>
                                 <section className='song-duration btns flex'>
                                     <p>{song.duration}</p>
-                                    <button className="like-btn">Like</button>
-                                    <button className="delete-btn">Delete</button>
+                                    {/* <button className="like-btn">Like</button>
+                                    <button className="delete-btn">Delete</button> */}
                                 </section>
                             </section>
                         </section>

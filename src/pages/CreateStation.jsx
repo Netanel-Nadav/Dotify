@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 
 import { stationService } from "../services/station.service";
 import { utilService } from "../services/util.service";
@@ -7,7 +7,7 @@ import { StationHero } from "../cmps/StationHero";
 import { PlayList } from "../cmps/PlayList";
 import { Recommendations } from "../cmps/Recommendations";
 
-import { makeNewStation, addSong } from "../store/station.action"
+import { makeNewStation, addSong } from "../store/station.action";
 
 class _CreateStation extends React.Component {
   state = {
@@ -43,11 +43,11 @@ class _CreateStation extends React.Component {
   };
 
   onAddSong = async (song) => {
-    if (!this.state.newStation._id) await this.onMakeNewStation()
-    const { newStation } = this.state
-    const savedStation = await this.props.addSong(newStation._id, song)
-    this.setState({ newStation: savedStation })
-  }
+    if (!this.state.newStation._id) await this.onMakeNewStation();
+    const { newStation } = this.state;
+    const savedStation = await this.props.addSong(newStation._id, song);
+    this.setState({ newStation: savedStation });
+  };
 
   onMakeNewStation = async () => {
     const newStation = await this.props.makeNewStation();
@@ -63,10 +63,9 @@ class _CreateStation extends React.Component {
 
         {newStation.songs && <PlayList station={newStation} />}
 
-
         <section className="new-station-search">
-          <p>Let's find something for your playlist</p>
-          <div className="form-container">
+          <div className="form-container flex column align-center">
+            <p>Let's find something for your playlist</p>
             <form onSubmit={this.search}>
               <input
                 autoFocus
@@ -74,14 +73,16 @@ class _CreateStation extends React.Component {
                 onChange={this.setQuery}
                 placeholder="Enter song or artist name"
               />
-              <button className="search-btn">Search</button>
+              {/* <button className="search-btn">Search</button> */}
             </form>
           </div>
 
           {list && (
             <section className="search-results flex column">
               {list.songs.map((item, idx) => {
-                if (newStation.songs.every(currSong => currSong._id !== item.id)) {
+                if (
+                  newStation.songs.every((currSong) => currSong._id !== item.id)
+                ) {
                   return (
                     <section key={idx} className="song-container flex">
                       <section className="song-info flex">
@@ -108,25 +109,27 @@ class _CreateStation extends React.Component {
             </section>
           )}
         </section>
-        { list?.recommendations && 
-        <section>
-          <hr />
-          <Recommendations list={list.recommendations} />
-        </section>}
+        {list?.recommendations && (
+          <section>
+            <hr />
+            <Recommendations list={list.recommendations} />
+          </section>
+        )}
       </section>
     );
   }
 }
 
 function mapStateToProps() {
-  return {
-  }
+  return {};
 }
 
 const mapDispatchToProps = {
   makeNewStation,
   addSong
-}
+};
 
-
-export const CreateStation = connect(mapStateToProps, mapDispatchToProps)(_CreateStation)
+export const CreateStation = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(_CreateStation);

@@ -1,11 +1,12 @@
 
 
-.new-station{
+.new-station-search{
 
     padding: 0px 20px;
 
     .form-container {
         margin-bottom: $base-margin;
+        
     }
 
     input {
@@ -24,10 +25,10 @@
 
     .search-results{
         gap: 20px;
-        padding: 0px 50px;
+        
        
         .song-container {
-            padding: $base-padding;
+            // padding: $base-padding;
             align-items: center;
             
             .song-info {

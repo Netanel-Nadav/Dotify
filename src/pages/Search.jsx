@@ -36,10 +36,10 @@ function _Search({setSongs}) {
     return (
         <section className='search-container'>
             <section className='search-by-text'>
-                <form onSubmit={search}>
+                <form onSubmit={search} className='flex justify-center'>
                     <input autoFocus value={query} placeholder='Enter song or artist name'
                         onChange={e => setQuery(e.target.value)} />
-                    <button>search</button>
+                    {/* <button>search</button> */}
                 </form>
                 {list.songs.length > 0 && <section className='list-container flex column'>
                     <h1>Search Results</h1>

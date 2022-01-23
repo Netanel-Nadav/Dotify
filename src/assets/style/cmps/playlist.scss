@@ -19,7 +19,6 @@
         
     }
     .songs-container{
-        gap: 20px;
         
         
         .station-song-details {
@@ -71,7 +70,7 @@
             
             .song-info {
                 align-items: center;
-                gap: 15px;
+                gap:  15px;
                 flex-basis: 60%;
 
                 .img-container{
@@ -81,7 +80,7 @@
                         width: 40px;
                         height: 40px;
                         object-fit: cover;
-                        border-radius: 50%;
+                        border-radius: 2px;
                     }
                 }
                 .playing {

@@ -24,7 +24,7 @@ function _StationPreview({ station, setStation }) {
                         <small>{station.name}</small>
                     </div>
                     <div className='likes-count flex column align-center space-between'>
-                        <i className="fas fa-thumbs-up"></i>
+                    <i className="fas fa-heart heart-icon"></i>
                         <small>{station.likesCount}</small>
                     </div>
                 </div>

@@ -5,13 +5,13 @@ import { AudioControllers } from "./AudioControllers";
 import { VolumeController } from "./VolumeController";
 import { SongData } from "./SongData";
 
-import {changeSong, setRandomSong, resetAlreadyPlayed, toggleIsPlaying} from '../store/media.action'
+import { changeSong, setRandomSong, resetAlreadyPlayed, toggleIsPlaying } from '../store/media.action'
 
 class _AudioPlayer extends React.Component {
   state = {
-    isPlaying: false,
     player: null,
     isShuffleOn: false,
+    isRepeatOn: false,
     isMuteOn: false,
     volume: 50,
   };
@@ -24,7 +24,7 @@ class _AudioPlayer extends React.Component {
 
 
   onSetVolume = (volume) => {
-    this.setState({volume}, () => {
+    this.setState({ volume }, () => {
       this.state.player.setVolume(volume)
     })
   };
@@ -37,50 +37,51 @@ class _AudioPlayer extends React.Component {
   };
 
 
-    onPlay = () => {
-        this.state.player.playVideo()
-        this.props.toggleIsPlaying()
+  onPlay = () => {
+    this.state.player.playVideo()
+    this.props.toggleIsPlaying()
+  }
+
+  onPause = () => {
+    this.state.player.pauseVideo()
+    this.props.toggleIsPlaying()
+  }
+
+  onNextSong = () => {
+    if (this.state.isRepeatOn) {
+      this.state.player.stopVideo()
+      this.state.player.playVideo()
+    }
+    else if (this.state.isShuffleOn) this.props.setRandomSong()
+    else {
+      if (this.props.currSongIdx === this.props.currSongList.length - 1) return
+      this.props.changeSong(1)
     }
 
-    onPause = () => {
-        this.state.player.pauseVideo()
-        this.props.toggleIsPlaying()
-    }
+  }
 
-    onNextSong = () => {
-        if(this.state.isRepeatOn) {
-            this.state.player.stopVideo()
-            this.state.player.playVideo()
-        }
-        else if (this.state.isShuffleOn) this.props.setRandomSong()
-        else {
-            if(this.props.currSongIdx === this.props.currSongList.length - 1) return
-            this.props.changeSong(1)
-        }
-        
+  onPrevSong = () => {
+    if (this.state.isRepeatOn) {
+      this.state.player.stopVideo()
+      this.state.player.playVideo()
     }
+    else if (this.state.isShuffleOn) this.props.setRandomSong()
+    else {
+      if (this.props.currSongIdx === 0) return
+      this.props.changeSong(-1)
+    }
+  }
 
-    onPrevSong = () => {
-        if(this.state.isRepeatOn) {
-            this.state.player.stopVideo()
-            this.state.player.playVideo()
-        }
-        else if (this.state.isShuffleOn) this.props.setRandomSong()
-        else {
-            if(this.props.currSongIdx === 0) return
-            this.props.changeSong(-1)
-        }
-    }
+  onToggleShuffle = () => {
+    this.setState({ isShuffleOn: !this.state.isShuffleOn }, () => {
+      if (!this.state.isShuffleOn) this.props.resetAlreadyPlayed()
+  
+    })
+  }
 
-    onToggleShuffle = () => {
-        this.setState({isShuffleOn: !this.state.isShuffleOn},() => {
-            if(!this.state.isShuffleOn) this.props.resetAlreadyPlayed()
-        })
-    }
-
-    onToggleRepeat = () => {
-        this.setState({isRepeatOn: !this.state.isRepeatOn})
-    }
+  onToggleRepeat = () => {
+    this.setState({ isRepeatOn: !this.state.isRepeatOn })
+  }
 
   render() {
     const opts = {
@@ -89,7 +90,6 @@ class _AudioPlayer extends React.Component {
       playerVars: {
         // https://developers.google.com/youtube/player_parameters
         autoplay: 1,
-        controls: 1
       }
     };
     const { volume } = this.state;
@@ -126,20 +126,20 @@ class _AudioPlayer extends React.Component {
 }
 
 function mapStateToProps({ mediaModule }) {
-    return {
-        currStation: mediaModule.currStation,
-        currSongList: mediaModule.currSongList,
-        currSongIdx: mediaModule.currSongIdx,
-        currSongId: mediaModule.currSongId,
-        isPlaying: mediaModule.isPlaying
-    }
+  return {
+    currStation: mediaModule.currStation,
+    currSongList: mediaModule.currSongList,
+    currSongIdx: mediaModule.currSongIdx,
+    currSongId: mediaModule.currSongId,
+    isPlaying: mediaModule.isPlaying
+  }
 }
 
 const mapDispatchToProps = {
-    changeSong,
-    setRandomSong,
-    resetAlreadyPlayed,
-    toggleIsPlaying
+  changeSong,
+  setRandomSong,
+  resetAlreadyPlayed,
+  toggleIsPlaying
 }
 
-export const AudioPlayer = connect(mapStateToProps,mapDispatchToProps)(_AudioPlayer)
+export const AudioPlayer = connect(mapStateToProps, mapDispatchToProps)(_AudioPlayer)

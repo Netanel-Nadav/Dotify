@@ -84,19 +84,6 @@ export function setRandomSong() {
     }
 }
 
-export function repeatSong() {
-    return async (dispatch,getState) => {
-        try {
-            const {currSongId} = getState().mediaModule
-            let action = {type: 'SET_CURR_SONG_ID', songId: ''}
-            dispatch(action)
-            // action = { type: 'SET_CURR_SONG_ID', songId: currSongId}
-            // dispatch(action)
-        } catch (err) {
-            console.log("Couldn't load song", err)
-        }
-    }
-}
 
 export function resetAlreadyPlayed() {
     return async (dispatch) => {

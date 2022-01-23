@@ -4,9 +4,9 @@ const initialState = {
     isPlaying: false,
     currStation: null,
     currSongList: [],
+    notPlayedId: [],
     currSongIdx: 0,
     currSongId: null,
-    alreadyPlayedId: []
 }
 
 export function mediaReducer(state = initialState, action) {

@@ -30,6 +30,7 @@
 
             .play-icon {
                 opacity: 0;
+                cursor: pointer;
             }
 
             .delete-btn {
@@ -43,8 +44,16 @@
             &:hover {           
                 background-color: $clr3;
                         
+                .absolute {
+                    opacity: 0;
+                }
+
                 .play-icon {
                     opacity: 1;
+
+                    &:hover {
+                        color: $clr1;
+                    }
                 }
 
                 .delete-btn {

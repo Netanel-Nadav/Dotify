@@ -1,33 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useState } from 'react';
 
 
-const songsList = [
-  {
-    _id: '121321312',
-    name: 'Gary Goodspeed',
-  },
-  {
-    _id: '2213123213213dadsa',
-    name: 'Little Cato',
-  },
-  {
-    _id: '3dasadasdasxc213',
-    name: 'KVN',
-  },
-  {
-    _id: '4213sadsd',
-    name: 'Mooncake',
-  },
-  {
-    _id: '51231dsads',
-    name: 'Quinn Ergon',
-  }
-]
+export function DragDrop({displayedSongs}) {
+  const [songs, setSongs] = useState(null);
 
-export function DragDrop() {
-  const [songs, setSongs] = useState(songsList);
+
+  useEffect(() => {
+    setSongs(displayedSongs)
+  }, [])
+
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
@@ -39,6 +22,7 @@ export function DragDrop() {
     setSongs(items);
   }
 
+  if(!songs) return <React.Fragment></React.Fragment>
   return (
     <div className="drag-drop-container">
       <h1>List Of Songs</h1>

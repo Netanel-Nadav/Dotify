@@ -47,7 +47,7 @@ function _Search({setSongs}) {
                         return (
                             <section key={item.id} className='song flex'>
                                 <section className='song-info flex'>
-                                    <p>{idx + 1}</p>
+                                    <p className='song-idx'>{idx + 1}</p>
                                     <span className="play-icon absolute" onClick={() => onSetSongs(item.id)}><i className="fas fa-play"></i></span>
                                     <section className='img-container'>
                                         <img src={item.bestThumbnail.url} />
@@ -55,9 +55,9 @@ function _Search({setSongs}) {
                                     <p>{item.title}</p>
                                 </section>
                                 <section className='btns-and-like flex'>
-                                    <button>like</button>
+                                    <button><i className="far fa-heart"></i></button>
                                     <p className='duration'>{item.duration}</p>
-                                    <button>add</button>
+                                    <button><i className="fas fa-plus"></i></button>
                                 </section>
                             </section>
                         )

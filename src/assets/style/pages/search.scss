@@ -33,7 +33,6 @@
 
         .list-container {
             margin-top: 30px;
-            padding: 0px 40px;
             gap: 20px;
             
             h1 {
@@ -43,10 +42,13 @@
 
             .song{
                 justify-content: space-between;
-                padding-left: 50px;
+                width: 100%;
+                border-radius: 5px;
+                padding: 10px 20px;
 
                 button {
                     opacity: 0;
+                    
                 }
         
                 &:hover {
@@ -59,10 +61,22 @@
                     align-items: center;
                     gap: 15px;
                     flex-basis: 65%;
+
+                    &:hover {
+
+                        .song-idx {
+                            opacity: 0;
+                        }
+                    }
                 }
 
                 .play-icon {
                     opacity: 0;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: $clr1;
+                    }
                 }
                 
                 &:hover {           
@@ -70,16 +84,28 @@
                             
                     .play-icon {
                         opacity: 1;
+                        z-index: 10;
                     }
                 }
 
                 .btns-and-like {
                     align-items: center;
-                    gap: 20px;
+                    gap: 10px;
                     flex-basis: 20%;
 
                     .duration {
                         width: 50px;
+                    }
+
+                    button {
+                        background: none;
+                        border: none;
+                        color: darken($clr6, 30%);
+                        cursor: pointer;
+
+                        &:hover {
+                            color: $clr1;
+                        }
                     }
                 }
             }

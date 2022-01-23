@@ -11,7 +11,7 @@ export function StationHero({ station }) {
         </div>
         <div className="user-info">
           <small>Playlist</small>
-          <h1>{station?.name}</h1>
+          <h1 contentEditable>{station?.name}</h1>
           {station._id && <p>
             {station?.createdBy?.fullname} &nbsp; &#8226; &nbsp;
             {station?.likesCount} likes &nbsp; &#8226; &nbsp;

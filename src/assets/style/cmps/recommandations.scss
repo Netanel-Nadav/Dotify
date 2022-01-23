@@ -3,6 +3,19 @@
 
     padding: 0px 20px;
 
+    .see-more {
+        font-size: 20px;
+        background: none;
+        border: none;
+        color: white;
+        margin-bottom: 10px;
+        cursor: pointer;
+
+        &:hover {
+            color: $clr1;
+        }
+    }
+
     h1 {
         font-size: rem(20px);
         margin-bottom: 20px;
@@ -11,6 +24,7 @@
     .recommendations{
         gap: 20px;
         flex-wrap: wrap;
+        
 
         .img-container {
 
@@ -26,6 +40,13 @@
             align-items: center;
             width: 250px;
             gap: 20px;
+            padding: 10px;
+            border-radius: 5px;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $clr3;
+            }
         }
     }
 }

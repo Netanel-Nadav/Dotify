@@ -38,7 +38,7 @@ function _PlayList({ station, setSongs, setStation, deleteSong, setDisplayedSong
                             </section>
                             <section className="wrraper flex space-around">
                                 <section className='song-addedAt'>
-                                    <p>some date</p>
+                                    <p>{song.addedAtForShow}</p>
                                 </section>
                                 <section className='song-duration btns flex'>
                                     <p>{song.duration}</p>

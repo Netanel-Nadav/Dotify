@@ -115,6 +115,7 @@ function formatNewSong(song) {
         },
         duration: song.duration,
         addedAt: Date.now(),
+        addedAtForShow: utilService.formatTime(),
         likesCount: 0
     }
     return Promise.resolve(newSong)

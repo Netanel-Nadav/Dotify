@@ -2,7 +2,8 @@ export const utilService = {
     makeId,
     makeLorem,
     getRandomIntInclusive,
-    debounce
+    debounce,
+    formatTime
 }
 
 function makeId(length = 6) {
@@ -35,12 +36,20 @@ function getRandomIntInclusive(min, max) {
 function debounce(func, wait) {
     let timeout
     return function (...args) {
-      const later = () => {
-          console.log('debounce activeted')
+        const later = () => {
+            console.log('debounce activeted')
+            clearTimeout(timeout)
+            func(...args)
+        }
         clearTimeout(timeout)
-        func(...args)
-      }
-      clearTimeout(timeout)
-      timeout = setTimeout(later, wait)
+        timeout = setTimeout(later, wait)
     }
-  }
+}
+
+function formatTime() {
+    const day = new Date().getDate()
+    const month = new Date().getMonth() + 1
+    const year = new Date().getFullYear()
+
+    return `${day}/${month}/${year}`
+}

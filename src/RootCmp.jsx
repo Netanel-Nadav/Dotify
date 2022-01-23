@@ -15,6 +15,7 @@ import { StationDetails } from "./pages/StationDetails";
 import { HomeScreenModal } from "./cmps/HomeScreenModal";
 
 export function RootCmp() {
+
   return (
     <div className="App main-container">
       <Header />

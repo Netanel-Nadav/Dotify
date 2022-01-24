@@ -86,6 +86,7 @@ async function addSongToStation(stationId, song) {
     const editedStation = { ...station }
     const newSong = await formatNewSong(song)
     editedStation.songs = [...editedStation.songs, newSong]
+    editedStation.totalDuration = getFullduration(editedStation)
     const updatedStation = await update(editedStation)
     return Promise.resolve(updatedStation)
 }
@@ -94,6 +95,7 @@ async function deleteSongFromStation(stationId,songId) {
     const station = await getById(stationId)
     const editedStation = { ...station }
     editedStation.songs = editedStation.songs.filter(song => song._id !== songId)
+    editedStation.totalDuration = getFullduration(editedStation)
     const updatedStation = await update(editedStation)
     return Promise.resolve(updatedStation)
 }
@@ -146,6 +148,57 @@ function makeNewStation() {
     station = storageService.post(STORAGE_KEY, station)
     return Promise.resolve(station)
 }
+
+
+function getFullduration(station) {
+    const {songs} = station
+
+    let durations = songs.map(song => song.duration)
+    durations = durations.map(duration => {
+      duration = duration.split(':')
+      let hour;
+      let min;
+      let sec;
+      if(duration.length ===3) { 
+        hour = duration[0]
+        min = duration[1]
+        sec = duration[2]
+      }else {
+        hour = 0
+        min = duration[0]
+        sec = duration[1]
+      }
+      return [hour,min,sec]
+    })
+  
+    let hours = durations.map(duration => +duration[0])
+    let minutes = durations.map(duration => +duration[1])
+    let seconds = durations.map(duration => +duration[2])
+  
+    hours = hours.reduce((a, b) => a + b, 0)
+    minutes = minutes.reduce((a, b) => a + b, 0)
+    seconds = seconds.reduce((a, b) => a + b, 0)
+    
+    while(seconds >= 60) {
+        minutes ++
+        seconds = seconds - 60
+    } 
+    while(minutes >= 60) {
+        hours ++
+        minutes = minutes - 60
+    }
+    const extraHours = Math.floor(minutes/60)
+    const extraMin = Math.floor(seconds/60)
+  
+    let totalTime;
+
+    if(hours + extraHours >= 1 && hours + extraHours < 2) totalTime = `${hours + extraHours} hour, ${minutes + extraMin} minutes and ${seconds % 60} seconds`
+    else if (hours + extraHours >= 2) totalTime = `${hours + extraHours} hours, ${minutes + extraMin} minutes and ${seconds % 60} seconds`
+    else totalTime = `${minutes + extraMin} minutes and ${seconds % 60} seconds`
+  
+    return totalTime
+  
+  }
 
 async function searchYouTube(q) {
     q = encodeURIComponent(q);

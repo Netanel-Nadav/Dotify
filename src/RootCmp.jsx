@@ -1,6 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router'
+import { connect } from "react-redux";
 // import routes from './routes'
+
+import {loadStations} from './store/station.action'
 
 import { Home } from "./pages/Home";
 import { CreateStation } from "./pages/CreateStation";
@@ -14,17 +17,26 @@ import { UserProfile } from "./pages/UserProfile";
 import { StationDetails } from "./pages/StationDetails";
 import { HomeScreenModal } from "./cmps/HomeScreenModal";
 
-export class RootCmp extends React.Component {
+export class _RootCmp extends React.Component {
 
 
   state = {
-    isFirstEntry: sessionStorage.getItem('isFirstEntry')
+    isFirstEntry: sessionStorage.getItem('isFirstEntry'),
+    isAppLoaded: false
   }
 
 
+  componentDidMount (){
+    
+    this.props.loadStations().then (() => {
+      this.setState({isAppLoaded: true})
+    })
+  }
+
   render() {
     
-    const {isFirstEntry} = this.state
+    const {isFirstEntry, isAppLoaded} = this.state
+    if (!isAppLoaded) return <h1>Loading...</h1>
     return (
       <div className="App main-container">
         <Header />
@@ -46,3 +58,14 @@ export class RootCmp extends React.Component {
     );
   }
   }
+
+  function mapStateToProps() {
+    return {
+    }
+  }
+  
+  const mapDispatchToProps = {
+    loadStations
+  };
+  
+  export const RootCmp = connect(mapStateToProps, mapDispatchToProps)(_RootCmp);

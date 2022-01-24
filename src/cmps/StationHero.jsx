@@ -13,8 +13,6 @@ export function _StationHero({ station, updateStation }) {
 
   return (
     <section className="station-header">
-
-
       <div className="hero-container flex align-center">
         <div className="img-container">
           <div className="edit-container">
@@ -31,7 +29,8 @@ export function _StationHero({ station, updateStation }) {
           {station._id && <p>
             {station?.createdBy?.fullname} &nbsp; &#8226; &nbsp;
             {station?.likesCount} likes &nbsp; &#8226; &nbsp;
-            {station?.songs.length} songs
+            {station?.songs.length} songs &nbsp; &#8226; &nbsp;
+            {station?.totalDuration}
           </p>}
         </div>
       </div>

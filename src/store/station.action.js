@@ -9,6 +9,7 @@ export function loadStations () {
       const stations = await stationService.query()
       const action = {type: 'SET_STATIONS', stations}
       dispatch(action)
+      return Promise.resolve()
     } catch (err) {
       console.log("Couldn't get stations", err)
     }
@@ -72,6 +73,7 @@ export function deleteSong (stationId,songId) {
     }
   }
 }
+
 
 export function makeNewStation() {
   return async (dispatch) => {

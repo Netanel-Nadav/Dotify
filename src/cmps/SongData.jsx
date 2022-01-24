@@ -2,7 +2,6 @@ import React from "react";
 
 export function SongData({ song }) {
 
-console.log(song)
   if(!song) return <div className="space"></div>
   const { imgUrl, title } = song;
   return (

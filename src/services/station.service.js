@@ -54,7 +54,7 @@ export const stationService = {
     getStationsGenre,
     searchYouTube,
     addSongToStation,
-    deleteSongFromStation
+    deleteSongFromStation,
 }
 
 
@@ -101,6 +101,7 @@ async function deleteSongFromStation(stationId,songId) {
 function getStationsGenre() {
     return Promise.resolve(stationsGenre)
 }
+
 
 function formatNewSong(song) {
     const newSong = {

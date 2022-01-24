@@ -7,15 +7,7 @@ import { DragDrop } from "./DragDrop";
 import { Equalizer } from "./Equalizer";
 
 
-function _PlayList({
-  station,
-  setSongs,
-  setStation,
-  deleteSong,
-  setDisplayedSongs,
-  displayedSongs,
-  currSongId
-}) {
+function _PlayList({ station, setSongs, setStation, deleteSong, setDisplayedSongs, displayedSongs, currSongId }) {
   useEffect(() => {
     setStation(station);
     setDisplayedSongs(station);
@@ -23,9 +15,11 @@ function _PlayList({
 
   return (
     <section className="playlist">
-    
       <section className="station-song-info-title flex">
-        <p className="title">Title</p>
+        <div className="title-container flex">
+          <p className="song-index">#</p>
+          <p className="title">Title</p>
+        </div>
         <section className="wrraper flex space-around">
           <p className="date-addedAt">Date Added</p>
           <p className="duration">
@@ -38,19 +32,33 @@ function _PlayList({
         {displayedSongs.map((song, idx) => {
           return (
             <section key={song._id} className={`station-song-details flex`}>
-            {/* <DragDrop displayedSongs={displayedSongs}/> */}
-              <section className={`song-info flex ${song._id === currSongId ? 'playing' : ''}`}>
-                {song._id !== currSongId ? <p className="absolute">{idx + 1}</p> : <Equalizer />}
+              {/* <DragDrop displayedSongs={displayedSongs}/> */}
+              <section
+                className={`song-info flex ${song._id === currSongId ? "playing" : ""
+                  }`}
+              >
+                {song._id !== currSongId ? (
+                  <p className="absolute">{idx + 1}</p>
+                ) : (
+                  <Equalizer />
+                )}
                 <span
-                  className={`play-icon absolute ${song._id === currSongId ? 'dont-show' : ''}`}
+                  className={`play-icon absolute ${song._id === currSongId ? "dont-show" : ""
+                    }`}
                   onClick={() => setSongs(station, song._id)}
                 >
-                  <i className={`fas fa-play ${song._id === currSongId ? 'equalizer' : ''}`}></i>
+                  <i
+                    className={`fas fa-play ${song._id === currSongId ? "equalizer" : ""
+                      }`}
+                  ></i>
                 </span>
-                <section className={`img-container ${song._id === currSongId ? 'playing' : ''}`}>
+                <section
+                  className={`img-container ${song._id === currSongId ? "playing" : ""
+                    }`}
+                >
                   <img src={song.imgUrl} />
                 </section>
-                <p className=''>{song.title}</p>
+                <p className="">{song.title}</p>
               </section>
               <section className="wrraper flex space-around">
                 <section className="song-addedAt">
@@ -84,7 +92,6 @@ function mapStateToProps({ stationModule, mediaModule }) {
   return {
     displayedSongs: stationModule.displayedSongs,
     currSongId: mediaModule.currSongId
-
   };
 }
 

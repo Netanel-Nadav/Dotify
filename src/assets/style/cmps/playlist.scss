@@ -7,10 +7,17 @@
         justify-content: space-between;
         width: 100%;
 
-        .title {
-            flex-basis: 60%;
-            text-align: left;
-            padding-left: 20px;
+        .title-container {
+           
+            .song-index {
+                padding-left: 20%;
+            }
+
+            .title {
+                flex-basis: 60%;
+                text-align: left;
+                padding-left: 20px;
+            }
         }
         .wrraper { 
             flex-basis: 40%;
@@ -34,6 +41,7 @@
             .play-icon {
                 opacity: 0;
                 cursor: pointer;
+                font-size: 12px;
             }
 
             .delete-btn {

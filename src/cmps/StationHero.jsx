@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 
-export function StationHero({ station }) {
+
+import { EditPlaylist } from "./EditPlaylist"
+import { updateStation } from "../store/station.action"
+
+export function _StationHero({ station, updateStation }) {
+
+
+
+  const [isModalShown, setIsModalShown] = useState(false)
+
   return (
     <section className="station-header">
 
 
       <div className="hero-container flex align-center">
         <div className="img-container">
+          <div className="edit-container">
+            <button className="edit-btn" onClick={() => setIsModalShown(!isModalShown)}>
+              <i className="fas fa-edit"></i>
+            </button>
+          </div>
           <i className="fas fa-user user-icon"></i>
         </div>
         <div className="user-info">
@@ -20,8 +35,23 @@ export function StationHero({ station }) {
           </p>}
         </div>
       </div>
-
-
+      {isModalShown &&
+        <EditPlaylist station={station} updateStation={updateStation} setIsModalShown={setIsModalShown} />}
     </section>
   );
 }
+
+
+
+function mapStateToProps({ }) {
+  return {
+
+  };
+}
+
+const mapDispatchToProps = {
+  updateStation
+
+};
+
+export const StationHero = connect(mapStateToProps, mapDispatchToProps)(_StationHero);

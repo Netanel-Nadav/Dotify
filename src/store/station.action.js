@@ -27,6 +27,20 @@ export function setDisplayedSongs(station) {
   } 
 }
 
+
+export function updateStation(station){
+  return async (dispatch) => {
+    try{
+      const updatedStation = await stationService.update(station)
+      let action = {type: 'UPDATE_STATION', updatedStation}
+      dispatch(action)
+    } catch (err) {
+      console.log('Had an Error in updateStation', err);
+    }
+  }
+}
+
+
 export function addSong (stationId,song) {
   return async (dispatch) => {
     try {

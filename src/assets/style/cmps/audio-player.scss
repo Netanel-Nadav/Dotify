@@ -11,13 +11,13 @@
         height: 100%;
         gap: 5px;
         flex-basis: 50%;
-
         
         button {
             background: none;
             border: none;
             cursor: pointer;
-            color: $clr3;
+            color: darken($clr6, 40%);
+            font-size: rem(20px);
 
             &:hover {
                 color: $clr1;
@@ -26,10 +26,22 @@
 
         .play-btn {
             font-size: rem(25px);
+            color: black;
         }
 
-        .playing {
+        .play-container {
+            background-color: white;
+            border-radius: 50%;
+            height: 35px;
+            width: 35px;
+        }
+
+        .pushed {
             color: $clr1;
+        }
+
+        .pause {
+            font-size: rem(20px);
         }
     }
 

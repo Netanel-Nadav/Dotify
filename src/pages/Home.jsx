@@ -4,18 +4,7 @@ import { StationList } from '../cmps/StationList';
 import { loadStations } from '../store/station.action';
 
 
-function _Home({loadStations, stations}) {
-
-    const [initDone, setInitiDone] = useState(false)
-
-    // useEffect(async () => {
-    //     if(!stations.length && !initDone) {
-    //         loadStations()
-    //         setInitiDone(true)
-    //     }
-    // }, [])
-
-    // hi
+function _Home({ stations }) {
 
     return (
         <section className='stations-lists-container'>
@@ -31,7 +20,7 @@ function _Home({loadStations, stations}) {
 
 function mapStateToProps({ stationModule }) {
     return {
-       stations: stationModule.stations
+        stations: stationModule.stations
     }
 }
 

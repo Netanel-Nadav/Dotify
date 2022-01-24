@@ -8,12 +8,17 @@ import { DragDrop } from "./DragDrop";
 import { Equalizer } from "./Equalizer";
 
 
-function _PlayList({station, setSongs, deleteSong, setDisplayedSongs, displayedSongs, currSongId}) {
+function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayedSongs, currSongId, player }) {
   moment().format();
-  
+
   useEffect(() => {
     setDisplayedSongs(station);
   }, []);
+
+  const onPlaySong = async (station, songId) => {
+    await setSongs(station, songId);
+    player.playVideo();
+  }
 
   return (
     <section className="playlist">
@@ -30,62 +35,64 @@ function _PlayList({station, setSongs, deleteSong, setDisplayedSongs, displayedS
         </section>
       </section>
       <hr />
-      {displayedSongs.length > 0 && <section className="songs-container flex column">
-        {displayedSongs.map((song, idx) => {
-          return (
-            <section key={song._id} className={`station-song-details flex`}>
-              <section className={`song-info flex ${song._id === currSongId ? 'playing' : ''}`}>
-                {song._id !== currSongId ? <p className="absolute">{idx + 1}</p> : <Equalizer />}
-                <span
-                  className={`play-icon absolute ${song._id === currSongId ? "dont-show" : ""
-                    }`}
-                  onClick={() => setSongs(station, song._id)}
-                >
-                  <i
-                    className={`fas fa-play ${song._id === currSongId ? "equalizer" : ""
+      {
+        displayedSongs.length > 0 && <section className="songs-container flex column">
+          {displayedSongs.map((song, idx) => {
+            return (
+              <section key={song._id} className={`station-song-details flex`}>
+                <section className={`song-info flex ${song._id === currSongId ? 'playing' : ''}`}>
+                  {song._id !== currSongId ? <p className="absolute">{idx + 1}</p> : <Equalizer />}
+                  <span
+                    className={`play-icon absolute ${song._id === currSongId ? 'dont-show' : ''}`}
+                    onClick={() => onPlaySong(station, song._id)}
+                  >
+                    <i
+                      className={`fas fa-play ${song._id === currSongId ? "equalizer" : ""
+                        }`}
+                    ></i>
+                  </span>
+                  <section
+                    className={`img-container ${song._id === currSongId ? "playing" : ""
                       }`}
-                  ></i>
-                </span>
-                <section
-                  className={`img-container ${song._id === currSongId ? "playing" : ""
-                    }`}
-                >
-                  <img src={song.imgUrl} />
+                  >
+                    <img src={song.imgUrl} />
+                  </section>
+                  <p className="">{song.title}</p>
                 </section>
-                <p className="">{song.title}</p>
-              </section>
-              <section className="wrraper flex space-around">
-                <section className="song-addedAt">
-                  <p>{moment(song.addedAt).fromNow()}</p>
+                <section className="wrraper flex space-around">
+                  <section className="song-addedAt">
+                    <p>{moment(song.addedAt).fromNow()}</p>
+                  </section>
+                  <section className="song-duration btns flex">
+                    <p>{song.duration}</p>
+                    <div className="btn-container flex">
+                      <button className="like-btn">
+                        <i className="far fa-heart"></i>
+                      </button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => deleteSong(station._id, song._id)}
+                      >
+                        <i className="fas fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </section>
                 </section>
-                <section className="song-duration btns flex">
-                  <p>{song.duration}</p>
-                  <div className="btn-container flex">
-                    <button className="like-btn">
-                      <i className="far fa-heart"></i>
-                    </button>
-                    <button
-                      className="delete-btn"
-                      onClick={() => deleteSong(station._id, song._id)}
-                    >
-                      <i className="fas fa-trash-alt"></i>
-                    </button>
-                  </div>
-                </section>
-              </section>
-            </section>
-          );
-        })}
-      </section>}
+              </section >
+            );
+          })
+          }
+        </section >}
       <hr />
-    </section>
+    </section >
   );
 }
 
 function mapStateToProps({ stationModule, mediaModule }) {
   return {
     displayedSongs: stationModule.displayedSongs,
-    currSongId: mediaModule.currSongId
+    currSongId: mediaModule.currSongId,
+    player: mediaModule.player
   };
 }
 

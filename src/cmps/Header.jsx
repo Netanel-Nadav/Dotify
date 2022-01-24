@@ -13,7 +13,7 @@ export function _Header({ user, logout }) {
     const toggleUserModal = () => {
         setIsUserModalOpen(!isUserModalShown)
     }
-    // hey
+
     const onGoBack = () => {
         this.props.history.push('/')
     }

@@ -1,14 +1,17 @@
+import { GiPauseButton } from 'react-icons/gi'
+import { IoRepeat, IoShuffle } from 'react-icons/io5'
+import { BsFillPlayFill } from 'react-icons/bs'
+import { MdSkipNext } from 'react-icons/md'
+import { MdSkipPrevious } from 'react-icons/md'
 
-
-export function AudioControllers ({isPlaying, onPlay, onPause, onNextSong, onPrevSong, onToggleShuffle, onToggleRepeat}) {
-
+export function AudioControllers({ isPlaying, isShuffleOn, isRepeatOn, onPlayPause, onNextSong, onPrevSong, onToggleShuffle, onToggleRepeat }) {
     return (
         <section className="audio-controller flex align-center justify-center">
-            <button className='shuffle-btn' onClick={onToggleShuffle}><i className="fas fa-random"></i></button>
-            <button className='prev-btn' onClick={onPrevSong}><i className="fas fa-backward"></i></button>
-            <button className={`play-btn ${isPlaying ? 'playing' : ''}`} onClick={isPlaying ? onPause : onPlay}><i className="fas fa-play"></i></button>
-            <button className='next-btn' onClick={onNextSong}><i className="fas fa-forward"></i></button>
-            <button className='repeat-btn' onClick={onToggleRepeat}><i className="fas fa-redo"></i></button>
+            <button className={`'shuffle-btn' ${isShuffleOn ? 'pushed' : ''}`} onClick={onToggleShuffle}><IoShuffle /></button>
+            <button className='prev-btn' onClick={onPrevSong}><MdSkipPrevious /></button>
+            <div className='play-container'><button className={`play-btn ${isPlaying ? 'pause' : 'play'}`} onClick={onPlayPause}>{isPlaying ? <GiPauseButton /> : <BsFillPlayFill />}</button></div>
+            <button className='next-btn' onClick={onNextSong}><MdSkipNext /></button>
+            <button className={`'repeat-btn' ${isRepeatOn ? 'pushed' : ''}`} onClick={onToggleRepeat}><IoRepeat /></button>
         </section>
     )
 }

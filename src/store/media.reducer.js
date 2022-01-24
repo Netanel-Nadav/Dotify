@@ -1,4 +1,5 @@
 const initialState = {
+    player: null,
     isPlaying: false,
     currStation: null,
     currSongList: [],
@@ -8,10 +9,14 @@ const initialState = {
 }
 
 export function mediaReducer(state = initialState, action) {
-    const notPlayedId = initialState.notPlayedId;
+    const notPlayedId = state.notPlayedId;
     let newState = state;
 
     switch (action.type) {
+        case "SET_PLAYER":
+            newState = { ...state, player: action.player };
+            break;
+
         case "SET_STATION":
             newState = { ...state, currStation: action.station };
             break;
@@ -40,13 +45,13 @@ export function mediaReducer(state = initialState, action) {
             newState = { ...state, notPlayedId: [...action.playlist] };
             break;
 
-        case "UPDATE_ALREADY_PLAYED": //slice a song played
-            newState = { ...state, notPlayedId: [...(notPlayedId.filter(id => id !== action.newId))] };
+        case "UPDATE_ALREADY_PLAYED": //remove a song played
+            newState = { ...state, notPlayedId: notPlayedId.filter(song => song._id !== action.newId) };
             break;
+
         case "RESET_ALREADY_PLAYED":
             newState = { ...state, notPlayedId: [] };
             break;
-
 
         default:
             break;

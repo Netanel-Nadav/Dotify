@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import moment from 'moment';
 
 import { setSongs, setStation } from "../store/media.action";
 import { deleteSong, setDisplayedSongs } from "../store/station.action";
@@ -7,17 +8,10 @@ import { DragDrop } from "./DragDrop";
 import { Equalizer } from "./Equalizer";
 
 
-function _PlayList({
-  station,
-  setSongs,
-  setStation,
-  deleteSong,
-  setDisplayedSongs,
-  displayedSongs,
-  currSongId
-}) {
+function _PlayList({station, setSongs, deleteSong, setDisplayedSongs, displayedSongs, currSongId}) {
+  moment().format();
+  
   useEffect(() => {
-    setStation(station);
     setDisplayedSongs(station);
   }, []);
 
@@ -34,11 +28,10 @@ function _PlayList({
         </section>
       </section>
       <hr />
-      <section className="songs-container flex column">
+      {displayedSongs.length > 0 && <section className="songs-container flex column">
         {displayedSongs.map((song, idx) => {
           return (
             <section key={song._id} className={`station-song-details flex`}>
-            {/* <DragDrop displayedSongs={displayedSongs}/> */}
               <section className={`song-info flex ${song._id === currSongId ? 'playing' : ''}`}>
                 {song._id !== currSongId ? <p className="absolute">{idx + 1}</p> : <Equalizer />}
                 <span
@@ -54,7 +47,7 @@ function _PlayList({
               </section>
               <section className="wrraper flex space-around">
                 <section className="song-addedAt">
-                  <p>{song.addedAtForShow}</p>
+                  <p>{moment(song.addedAt).fromNow()}</p>
                 </section>
                 <section className="song-duration btns flex">
                   <p>{song.duration}</p>
@@ -74,7 +67,7 @@ function _PlayList({
             </section>
           );
         })}
-      </section>
+      </section>}
       <hr />
     </section>
   );

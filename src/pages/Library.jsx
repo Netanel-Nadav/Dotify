@@ -11,14 +11,14 @@ function _Library({loadStations, stations}) {
 
     const [initDone, setInitiDone] = useState(false)
 
-    useEffect(async () => {
-        if(!stations.length && !initDone) {
-            loadStations()
-            setInitiDone(true)
-        }
-    }, [])
+    // useEffect(async () => {
+    //     if(!stations.length && !initDone) {
+    //         loadStations()
+    //         setInitiDone(true)
+    //     }
+    // }, [])
 
-    if(!stations) return <h1>Loading...</h1>
+    // if(!stations) return <h1>Loading...</h1>
     return (
         <section className='station-list-library flex'>
             {stations.map(station => {

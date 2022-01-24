@@ -8,12 +8,12 @@ function _Home({loadStations, stations}) {
 
     const [initDone, setInitiDone] = useState(false)
 
-    useEffect(async () => {
-        if(!stations.length && !initDone) {
-            loadStations()
-            setInitiDone(true)
-        }
-    }, [])
+    // useEffect(async () => {
+    //     if(!stations.length && !initDone) {
+    //         loadStations()
+    //         setInitiDone(true)
+    //     }
+    // }, [])
 
     // hi
 

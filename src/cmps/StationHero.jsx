@@ -1,10 +1,10 @@
-import React from "react";
+
 
 export function StationHero({ station }) {
+
+  
   return (
     <section className="station-header">
-
-
       <div className="hero-container flex align-center">
         <div className="img-container">
           <i className="fas fa-user user-icon"></i>
@@ -16,7 +16,8 @@ export function StationHero({ station }) {
           {station._id && <p>
             {station?.createdBy?.fullname} &nbsp; &#8226; &nbsp;
             {station?.likesCount} likes &nbsp; &#8226; &nbsp;
-            {station?.songs.length} songs
+            {station?.songs.length} songs &nbsp; &#8226; &nbsp;
+            {station?.totalDuration}
           </p>}
         </div>
       </div>

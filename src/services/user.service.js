@@ -44,11 +44,11 @@ function logout() {
 async function signup(userInfo) {
     const users = await storageService.query()
     if (!users) storageService._save(STORAGE_KEY, [])
-    let user = _createUser()
-    user.username = userInfo.username;
-    user.password = userInfo.password;
-
-    console.log(user);
+    let user = {
+        username: userInfo.username,
+        fullname: userInfo.fullname,
+        password: userInfo.password
+    }
     const newUser = await storageService.post(STORAGE_KEY, user)
     _setLogedinUser(newUser)
     return newUser
@@ -69,6 +69,7 @@ function _setLogedinUser(user) {
     return user
 }
 
+<<<<<<< HEAD
 
 function _createUser() {
     const user = {
@@ -78,3 +79,5 @@ function _createUser() {
     }
     return user
 }
+=======
+>>>>>>> c6dd827174f6e3fc91baaa8b311edd11c05c05d5

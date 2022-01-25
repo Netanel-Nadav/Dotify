@@ -19,7 +19,7 @@ class _AudioPlayer extends React.Component {
   onReady = async (event) => {
     // access to player in all event handlers via event.target
     const player = event.target;
-    await this.props.setPlayer(player);
+    // this.props.setPlayer(player);
   }
 
   onSetVolume = (volume) => {

@@ -37,6 +37,6 @@ export function stationReducer(state = initialState, action) {
     default:
       break;
   }
-
+  window.station = newState
   return newState;
 }

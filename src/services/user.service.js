@@ -44,11 +44,11 @@ function logout() {
 async function signup(userInfo) {
     const users = await storageService.query()
     if (!users) storageService._save(STORAGE_KEY, [])
-    let user = _createUser()
-    user.username = userInfo.username;
-    user.password = userInfo.password;
-
-    console.log(user);
+    let user = {
+        username: userInfo.username,
+        fullname: userInfo.fullname,
+        password: userInfo.password
+    }
     const newUser = await storageService.post(STORAGE_KEY, user)
     _setLogedinUser(newUser)
     return newUser
@@ -63,12 +63,3 @@ function _setLogedinUser(user) {
     return user
 }
 
-
-function _createUser() {
-    const user = {
-        imgUrl: 'assets/img/user-img.svg',
-        likedSongs: [],
-        lastPlayedArtists: [],
-    }
-    return user
-}

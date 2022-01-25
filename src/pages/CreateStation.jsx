@@ -18,6 +18,8 @@ class _CreateStation extends React.Component {
     list: null
   };
 
+
+
   // onSearch(ev) {
   //     ev.preventDefault()
   //     const search = utilService.debounce(this.search, 2000)
@@ -50,7 +52,7 @@ class _CreateStation extends React.Component {
   onAddSong = async (song) => {
     if (!this.state.newStation._id) await this.onMakeNewStation();
     const { newStation } = this.state;
-    const savedStation = await this.props.addSong(newStation._id, song);
+    const savedStation = await this.props.addSong(newStation, song);
     this.setState({ newStation: savedStation });
   };
 

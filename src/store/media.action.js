@@ -4,9 +4,10 @@ import { utilService } from "../services/util.service";
 export function setPlayer(player) {
     return async (dispatch) => {
         try {
+            console.log(player)
             const action = { type: "SET_PLAYER", player };
             dispatch(action);
-            return Promise.resolve;
+            // return Promise.resolve()
         } catch (err) {
             console.log("Got an Error in SetPlayer", err);
         }

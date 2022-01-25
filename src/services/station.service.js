@@ -1,6 +1,8 @@
+
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
+import {httpService} from './http.service'
 
 
 const gStations = require('../data/station.json')
@@ -55,6 +57,7 @@ export const stationService = {
     searchYouTube,
     addSongToStation,
     deleteSongFromStation,
+    // save
 }
 
 
@@ -91,7 +94,7 @@ async function addSongToStation(stationId, song) {
     return Promise.resolve(updatedStation)
 }
 
-async function deleteSongFromStation(stationId,songId) {
+async function deleteSongFromStation(stationId, songId) {
     const station = await getById(stationId)
     const editedStation = { ...station }
     editedStation.songs = editedStation.songs.filter(song => song._id !== songId)
@@ -112,13 +115,12 @@ function formatNewSong(song) {
         url: song.url,
         imgUrl: song.bestThumbnail.url,
         addedBy: {
-            _id: 'a1',
-            fullname: 'Sahar Gar Onne',
+            _id: userService.getLogedinUser()?._id || utilService.makeId(),
+            fullname: userService.getLogedinUser()?.username || 'Guest',
             imgUrl: '#'
         },
         duration: song.duration,
         addedAt: Date.now(),
-        addedAtForShow: utilService.formatTime(),
         likesCount: 0
     }
     return Promise.resolve(newSong)
@@ -128,11 +130,11 @@ function makeNewStation() {
     let station = {
         name: 'New Playlist',
         imgUrl: null,
-        likesCount: utilService.getRandomIntInclusive(300,2000),
+        likesCount: utilService.getRandomIntInclusive(300, 2000),
         tags: 'Rock',
         createdAt: Date.now(),
         createdBy: {
-            _id:userService.getLogedinUser()?._id || utilService.makeId() ,
+            _id: userService.getLogedinUser()?._id || utilService.makeId(),
             fullname: userService.getLogedinUser()?.username || 'Guest',
             imgUrl: '#'
         },
@@ -151,54 +153,67 @@ function makeNewStation() {
 
 
 function getFullduration(station) {
-    const {songs} = station
+    const { songs } = station
 
     let durations = songs.map(song => song.duration)
     durations = durations.map(duration => {
-      duration = duration.split(':')
-      let hour;
-      let min;
-      let sec;
-      if(duration.length ===3) { 
-        hour = duration[0]
-        min = duration[1]
-        sec = duration[2]
-      }else {
-        hour = 0
-        min = duration[0]
-        sec = duration[1]
-      }
-      return [hour,min,sec]
+        duration = duration.split(':')
+        let hour;
+        let min;
+        let sec;
+        if (duration.length === 3) {
+            hour = duration[0]
+            min = duration[1]
+            sec = duration[2]
+        } else {
+            hour = 0
+            min = duration[0]
+            sec = duration[1]
+        }
+        return [hour, min, sec]
     })
-  
+
     let hours = durations.map(duration => +duration[0])
     let minutes = durations.map(duration => +duration[1])
     let seconds = durations.map(duration => +duration[2])
-  
+
     hours = hours.reduce((a, b) => a + b, 0)
     minutes = minutes.reduce((a, b) => a + b, 0)
     seconds = seconds.reduce((a, b) => a + b, 0)
-    
-    while(seconds >= 60) {
-        minutes ++
-        seconds = seconds - 60
-    } 
-    while(minutes >= 60) {
-        hours ++
-        minutes = minutes - 60
+
+    while (seconds >= 60) {
+        minutes++
+        seconds -= 60
     }
-    const extraHours = Math.floor(minutes/60)
-    const extraMin = Math.floor(seconds/60)
-  
+    while (minutes >= 60) {
+        hours++
+        minutes -= 60
+    }
+    const extraHours = Math.floor(minutes / 60)
+    const extraMin = Math.floor(seconds / 60)
+
     let totalTime;
 
-    if(hours + extraHours >= 1 && hours + extraHours < 2) totalTime = `${hours + extraHours} hour, ${minutes + extraMin} minutes and ${seconds % 60} seconds`
+    if (hours + extraHours >= 1 && hours + extraHours < 2) totalTime = `${hours + extraHours} hour, ${minutes + extraMin} minutes and ${seconds % 60} seconds`
     else if (hours + extraHours >= 2) totalTime = `${hours + extraHours} hours, ${minutes + extraMin} minutes and ${seconds % 60} seconds`
     else totalTime = `${minutes + extraMin} minutes and ${seconds % 60} seconds`
-  
+
     return totalTime
-  
-  }
+
+}
+
+// function query() {
+//     return httpService.get('station/')
+// }
+
+// function save(station ,song = null) {
+//     if(!station._id) return httpService.post('station/', station)
+//     else return httpService.put('station/', {station, song})
+// }
+
+// function getById(stationId) {
+//     return httpService.get(`station/${stationId}`)
+// }
 
 async function searchYouTube(q) {
     q = encodeURIComponent(q);

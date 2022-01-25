@@ -69,15 +69,3 @@ function _setLogedinUser(user) {
     return user
 }
 
-<<<<<<< HEAD
-
-function _createUser() {
-    const user = {
-        imgUrl: '/assets/img/user-img.svg',
-        likedSongs: [],
-        lastPlayedArtists: [],
-    }
-    return user
-}
-=======
->>>>>>> c6dd827174f6e3fc91baaa8b311edd11c05c05d5

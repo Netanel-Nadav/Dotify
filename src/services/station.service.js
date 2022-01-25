@@ -143,7 +143,8 @@ function makeNewStation() {
                 imgUrl: '#'
             }
         ],
-        songs: []
+        songs: [],
+        backgroundColor: '#e6e6e64b'
     }
     station = storageService.post(STORAGE_KEY, station)
     return Promise.resolve(station)

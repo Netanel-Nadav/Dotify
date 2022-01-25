@@ -8,7 +8,7 @@ import { DragDrop } from "./DragDrop";
 import { Equalizer } from "./Equalizer";
 
 
-function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayedSongs, currSongId, player }) {
+function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayedSongs, currSongId, player, isPlaying }) {
   moment().format();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayed
           <p className="song-index">#</p>
           <p className="title">Title</p>
         </div>
-        <section className="wrraper flex space-around">
+        <section className="wrraper flex space-between">
           <p className="date-addedAt">Date Added</p>
           <p className="duration">
             <i className="fas fa-clock"></i>
@@ -41,9 +41,9 @@ function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayed
             return (
               <section key={song._id} className={`station-song-details flex`}>
                 <section className={`song-info flex ${song._id === currSongId ? 'playing' : ''}`}>
-                  {song._id !== currSongId ? <p className="absolute">{idx + 1}</p> : <Equalizer />}
+                  {song._id !== currSongId ? <p className='title'>{idx + 1}</p> : <Equalizer />}
                   <span
-                    className={`play-icon absolute ${song._id === currSongId ? 'dont-show' : ''}`}
+                    className={`play-icon ${song._id === currSongId ? 'dont-show' : ''}`}
                     onClick={() => onPlaySong(station, song._id)}
                   >
                     <i
@@ -59,7 +59,7 @@ function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayed
                   </section>
                   <p className="">{song.title}</p>
                 </section>
-                <section className="wrraper flex space-around">
+                <section className="wrraper flex space-between">
                   <section className="song-addedAt">
                     <p>{moment(song.addedAt).fromNow()}</p>
                   </section>
@@ -78,13 +78,13 @@ function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayed
                     </div>
                   </section>
                 </section>
-              </section >
+              </section>
             );
           })
           }
-        </section >}
+        </section>}
       <hr />
-    </section >
+    </section>
   );
 }
 

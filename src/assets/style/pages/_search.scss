@@ -3,15 +3,17 @@
 
     padding: 0px 20px;
     margin-bottom: $base-margin;
+    margin-top: 65px;
 
 
-    .img-container {
+    .song-img-container {
+        
 
         img { 
+            border-radius: 5px;
             width: 40px;
             height: 40px;
             object-fit: cover;
-            border-radius: 2px; 
         }
     }
 
@@ -19,6 +21,7 @@
         margin-bottom: 30px;
 
         input {
+            width: 350px;
             height: 40px;
             padding: 8px 36px;
             border-radius: 20px;
@@ -33,7 +36,6 @@
 
         .list-container {
             margin-top: 30px;
-            gap: 10px;
             
             h1 {
                 font-size: rem(20px);
@@ -61,6 +63,8 @@
                     align-items: center;
                     gap: 15px;
                     flex-basis: 65%;
+                    max-width: 40ch;
+                    position: relative;
 
                     &:hover {
 
@@ -71,6 +75,7 @@
                 }
 
                 .play-icon {
+                    position: absolute;
                     opacity: 0;
                     cursor: pointer;
 
@@ -118,6 +123,54 @@
         gap: 20px;
 
         .genre {
+            width: 200px;
+            height: 200px;
+            border-radius: 5px;
+
+            &:hover {
+                cursor: pointer;
+                opacity: 0.8;
+
+            }
+            
+            h1 {
+                padding: 20px;
+                font-size: rem( 30px);
+            }
+        }
+    }
+
+
+
+    @include for-normal-layout {
+        .song {
+            .song-info{
+                align-items: center;
+                gap: 15px;
+                flex-basis: 65%;
+                min-width: 50ch;
+        
+                &:hover {
+        
+                    .song-idx {
+                        opacity: 0;
+                    }
+                }
+            }
+    
+        }
+    }
+
+
+
+
+    @include for-wide-layout {
+    .stations-by-genre {
+        
+        flex-wrap: wrap;
+        gap: 20px;
+
+        .genre {
             width: 250px;
             height: 250px;
             border-radius: 10px;
@@ -134,4 +187,22 @@
             }
         }
     }
+
+    .song {
+        .song-info{
+            align-items: center;
+            gap: 15px;
+            flex-basis: 65%;
+            min-width: 50%;
+    
+            &:hover {
+    
+                .song-idx {
+                    opacity: 0;
+                }
+            }
+        }
+
+    }
+  }
 }

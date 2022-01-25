@@ -52,8 +52,8 @@ function _Search({setSongs}) {
                             <section key={item.id} className='song flex'>
                                 <section className='song-info flex'>
                                     <p className='song-idx'>{idx + 1}</p>
-                                    <span className="play-icon absolute" onClick={() => onSetSongs(item.id)}><i className="fas fa-play"></i></span>
-                                    <section className='img-container'>
+                                    <span className="play-icon" onClick={() => onSetSongs(item.id)}><i className="fas fa-play"></i></span>
+                                    <section className='song-img-container'>
                                         <img src={item.bestThumbnail.url} />
                                     </section>
                                     <p>{item.title}</p>
@@ -74,7 +74,7 @@ function _Search({setSongs}) {
 
             {
                 genres && !list.songs.length &&
-                <section className='stations-by-genre flex'>
+                <section className='stations-by-genre flex justify-center'>
                     {genres.map(genre => {
                         return (
                             <section key={genre.name} className='genre' style={{ backgroundColor: genre.backgroundColor }}>

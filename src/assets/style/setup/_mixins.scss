@@ -1,3 +1,22 @@
+/* Media queries Breakpoint mixins */
+
+
+@mixin for-normal-layout {
+  @media (min-width: $break-normal) {
+    @content;
+  }
+}
+
+@mixin for-wide-layout {
+  @media (min-width: $break-wide) {
+    @content;
+  }
+}
+
+@mixin layoutGTC($max) {
+  grid-template-columns: 225px 1fr
+}
+
 
 
 

@@ -33,6 +33,12 @@ export class _RootCmp extends React.Component {
     })
   }
 
+
+  componentDidUpdate(prevProps, prevState) {
+    
+  }
+  
+
   render() {
     
     const {isFirstEntry, isAppLoaded} = this.state

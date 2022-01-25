@@ -9,7 +9,7 @@ export function Navigation() {
           Dotify<span>.</span>
         </div>
       </Link>
-      <ul className="clean-list">
+      <ul className="clean-list flex">
         <NavLink to="/">
           <li className="link-container flex align-center">
             <div className="icon">
@@ -49,7 +49,6 @@ export function Navigation() {
           </li>
         </NavLink>
       </ul>
-      <hr />
     </nav>
   );
 }

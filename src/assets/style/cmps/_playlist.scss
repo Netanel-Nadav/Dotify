@@ -5,12 +5,11 @@
 
     .station-song-info-title{
         justify-content: space-between;
-        width: 100%;
 
         .title-container {
            
             .song-index {
-                padding-left: 20%;
+                padding-left: 30%;
             }
 
             .title {
@@ -21,6 +20,14 @@
         }
         .wrraper { 
             flex-basis: 40%;
+
+            .date-addedAt {
+                flex-basis: 50%;
+            }
+
+            .duration {
+                flex-basis: 50%;
+            }
         }
 
         
@@ -29,9 +36,9 @@
         
         
         .station-song-details {
-            padding: 5px 10px;
             align-items: center;
             border-radius: 10px;
+            gap: 15px;
 
             .playing {
                 color: $clr1;
@@ -39,6 +46,7 @@
 
 
             .play-icon {
+                position: absolute;
                 opacity: 0;
                 cursor: pointer;
                 font-size: 12px;
@@ -55,7 +63,7 @@
             &:hover {           
                 background-color: $clr3;
                         
-                .absolute {
+                .title {
                     opacity: 0;
                 }
 
@@ -77,12 +85,13 @@
             }
             
             .song-info {
+                position: relative;
                 align-items: center;
                 gap:  15px;
                 flex-basis: 60%;
+                padding-left: 16px;
 
                 .img-container{
-                    padding-left: 30px;
                     
                     img {
                         width: 40px;
@@ -105,8 +114,13 @@
             .wrraper { 
                 flex-basis: 40%;
 
+
+                .song-addedAt {
+                    flex-basis: 50%;
+                }
+
                 .song-duration {
-                    width: 10px;
+                    flex-basis: 50%;
                     gap: 10px;
                 }
 

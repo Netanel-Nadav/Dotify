@@ -8,8 +8,12 @@ $clr5: #000000;
 $clr6: #ffffff;
 
 
-
 // BASE PADDING & MARGIN
 
 $base-padding: rem(10px);
 $base-margin: rem(20px);
+
+
+// Breakpoints
+$break-normal: 720px;
+$break-wide: 920px;

@@ -1,14 +1,6 @@
-.volume-container {
+.time-bar {
     gap: 10px;
     margin: auto;
-    
-    button {
-        background: none;
-        border: none;
-        color: darken($clr6, 40%);
-        font-size: rem(16px);
-        cursor: pointer;
-    }
 
     .MuiSlider-root {
         color: white;

@@ -1,5 +1,4 @@
 const initialState = {
-    player: null,
     isPlaying: false,
     currStation: null,
     currSongList: [],
@@ -13,10 +12,6 @@ export function mediaReducer(state = initialState, action) {
     let newState = state;
 
     switch (action.type) {
-        case "SET_PLAYER":
-            newState = { ...state, player: action.player };
-            break;
-
         case "SET_STATION":
             newState = { ...state, currStation: action.station };
             break;

@@ -1,43 +1,58 @@
-import React from "react";
-import YouTube from "react-youtube";
-import { connect } from "react-redux";
-import { AudioControllers } from "./AudioControllers";
-import { VolumeController } from "./VolumeController";
-import { SongData } from "./SongData";
+import React from "react"
+import YouTube from "react-youtube"
+import { connect } from "react-redux"
+import { AudioControllers } from "./AudioControllers"
+import { VolumeController } from "./VolumeController"
+import { TimeBar } from "./TimeBar.jsx"
+import { SongData } from "./SongData"
 
-import { setPlayer, changeSong, setRandomSong, resetAlreadyPlayed, toggleIsPlaying, setShuffleState } from '../store/media.action';
+import { changeSong, setRandomSong, resetAlreadyPlayed, toggleIsPlaying, setShuffleState } from '../store/media.action';
+import { eventBusService } from "../services/event-bus.service"
 
 class _AudioPlayer extends React.Component {
   state = {
     player: null,
+    currDuration: 0,
     isShuffleOn: false,
     isRepeatOn: false,
     isMuteOn: false,
     volume: 50,
   };
 
-  onReady = async (event) => {
-    // access to player in all event handlers via event.target
+  unsubscribe;
+
+  componentDidMount() {
+    this.unsubscribe = eventBusService.on('playVideo', () => {
+      this.state.player.playVideo();
+    })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  onReady = (event) => {
     const player = event.target;
-    await this.props.setPlayer(player);
+    this.setState({ player });
   }
 
   onSetVolume = (volume) => {
-    this.setState({ volume }, () => {
-      this.props.player.setVolume(volume);
+    this.setState((prevState) => ({ ...prevState, volume }), () => {
+      if (this.state.player) this.state.player.setVolume(volume);
     })
   };
 
   onSetMute = () => {
     this.setState({ isMuteOn: !this.state.isMuteOn }, () => {
-      if (this.state.isMuteOn) this.props.player.mute();
-      else this.props.player.unMute();
+      console.log('isMute', this.state.isMuteOn)
+      if (this.state.isMuteOn && this.state.player) { //muted
+        this.state.player.mute();
+      } else if (this.state.player) this.state.player.unMute();
     });
   };
 
-
   onPlayPause = async () => {
-    const { player } = this.props;
+    const { player } = this.state;
     if (this.props.currSongId) {
       await this.props.toggleIsPlaying();
       if (this.props.isPlaying) {
@@ -51,8 +66,8 @@ class _AudioPlayer extends React.Component {
   onNextSong = () => {
     if (this.state.isRepeatOn) {
       console.log('repeat on');
-      this.props.player.stopVideo();
-      this.props.player.playVideo();
+      this.state.player.stopVideo();
+      this.state.player.playVideo();
     }
     else if (this.state.isShuffleOn) {
       this.props.setRandomSong();
@@ -67,8 +82,8 @@ class _AudioPlayer extends React.Component {
   onPrevSong = () => {
     if (this.state.isRepeatOn) {
       console.log('repeat on');
-      this.props.player.stopVideo();
-      this.props.player.playVideo();
+      this.state.player.stopVideo();
+      this.state.player.playVideo();
     }
     else if (this.state.isShuffleOn) {
       this.props.setRandomSong();
@@ -88,7 +103,6 @@ class _AudioPlayer extends React.Component {
         this.props.setShuffleState(this.props.currSongId);
       }
       else this.props.resetAlreadyPlayed() // if shuffle not working
-
     })
   }
 
@@ -97,6 +111,13 @@ class _AudioPlayer extends React.Component {
     this.setState({ isRepeatOn: !this.state.isRepeatOn }, () => {
       if (this.state.isShuffleOn && this.state.isRepeatOn) this.setState({ isShuffleOn: false }); //turn off shuffle if its on
     })
+  }
+
+  onSetDuration = (ev) => {
+    const currDuration = ev.target.value;
+    this.setState({ currDuration });
+    console.log('currDuration', currDuration);
+    this.state.player.seekTo(currDuration);
   }
 
   onStateChange = () => {
@@ -109,7 +130,7 @@ class _AudioPlayer extends React.Component {
       width: "0",
       playerVars: { 'autoplay': 1 }
     };
-    const { volume, isShuffleOn, isRepeatOn, isMuteOn } = this.state;
+    const { player, volume, isShuffleOn, isRepeatOn, isMuteOn, currDuration } = this.state;
     const { currSongList, currSongIdx, currSongId, isPlaying } = this.props;
 
     return (
@@ -124,17 +145,19 @@ class _AudioPlayer extends React.Component {
             onStateChange={this.onStateChange}
           />
         </div>
-        <AudioControllers
-          isPlaying={isPlaying}
-          isShuffleOn={isShuffleOn}
-          isRepeatOn={isRepeatOn}
-          onPlayPause={this.onPlayPause}
-          // onPause={this.onPlayPause}
-          onNextSong={this.onNextSong}
-          onPrevSong={this.onPrevSong}
-          onToggleShuffle={this.onToggleShuffle}
-          onToggleRepeat={this.onToggleRepeat}
-        />
+        <div className="player-center flex column ">
+          <AudioControllers
+            isPlaying={isPlaying}
+            isShuffleOn={isShuffleOn}
+            isRepeatOn={isRepeatOn}
+            onPlayPause={this.onPlayPause}
+            onNextSong={this.onNextSong}
+            onPrevSong={this.onPrevSong}
+            onToggleShuffle={this.onToggleShuffle}
+            onToggleRepeat={this.onToggleRepeat}
+          />
+          <TimeBar song={currSongList[currSongIdx]} player={player} currDuration={currDuration} setDuration={this.onSetDuration} />
+        </div>
         <VolumeController
           onSetVolume={this.onSetVolume}
           onSetMute={this.onSetMute}
@@ -158,7 +181,6 @@ function mapStateToProps({ mediaModule }) {
 }
 
 const mapDispatchToProps = {
-  setPlayer,
   changeSong,
   setRandomSong,
   resetAlreadyPlayed,

@@ -1,8 +1,9 @@
+import { Loader } from "./Loader"
 import { StationPreview } from "./StationPreview"
 
 export function StationList({ stations }) {
 
-    if (!stations) return <h1>Loading...</h1>
+    if (!stations) return <Loader />
     return (
         <section className="station-list">
                 {stations.map(station => {

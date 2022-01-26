@@ -1,8 +1,11 @@
 .drag-drop-container {
 
+    padding: 0px 20px;
+    
     .station-song-details {
         align-items: center;
         border-radius: 10px;
+        padding: 0px 20px;
         gap: 15px;
 
         .playing {
@@ -54,7 +57,10 @@
             align-items: center;
             gap:  15px;
             flex-basis: 60%;
-            padding-left: 16px;
+
+            p {
+                font-size: rem(14px);
+            }
 
             .img-container{
                 

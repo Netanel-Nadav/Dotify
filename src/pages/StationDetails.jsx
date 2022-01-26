@@ -8,6 +8,7 @@ import { stationService } from "../services/station.service";
 import { PlayList } from '../cmps/PlayList';
 import { StationHero } from '../cmps/StationHero';
 import { DragDrop } from '../cmps/DragDrop';
+import { Loader } from '../cmps/Loader';
 
 
 
@@ -21,7 +22,7 @@ function _StationDetails({ match,stations, setDisplayedSongs }) {
         setStation(reqStation)
     }, [stations])
 
-    if (!station) return <h1>Loading...</h1>
+    if (!station) return <Loader />
     return (
         <section className='station'>
             <StationHero station={station} />

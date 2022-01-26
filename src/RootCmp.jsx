@@ -16,6 +16,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { UserProfile } from "./pages/UserProfile";
 import { StationDetails } from "./pages/StationDetails";
 import { HomeScreenModal } from "./cmps/HomeScreenModal";
+import { Loader } from './cmps/Loader';
 
 export class _RootCmp extends React.Component {
 
@@ -42,7 +43,7 @@ export class _RootCmp extends React.Component {
   render() {
     
     const {isFirstEntry, isAppLoaded} = this.state
-    if (!isAppLoaded) return <h1>Loading...</h1>
+    if (!isAppLoaded) return <Loader />
     return (
       <div className="App main-container">
         <Header />

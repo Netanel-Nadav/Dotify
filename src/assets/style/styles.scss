@@ -30,6 +30,7 @@
 
 
 
+@import "./cmps/Loader";
 @import "./cmps/edit-user.scss";
 @import "./cmps/edit-playlist.scss";
 @import "./cmps/equalizer.scss";
@@ -40,7 +41,6 @@
 @import "./cmps/station-hero.scss";
 @import "./cmps/DragDrop.scss";
 @import "./cmps/station-list";
-@import "./cmps/user-hero";
 @import "./cmps/user-modal";
 @import "./cmps/music-player";
 @import "./cmps/header";

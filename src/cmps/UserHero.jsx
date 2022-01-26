@@ -2,6 +2,7 @@ import React from 'react';
 import { EditUser } from './EditUser';
 import { connect } from "react-redux";
 import { updateUser } from '../store/user.action';
+import { Loader } from './Loader';
 
 
 class _UserHero extends React.Component {
@@ -30,7 +31,7 @@ class _UserHero extends React.Component {
 
     render() {
         const { user, isEditShown } = this.state
-        if (!user) return <h1>Loading...</h1>
+        if (!user) return <Loader />
         const { imgUrl, username, backgroundColor } = user
         const transperent = 'rgb(0 0 0 / 0%)'
         return (

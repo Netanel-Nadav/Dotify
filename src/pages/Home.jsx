@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
+import { Loader } from '../cmps/Loader';
 import { StationList } from '../cmps/StationList';
 import { loadStations } from '../store/station.action';
 
@@ -12,7 +13,7 @@ function _Home({ stations }) {
                 <section >
                     <StationList stations={stations} />
                     {/* stations lists by labels */}
-                </section> : <h1>Loading...</h1>}
+                </section> : <Loader />}
         </section>
     )
 }

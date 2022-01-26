@@ -117,7 +117,7 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
           </Droppable>
         </DragDropContext>
       </div>
-    </section >
+    </section>
   );
 }
 

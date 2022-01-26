@@ -2,6 +2,7 @@
     gap: 10px;
     margin: auto;
 
+
     .MuiSlider-root {
         color: white;
         width: 200px;
@@ -10,5 +11,7 @@
     .MuiSlider-rail {
         background-color: darken($clr6, 60%);
     }
-
+    @include for-wide-layout {
+        
+    }
 }

@@ -1,12 +1,14 @@
 .player {
-    // position: fixed;
-    bottom: 0;
     width: 100%;
     height: 100px;
     background-color: $clr2;
     border-top: 2px solid #282828;
     padding: 0px 20px;
     
+    .player-center {
+        flex-basis: 70%;
+    }
+
     .audio-controller {
         height: 100%;
         gap: 5px;
@@ -59,6 +61,12 @@
     .xxx {
         position: fixed;
         display: none;
+    }
+
+    @include for-wide-layout {
+        .player-center {
+            flex-basis: 50%;
+        }
     }
 }
 

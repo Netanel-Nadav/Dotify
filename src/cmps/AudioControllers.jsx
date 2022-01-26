@@ -11,7 +11,10 @@ export function AudioControllers({ isPlaying, isShuffleOn, isRepeatOn, onPlayPau
             <button className='prev-btn' onClick={onPrevSong}><MdSkipPrevious /></button>
             <div className='play-container'><button className={`play-btn ${isPlaying ? 'pause' : 'play'}`} onClick={onPlayPause}>{isPlaying ? <GiPauseButton /> : <BsFillPlayFill />}</button></div>
             <button className='next-btn' onClick={onNextSong}><MdSkipNext /></button>
-            <button className={`'repeat-btn' ${isRepeatOn ? 'pushed' : ''}`} onClick={onToggleRepeat}><IoRepeat /></button>
+            <button className={`'repeat-btn' ${isRepeatOn ? 'pushed' : ''}`} onClick={onToggleRepeat}>
+                <IoRepeat />
+                {isRepeatOn && <span>.</span>}
+            </button>
         </section>
     )
 }

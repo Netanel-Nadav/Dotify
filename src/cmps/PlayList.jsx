@@ -18,7 +18,6 @@ function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayed
 
   const onPlaySong = async (station, songId) => {
     await setSongs(station, songId);
-    // player.playVideo();
     eventBusService.emit('playVideo');
   }
 

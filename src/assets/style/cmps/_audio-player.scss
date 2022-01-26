@@ -27,6 +27,20 @@
         .play-btn {
             font-size: rem(25px);
             color: black;
+            position: absolute;
+
+            &.play {
+                top: 58%;
+                left: 53%;
+                transform: translate(-50%, -50%);
+            }
+
+            &.pause {
+                font-size: rem(16px);
+                top: 57%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
         }
 
         .play-container {
@@ -34,14 +48,11 @@
             border-radius: 50%;
             height: 35px;
             width: 35px;
+            position: relative;
         }
 
         .pushed {
             color: $clr1;
-        }
-
-        .pause {
-            font-size: rem(20px);
         }
     }
 

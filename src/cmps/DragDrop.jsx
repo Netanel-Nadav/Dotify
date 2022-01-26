@@ -3,28 +3,29 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from "react-redux";
 import { useParams } from 'react-router-dom';
 import { stationService } from '../services/station.service';
+import { eventBusService } from '../services/event-bus.service';
 import { updateStation, setDisplayedSongs, deleteSong } from '../store/station.action'
+import { setSongs } from '../store/media.action'
 import { Equalizer } from "./Equalizer";
 import moment from 'moment';
 
-export function _DragDrop({ station ,updateStation, currSongId, deleteSong, displayedSongs }) {
+export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, setSongs }) {
   moment().format();
 
-  const [stationToRender, setStationToRender] = useState(null);
-  const [songs, setSongs] = useState(null);
+  // const [stationToRender, setStationToRender] = useState(null);
+  const [songs, setSongsToRender] = useState(null);
 
 
   useEffect(() => {
-    setStationToRender(station)
-    setSongs(station.songs)
+    // setStationToRender(station)
+    setSongsToRender(station.songs)
   }, [displayedSongs])
 
 
 
   const onPlaySong = async (station, songId) => {
     await setSongs(station, songId);
-    console.log(station);
-    // player.playVideo();
+    eventBusService.emit('playVideo');
   }
 
   function handleOnDragEnd(result) {
@@ -34,7 +35,7 @@ export function _DragDrop({ station ,updateStation, currSongId, deleteSong, disp
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    setSongs(items);
+    setSongsToRender(items);
     station.songs = items
     updateStation(station)
   }
@@ -46,6 +47,7 @@ export function _DragDrop({ station ,updateStation, currSongId, deleteSong, disp
         <Droppable droppableId="song-container">
           {(provided) => (
             <ul className="songs-list" {...provided.droppableProps} ref={provided.innerRef}>
+              {console.log(songs)}
               {songs && songs.map((song, index) => {
                 return (
                   <Draggable key={song._id} draggableId={song._id} index={index}>
@@ -118,6 +120,7 @@ const mapDispatchToProps = {
   updateStation,
   setDisplayedSongs,
   deleteSong,
+  setSongs
 };
 
 export const DragDrop = connect(mapStateToProps, mapDispatchToProps)(_DragDrop);

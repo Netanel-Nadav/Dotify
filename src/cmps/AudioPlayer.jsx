@@ -17,9 +17,11 @@ class _AudioPlayer extends React.Component {
     isRepeatOn: false,
     isMuteOn: false,
     volume: 50,
+    currTime: 0
   };
 
   unsubscribe;
+  timerInterval;
 
   componentDidMount() {
     this.unsubscribe = eventBusService.on('playVideo', () => {
@@ -29,6 +31,7 @@ class _AudioPlayer extends React.Component {
 
   componentWillUnmount() {
     this.unsubscribe();
+    clearInterval(this.timerInterval)
   }
 
   onReady = (event) => {
@@ -120,8 +123,24 @@ class _AudioPlayer extends React.Component {
     this.state.player.seekTo(currDuration);
   }
 
-  onStateChange = () => {
+  onStateChange = (ev) => {
+    const { player } = this.state;
 
+    if (ev.data === 3 || ev.data === -1) return;
+
+    if (ev.data === 5) player.playVideo();
+
+    if (ev.data === 2) {
+      clearInterval(this.timerInterval)
+    }
+
+    if (ev.data === 1) {
+      if (this.timerInterval) clearInterval(this.timerInterval);
+      this.timerInterval = setInterval(() => {
+        const currTime = player.getCurrentTime();
+        this.setState({ currTime });
+      }, 1000)
+    }
   }
 
   render() {
@@ -130,7 +149,7 @@ class _AudioPlayer extends React.Component {
       width: "0",
       playerVars: { 'autoplay': 1 }
     };
-    const { player, volume, isShuffleOn, isRepeatOn, isMuteOn, currDuration } = this.state;
+    const { player, volume, isShuffleOn, isRepeatOn, isMuteOn, currTime } = this.state;
     const { currSongList, currSongIdx, currSongId, isPlaying } = this.props;
 
     return (
@@ -156,7 +175,7 @@ class _AudioPlayer extends React.Component {
             onToggleShuffle={this.onToggleShuffle}
             onToggleRepeat={this.onToggleRepeat}
           />
-          <TimeBar song={currSongList[currSongIdx]} player={player} currDuration={currDuration} setDuration={this.onSetDuration} />
+          <TimeBar song={currSongList[currSongIdx]} player={player} currTime={currTime} setDuration={this.onSetDuration} />
         </div>
         <VolumeController
           onSetVolume={this.onSetVolume}

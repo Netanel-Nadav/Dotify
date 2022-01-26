@@ -3,14 +3,14 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from "react-redux";
 import { useParams } from 'react-router-dom';
 import { stationService } from '../services/station.service';
-import { eventBusService } from '../services/event-bus.service';
+import {eventBusService} from '../services/event-bus.service'
 import { updateStation, setDisplayedSongs, deleteSong } from '../store/station.action'
-import { setSongs } from '../store/media.action'
+import {setSongs} from "../store/media.action"
 import { likeSong } from "../store/user.action";
 import { Equalizer } from "./Equalizer";
 import moment from 'moment';
 
-export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, user, setSongs }) {
+export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, user }) {
   moment().format();
 
   // const [stationToRender, setStationToRender] = useState(null);
@@ -23,9 +23,11 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
     else setSongsToRender(user.likedSongs)
   }, [displayedSongs])
 
+
+
   const onPlaySong = async (station, songId) => {
     await setSongs(station, songId);
-    eventBusService.emit('playVideo');
+    eventBusService.emit('playVideo')
   }
 
   function handleOnDragEnd(result) {
@@ -43,7 +45,7 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
   if (!songs) return <React.Fragment></React.Fragment>
   return (
     <section>
-      <section className="station-song-info-title flex">
+       <section className="station-song-info-title flex">
         <div className="title-container flex">
           <p className="song-index">#</p>
           <p className="title">Title</p>
@@ -93,9 +95,18 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
                               <section className="song-duration btns flex">
                                 <p>{song.duration}</p>
                                 <div className="btn-container flex">
-                                  <button className="like-btn">
+                                  {user?.likedSongs.some(likedSong => likedSong._id === song._id) ? 
+                                   <button className="like-btn">
+                                   <i className="fas fa-heart liked" ></i>
+                                 </button>
+                                : 
+                                <button className="like-btn">
+                                <i className="far fa-heart" onClick={() => likeSong(song)}></i>
+                              </button>
+                                }
+                                  {/* <button className="like-btn">
                                     <i className={user?.likedSongs.some(likedSong => likedSong._id === song._id) ? "fas fa-heart liked" : "far fa-heart"} onClick={() => likeSong(song)}></i>
-                                  </button>
+                                  </button> */}
                                   <button
                                     className="delete-btn"
                                     onClick={() => deleteSong(station._id, song._id)}
@@ -117,7 +128,7 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
           </Droppable>
         </DragDropContext>
       </div>
-    </section >
+    </section>
   );
 }
 

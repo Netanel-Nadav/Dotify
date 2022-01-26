@@ -82,7 +82,7 @@ export class EditPlaylist extends React.Component {
                             <div className='color-container flex justify-center align-center'>
                                 <div className={`color red`} onClick={() => this.onChooseColor('#ff0000')}></div>
                                 <div className={`color blue`} onClick={() => this.onChooseColor('#0000ff')}></div>
-                                <div className={`color green`} onClick={() => this.onChooseColor('#008000')}></div>
+                                <div className={` color green`} onClick={() => this.onChooseColor('#008000')}></div>
                                 <div className={`${isColorClicked ? 'clicked' : ''} color yellow`} onClick={() => this.onChooseColor('#ffff00')}></div>
                                 <div className={`color purple`} onClick={() => this.onChooseColor('#800080')}></div>
                             </div>

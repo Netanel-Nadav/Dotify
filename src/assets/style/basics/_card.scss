@@ -41,6 +41,10 @@
         h3 {
             font-size: rem(16px);
             margin-bottom: 5px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 130px;
+            overflow: hidden;
         }
 
     }

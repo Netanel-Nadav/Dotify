@@ -4,26 +4,32 @@ import { connect } from 'react-redux'
 import { useState } from 'react';
 import { UserModal } from './UserModal';
 import { logout } from '../store/user.action'
+import { useHistory } from 'react-router-dom';
+
 
 export function _Header({ user, logout }) {
 
     const [isUserModalShown, setIsUserModalOpen] = useState(false);
+    const history = useHistory()
+    console.log(history);
 
     const toggleUserModal = () => {
         setIsUserModalOpen(!isUserModalShown)
     }
 
     const onGoBack = () => {
-        this.props.history.push('/')
+        history.goBack()
     }
 
-    
+    const onGoForward = () => {
+        history.goForward()
+    }
 
     return (
         <header className='app-header flex space-between align-center'>
             <div className='back-foword-container flex'>
                 <button onClick={onGoBack} className='back-btn'>&lt;</button>
-                <button className='back-btn'>&gt;</button>
+                <button onClick={onGoForward} className='back-btn'>&gt;</button>
             </div>
             <div className='user-login-container'>
                 <button onClick={toggleUserModal} className='login-btn flex align-center'>

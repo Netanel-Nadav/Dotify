@@ -5,11 +5,12 @@ import moment from 'moment';
 import { eventBusService } from '../services/event-bus.service';
 import { setSongs, setStation } from "../store/media.action";
 import { deleteSong, setDisplayedSongs } from "../store/station.action";
+import { likeSong } from "../store/user.action";
 import { DragDrop } from "./DragDrop";
 import { Equalizer } from "./Equalizer";
 
 
-function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayedSongs, currSongId, player, isPlaying }) {
+function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayedSongs, currSongId, player, isPlaying, likeSong, user }) {
   moment().format();
 
   useEffect(() => {
@@ -69,11 +70,11 @@ function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayed
                     <p>{song.duration}</p>
                     <div className="btn-container flex">
                       <button className="like-btn">
-                        <i className="far fa-heart"></i>
+                        <i className={user?.likedSongs.some(likedSong => likedSong._id === song._id) ? "fas fa-heart liked" : "far fa-heart"} onClick={() => likeSong(song)}></i>
                       </button>
                       <button
                         className="delete-btn"
-                        onClick={() => deleteSong(station._id, song._id)}
+                        onClick={() => deleteSong(station, song._id)}
                       >
                         <i className="fas fa-trash-alt"></i>
                       </button>
@@ -90,11 +91,12 @@ function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayed
   );
 }
 
-function mapStateToProps({ stationModule, mediaModule }) {
+function mapStateToProps({ stationModule, mediaModule, userModule }) {
   return {
     displayedSongs: stationModule.displayedSongs,
     currSongId: mediaModule.currSongId,
-    player: mediaModule.player
+    player: mediaModule.player,
+    user: userModule.user
   };
 }
 
@@ -102,7 +104,8 @@ const mapDispatchToProps = {
   setSongs,
   setStation,
   deleteSong,
-  setDisplayedSongs
+  setDisplayedSongs,
+  likeSong
 };
 
 export const PlayList = connect(mapStateToProps, mapDispatchToProps)(_PlayList);

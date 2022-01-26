@@ -1,8 +1,42 @@
+.station-song-info-title{
+    justify-content: space-between;
+
+    .title-container {
+       
+        .song-index {
+            padding-left: 30%;
+        }
+
+        .title {
+            flex-basis: 60%;
+            text-align: left;
+            padding-left: 20px;
+        }
+    }
+    .wrraper { 
+        flex-basis: 40%;
+
+        .date-addedAt {
+            flex-basis: 50%;
+        }
+
+        .duration {
+            flex-basis: 50%;
+        }
+    }
+
+    
+}
+
+
 .drag-drop-container {
 
+    padding: 0px 20px;
+    
     .station-song-details {
         align-items: center;
         border-radius: 10px;
+        padding: 0px 20px;
         gap: 15px;
 
         .playing {
@@ -54,7 +88,10 @@
             align-items: center;
             gap:  15px;
             flex-basis: 60%;
-            padding-left: 16px;
+
+            p {
+                font-size: rem(14px);
+            }
 
             .img-container{
                 

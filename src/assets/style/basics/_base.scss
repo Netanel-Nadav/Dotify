@@ -41,6 +41,11 @@ hr {
 
 button {
     cursor: pointer;
+    font-family: latobold;
+}
+
+.liked {
+    color: $clr1
 }
 
 ::-webkit-scrollbar {

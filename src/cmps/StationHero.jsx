@@ -13,7 +13,7 @@ export function _StationHero({ station, updateStation }) {
   const {imgUrl, backgroundColor, songs} = station
   const transperent = 'rgb(0 0 0 / 0%)'
   return (
-    <section className="station-header" style={{backgroundImage: `linear-gradient(181deg, ${backgroundColor}, ${transperent})`}}>
+    <section className="station-header flex justify-center align-center" style={{backgroundImage: `linear-gradient(181deg, ${backgroundColor}, ${transperent})`}}>
       <div className="hero-container flex align-center">
         <div className="img-container" style={{backgroundImage: station.imgUrl ? `url(${imgUrl})` : `url(${songs[0]?.imgUrl})`}}>
           <div className="edit-container">

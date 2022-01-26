@@ -17,8 +17,8 @@ export function login(credentials) {
 export function logout() {
     return async (dispatch) => {
         try {
-            const user = await userService.logout();
-            const action = { type: 'SET_USER', user }
+            await userService.logout();
+            const action = { type: 'SET_USER', user: null }
             dispatch(action)
         } catch (err) {
             console.log('Error at User Action Logout', err);
@@ -34,6 +34,31 @@ export function signup(newUser) {
             dispatch(action)
         } catch (err) {
             console.log('Error at User Action signup', err);
+        }
+    }
+}
+
+
+export function likeSong (song) {
+    return async (dispatch, getState) => {
+        try {
+            const songToLike = {
+                _id: song._id || song.id,
+                title: song.title,
+                url: song.url,
+                imgUrl: song.imgUrl || song.bestThumbnail.url,
+                duration: song.duration
+            }
+            const {user} = getState().userModule
+            if(user && user.likedSongs.every(likedSong => likedSong._id !== songToLike._id)) {
+                const editedUser = {...user}
+                editedUser.likedSongs = [...editedUser.likedSongs, songToLike ]
+                const updatedUser = await userService.update(editedUser)
+                let action = { type: 'UPDATE_USER', updatedUser }
+                dispatch(action)
+            } else console.log('Please login')
+        } catch (err) {
+            console.log('Error at User Action like song', err)
         }
     }
 }

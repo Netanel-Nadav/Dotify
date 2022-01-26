@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 
 import { Recommendations } from '../cmps/Recommendations';
 
+import { likeSong } from "../store/user.action";
 import { stationService } from '../services/station.service';
 import {setSongs} from '../store/media.action'
 
-function _Search({setSongs}) {
+function _Search({setSongs, likeSong, user}) {
 
     const [genres, setGenres] = useState(null)
     const [query, setQuery] = useState('');
@@ -59,7 +60,7 @@ function _Search({setSongs}) {
                                     <p>{item.title}</p>
                                 </section>
                                 <section className='btns-and-like flex'>
-                                    <button><i className="far fa-heart"></i></button>
+                                    <button><i className={user?.likedSongs.some(likedSong => likedSong._id === item.id) ? "fas fa-heart liked" : "far fa-heart"} onClick={() => likeSong(item)}></i></button>
                                     <p className='duration'>{item.duration}</p>
                                     <button><i className="fas fa-plus"></i></button>
                                 </section>
@@ -89,13 +90,15 @@ function _Search({setSongs}) {
     )
 }
 
-function mapStateToProps({  }) {
+function mapStateToProps({ userModule }) {
     return {
+        user: userModule.user
     }
 }
 
 const mapDispatchToProps = {
-    setSongs
+    setSongs,
+    likeSong
 }
 
 

@@ -24,7 +24,6 @@ function _StationPreview({ station, setStation }) {
                     <i className="fas fa-heart heart-icon"></i>
                     </div>
                 </div>
-                {/* <span>{station.songs.map(song => <p key={song._id}>{song.url}</p>)}</span> */}
             </section>
         </Link>
     )

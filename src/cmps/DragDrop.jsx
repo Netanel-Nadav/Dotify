@@ -6,11 +6,11 @@ import { stationService } from '../services/station.service';
 import {eventBusService} from '../services/event-bus.service'
 import { updateStation, setDisplayedSongs, deleteSong } from '../store/station.action'
 import {setSongs} from "../store/media.action"
-import { likeSong } from "../store/user.action";
+import { likeSong, unlikeSong } from "../store/user.action";
 import { Equalizer } from "./Equalizer";
 import moment from 'moment';
 
-export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, user }) {
+export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs }) {
   moment().format();
 
   // const [stationToRender, setStationToRender] = useState(null);
@@ -97,7 +97,7 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
                                 <div className="btn-container flex">
                                   {user?.likedSongs.some(likedSong => likedSong._id === song._id) ? 
                                    <button className="like-btn">
-                                   <i className="fas fa-heart liked" ></i>
+                                   <i className="fas fa-heart liked"onClick={() => unlikeSong(song._id)} ></i>
                                  </button>
                                 : 
                                 <button className="like-btn">
@@ -147,7 +147,8 @@ const mapDispatchToProps = {
   setDisplayedSongs,
   deleteSong,
   setSongs,
-  likeSong
+  likeSong,
+  unlikeSong
 };
 
 export const DragDrop = connect(mapStateToProps, mapDispatchToProps)(_DragDrop);

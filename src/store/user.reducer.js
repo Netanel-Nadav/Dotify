@@ -18,7 +18,11 @@ export function userReducer(state = initialState, action) {
             newState = { ...state, user: action.updatedUser }
             break;
         case 'LIKE_SONG': 
-            newState = {...state, user: {...state.user, likedSongs: [...state.user.likedSongs, action.song]}  }
+            newState = {...state, user: {...state.user, likedSongs: [...state.user.likedSongs, action.song]}}
+            break;
+        case 'UNLIKE_SONG': 
+            newState = {...state, user: {...state.user, likedSongs: state.user.likedSongs.filter(song => song._id !== action.songId)}}
+            break;
         default:
             break;
 

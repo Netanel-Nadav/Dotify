@@ -43,6 +43,21 @@ export function setSongs(station, songId) {
     };
 }
 
+// export function updateSongsOrder(songs) {
+//     return async (dispatch, getState) => {
+//         try {
+//             const action = {type: "UPDATE_SONGS_ORDER", songs}
+//             dispatch(action)
+//             const {currSongId} = getState().mediaModule
+//             const songIdx = songs.findIndex(song => song._id === currSongId);
+//             action = { type: 'SET_CURR_SONG_IDX', songIdx }
+//             dispatch(action);
+//         } catch (err) {
+//             console.log('Error in updating song order', err)
+//         }
+//     } 
+// }
+
 export function changeSong(diff) {
     return async (dispatch, getState) => {
         try {

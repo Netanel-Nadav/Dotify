@@ -1,0 +1,121 @@
+.drag-drop-container {
+
+    .station-song-details {
+        align-items: center;
+        border-radius: 10px;
+        gap: 15px;
+
+        .playing {
+            color: $clr1;
+        }
+
+
+        .play-icon {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .delete-btn {
+            opacity: 0;
+        }
+        
+        .like-btn {
+            opacity: 0;
+        }
+        
+        &:hover {           
+            background-color: $clr3;
+                    
+            .title {
+                opacity: 0;
+            }
+
+            .play-icon {
+                opacity: 1;
+
+                &:hover {
+                    color: $clr1;
+                }
+            }
+
+            .delete-btn {
+                opacity: 1;
+            }
+
+            .like-btn {
+                opacity: 1;
+            }
+        }
+        
+        .song-info {
+            position: relative;
+            align-items: center;
+            gap:  15px;
+            flex-basis: 60%;
+            padding-left: 16px;
+
+            .img-container{
+                
+                img {
+                    width: 40px;
+                    height: 40px;
+                    object-fit: cover;
+                    border-radius: 2px;
+                }
+            }
+            .playing {
+                padding-left: 0px;
+            }
+
+            .dont-show {
+                opacity: 0;
+            }   
+
+        }
+    
+
+        .wrraper { 
+            flex-basis: 40%;
+
+
+            .song-addedAt {
+                flex-basis: 50%;
+            }
+
+            .song-duration {
+                flex-basis: 50%;
+                gap: 10px;
+            }
+
+            .btn-container {
+                gap: 2px;
+
+                button {
+                    background: none;
+                    border: none;
+                    color: $clr6;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: $clr1;
+                    }
+                }
+            }
+        }
+    }
+
+
+    h1 {
+        margin-bottom: $base-margin;
+    }
+    .songs-list {
+     list-style-type: none;
+     padding: 0;
+     margin: 0;
+
+    }
+
+
+}

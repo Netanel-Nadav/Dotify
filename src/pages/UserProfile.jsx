@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { UserHero } from "../cmps/UserHero";
 import { stationService } from "../services/station.service"
-import {StationPreview} from "../cmps/StationPreview"
+import { StationList } from "../cmps/StationList";
 
 
 export class _UserProfile extends React.Component {
@@ -26,11 +26,8 @@ export class _UserProfile extends React.Component {
         return (
             <section className="user-profile">
                 <UserHero user={user} />
-                {
-                   stations && stations.map(station => (
-                        <StationPreview key={station._id} station={station}/>
-                    ))
-                }
+                <h2>Your Playlists:</h2>
+                <StationList stations={stations} />
             </section>
         )
     }

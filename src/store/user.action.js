@@ -27,7 +27,6 @@ export function logout() {
 }
 
 export function signup(newUser) {
-    // console.log(newUser);
     return async (dispatch) => {
         try {
             const user = await userService.signup(newUser)
@@ -35,6 +34,19 @@ export function signup(newUser) {
             dispatch(action)
         } catch (err) {
             console.log('Error at User Action signup', err);
+        }
+    }
+}
+
+
+export function updateUser(user) {
+    return async (dispatch) => {
+        try {
+            const updatedUser = await userService.update(user)
+            let action = { type: 'UPDATE_USER', updatedUser }
+            dispatch(action)
+        } catch (err) {
+            console.log('Had an Error in updateStation', err);
         }
     }
 }

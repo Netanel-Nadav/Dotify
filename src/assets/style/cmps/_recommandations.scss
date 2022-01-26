@@ -1,0 +1,144 @@
+
+.recommendations-container {
+    padding: $base-margin;
+
+    h1 {
+        font-size: rem(18px);
+        margin-bottom: $base-margin;
+    }
+
+    .see-more {
+        font-family: latobold;
+        font-size: rem(14px);
+        background: none;
+        border: none;
+        color: $clr6;
+        margin-bottom: 10px;
+        cursor: pointer;
+        text-transform: uppercase;
+        text-decoration: underline;
+
+        &:hover {
+            color: $clr1;
+        }
+    }
+
+        .items-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, auto));
+            
+        
+
+        .recommendation {
+            flex-direction: column;
+            align-items: center;
+            border-radius: 5px;
+            padding: 10px;
+
+            p {
+                font-family: latobold;
+                font-size: rem(12px);
+                text-align: center;
+                margin: 5px 0px;
+            }
+
+            &:hover {
+                cursor: pointer;
+                background-color: $clr3;
+            }
+        }
+     }
+    
+
+    
+
+
+    @include for-normal-layout {
+        h1 {
+            text-align: center;
+            margin-top: $base-padding;
+        }
+        
+        .see-more {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .recommendations{
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+    
+            .img-container {
+    
+                img { 
+                    border-radius: 5px;
+                }
+            }
+
+            .recommendation {
+                border-radius: 5px;
+                padding: 10px;
+    
+                p {
+                    text-align: center;
+                    margin: 5px 0px;
+                }
+    
+                &:hover {
+                    cursor: pointer;
+                    background-color: $clr3;
+                }
+            }
+        }
+    }
+
+
+
+
+    @include for-wide-layout {
+        padding: 0px 20px;
+
+        .see-more {
+            margin-bottom: $base-margin;
+            position: relative;
+            left: rem(40px);
+
+            &:hover {
+                color: $clr1;
+            }
+        }
+    
+        h1 {
+            font-size: rem(20px);
+            margin-bottom: $base-padding;
+            text-align: left;
+        }
+    
+        .recommendations{
+            flex-wrap: wrap;
+            justify-content: start;
+            gap: 15px;
+    
+            .img-container {
+    
+                img { 
+                    border-radius: 5px; 
+                }
+            }
+        
+            .recommendation {
+                align-items: center;
+                padding: 10px;
+                border-radius: 5px;
+                width: rem(110px);
+    
+                &:hover {
+                    cursor: pointer;
+                    background-color: $clr3;
+                }
+            }
+        }
+    }
+}

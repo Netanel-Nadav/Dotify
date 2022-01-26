@@ -29,6 +29,7 @@ export function updateStation(station) {
   return async (dispatch) => {
     try {
       const updatedStation = await stationService.update(station)
+      // const updatedStation = await stationService.save(station)
       let action = { type: 'UPDATE_STATION', updatedStation }
       dispatch(action)
     } catch (err) {
@@ -37,10 +38,11 @@ export function updateStation(station) {
   }
 }
 
-export function addSong(stationId, song) {
+export function addSong(station, song) {
   return async (dispatch) => {
     try {
-      const updatedStation = await stationService.addSongToStation(stationId, song)
+      const updatedStation = await stationService.addSongToStation(station._id, song)
+      // const updatedStation = await stationService.save(station, song)
       let action = { type: 'UPDATE_STATION', updatedStation }
       dispatch(action)
       action = { type: 'UPDATE_DISPLAYED_SONGS', songs: updatedStation.songs }
@@ -58,8 +60,6 @@ export function deleteSong(stationId, songId) {
       const updatedStation = await stationService.deleteSongFromStation(stationId, songId)
       let action = { type: 'UPDATE_STATION', updatedStation }
       dispatch(action)
-      action = { type: 'UPDATE_STATION', updatedStation }
-      dispatch(action)
       action = { type: 'UPDATE_DISPLAYED_SONGS', songs: updatedStation.songs }
       dispatch(action)
       return Promise.resolve()
@@ -73,6 +73,7 @@ export function makeNewStation() {
   return async (dispatch) => {
     try {
       const newStation = await stationService.makeNewStation()
+      // const newStation = await stationService.save({})
       console.log(newStation)
       const action = { type: 'ADD_STATION', newStation }
       dispatch(action)

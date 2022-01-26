@@ -69,7 +69,10 @@
             .img-upload {
                 width: 150px;
                 height: 150px;
-                background-color: rosybrown;
+                background-color: $clr3;
+                background-position: center;
+                background-size: cover;
+
 
                 input {
                     width: 100%;

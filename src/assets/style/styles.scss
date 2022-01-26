@@ -20,6 +20,7 @@
 // PAGES
 
 
+@import "./pages/user-profile";
 @import "./pages/login-page.scss";
 @import "./pages/create-station.scss";
 @import "./pages/library";
@@ -30,6 +31,7 @@
 
 
 
+@import "./cmps/edit-user.scss";
 @import "./cmps/edit-playlist.scss";
 @import "./cmps/equalizer.scss";
 @import "./cmps/volume-controller.scss";

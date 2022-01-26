@@ -12,6 +12,7 @@ export const userService = {
     signup,
     getLogedinUser,
     setUser,
+    update,
 }
 
 
@@ -25,7 +26,6 @@ async function login(credentials) {
     }
     return user
 }
-
 
 
 async function setUser() {
@@ -44,14 +44,21 @@ function logout() {
 async function signup(userInfo) {
     const users = await storageService.query()
     if (!users) storageService._save(STORAGE_KEY, [])
-    let user = _createUser()
-    user.username = userInfo.username;
-    user.password = userInfo.password;
-
-    console.log(user);
+    let user = {
+        username: userInfo.username,
+        fullname: userInfo.fullname,
+        password: userInfo.password,
+        backgroundColor: '#fff'
+    }
     const newUser = await storageService.post(STORAGE_KEY, user)
     _setLogedinUser(newUser)
     return newUser
+}
+
+async function update(user) {
+    const updatedUser =  await storageService.put(STORAGE_KEY, user)
+    _setLogedinUser(updatedUser)
+    return updatedUser
 }
 
 function getLogedinUser() {
@@ -60,15 +67,5 @@ function getLogedinUser() {
 
 function _setLogedinUser(user) {
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(user))
-    return user
-}
-
-
-function _createUser() {
-    const user = {
-        imgUrl: 'assets/img/user-img.svg',
-        likedSongs: [],
-        lastPlayedArtists: [],
-    }
     return user
 }

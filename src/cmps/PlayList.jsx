@@ -71,7 +71,7 @@ function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayed
                       </button>
                       <button
                         className="delete-btn"
-                        onClick={() => deleteSong(station._id, song._id)}
+                        onClick={() => deleteSong(station, song._id)}
                       >
                         <i className="fas fa-trash-alt"></i>
                       </button>

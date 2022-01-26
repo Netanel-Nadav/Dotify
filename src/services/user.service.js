@@ -1,5 +1,6 @@
 
 import { storageService } from "./async-storage.service";
+import { httpService } from "./http.service";
 
 
 const STORAGE_KEY = 'user'
@@ -11,29 +12,16 @@ export const userService = {
     logout,
     signup,
     getLogedinUser,
-    setUser,
     update,
 }
 
 
 async function login(credentials) {
-    const users = await storageService.query(STORAGE_KEY)
-    let user = users.find(user => user.username === credentials.username && user.password === credentials.password)
-    if (user) {
-        user = { ...user }
-        delete user.password
-        _setLogedinUser(user)
-    }
+    const user = await httpService.post('auth/login', credentials)
+    _setLogedinUser(user)
     return user
 }
 
-
-async function setUser() {
-    storageService._save(STORAGE_KEY, [])
-    await signup({ username: 'nati', password: '123' })
-    await signup({ username: 'sahar', password: '123' })
-    await signup({ username: 'rotem', password: '123' })
-}
 
 function logout() {
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, null)
@@ -42,20 +30,13 @@ function logout() {
 
 
 async function signup(userInfo) {
-    const users = await storageService.query()
-    if (!users) storageService._save(STORAGE_KEY, [])
-    let user = {
-        username: userInfo.username,
-        fullname: userInfo.fullname,
-        password: userInfo.password
-    }
-    const newUser = await storageService.post(STORAGE_KEY, user)
+    const newUser = await httpService.post('auth/signup', userInfo)
     _setLogedinUser(newUser)
     return newUser
 }
 
 async function update(user) {
-    const updatedUser =  await storageService.put(STORAGE_KEY, user)
+    const updatedUser =  await httpService.put(`user/${user._id}`, user)
     _setLogedinUser(updatedUser)
     return updatedUser
 }

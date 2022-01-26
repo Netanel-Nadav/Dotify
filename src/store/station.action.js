@@ -13,6 +13,18 @@ export function loadStations() {
   }
 }
 
+
+export function getGenres() {
+  return async (dispatch) => {
+    try {
+      const genres = await stationService.getStationsGenre()
+      return Promise.resolve(genres)
+     } catch (err) {
+       console.log("Couldn't get genres", err)
+     }
+  }
+}
+
 export function setDisplayedSongs(station) {
   return async (dispatch) => {
     try {
@@ -28,7 +40,8 @@ export function setDisplayedSongs(station) {
 export function updateStation(station) {
   return async (dispatch) => {
     try {
-      const updatedStation = await stationService.update(station)
+      const updatedStation = await stationService.save(station)
+      console.log(updatedStation)
       // const updatedStation = await stationService.save(station)
       let action = { type: 'UPDATE_STATION', updatedStation }
       dispatch(action)
@@ -41,7 +54,7 @@ export function updateStation(station) {
 export function addSong(station, song) {
   return async (dispatch) => {
     try {
-      const updatedStation = await stationService.addSongToStation(station._id, song)
+      const updatedStation = await stationService.addSongToStation(station, song)
       // const updatedStation = await stationService.save(station, song)
       let action = { type: 'UPDATE_STATION', updatedStation }
       dispatch(action)
@@ -54,10 +67,10 @@ export function addSong(station, song) {
   }
 }
 
-export function deleteSong(stationId, songId) {
+export function deleteSong(station, songId) {
   return async (dispatch) => {
     try {
-      const updatedStation = await stationService.deleteSongFromStation(stationId, songId)
+      const updatedStation = await stationService.save(station, null,songId)
       let action = { type: 'UPDATE_STATION', updatedStation }
       dispatch(action)
       action = { type: 'UPDATE_DISPLAYED_SONGS', songs: updatedStation.songs }
@@ -72,9 +85,9 @@ export function deleteSong(stationId, songId) {
 export function makeNewStation() {
   return async (dispatch) => {
     try {
-      const newStation = await stationService.makeNewStation()
-      // const newStation = await stationService.save({})
-      console.log(newStation)
+      // const newStation = await stationService.makeNewStation()
+      
+      const newStation = await stationService.save({})
       const action = { type: 'ADD_STATION', newStation }
       dispatch(action)
       return Promise.resolve(newStation)

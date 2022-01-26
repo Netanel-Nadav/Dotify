@@ -13,6 +13,7 @@ const initialState = {
 export function stationReducer(state = initialState, action) {
   let newState = state;
 
+
   switch (action.type) {
     case "SET_STATIONS":
       newState = { ...state, stations: action.stations };
@@ -37,6 +38,5 @@ export function stationReducer(state = initialState, action) {
     default:
       break;
   }
-  window.station = newState
   return newState;
 }

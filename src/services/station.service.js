@@ -222,11 +222,10 @@ async function searchYouTube(q) {
         "method": "GET",
         "headers": {
             "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
-            "x-rapidapi-key": '6600944e0amsh06bd5834aeedf3ap12c401jsn549127d55af9'
+            "x-rapidapi-key": '6f5320ed11msh859c70eb983b0edp158967jsnc3a93be7fd34'
         }
     });
     const body = await response.json();
-    console.log(body);
     const searchRes = {
         songs: body.items.filter(item => item.type === 'video'),
         recommendations: body.refinements

@@ -42,11 +42,11 @@ export function signup(newUser) {
 export function updateUser(user) {
     return async (dispatch) => {
         try {
-        const updatedUser = await userService.update(user)
-        let action = { type: 'UPDATE_USER', updatedUser }
-        dispatch(action)
-      } catch (err) {
-        console.log('Had an Error in updateStation', err);
-      }
+            const updatedUser = await userService.update(user)
+            let action = { type: 'UPDATE_USER', updatedUser }
+            dispatch(action)
+        } catch (err) {
+            console.log('Had an Error in updateStation', err);
+        }
     }
-  }
+}

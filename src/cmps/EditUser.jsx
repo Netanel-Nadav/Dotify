@@ -57,7 +57,6 @@ export class EditUser extends React.Component {
     }
 
     onChooseColor = (color) => {
-        // this.setState({isColorClicked: !this.state.isColorClicked})
         this.setState((prevState) => ({ user: { ...prevState.user, backgroundColor: color } }))
     }
 

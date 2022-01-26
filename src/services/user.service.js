@@ -47,7 +47,8 @@ async function signup(userInfo) {
     let user = {
         username: userInfo.username,
         fullname: userInfo.fullname,
-        password: userInfo.password
+        password: userInfo.password,
+        backgroundColor: '#fff'
     }
     const newUser = await storageService.post(STORAGE_KEY, user)
     _setLogedinUser(newUser)
@@ -68,16 +69,3 @@ function _setLogedinUser(user) {
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(user))
     return user
 }
-
-<<<<<<< HEAD
-
-function _createUser() {
-    const user = {
-        imgUrl: '/assets/img/user-img.svg',
-        likedSongs: [],
-        lastPlayedArtists: [],
-    }
-    return user
-}
-=======
->>>>>>> c6dd827174f6e3fc91baaa8b311edd11c05c05d5

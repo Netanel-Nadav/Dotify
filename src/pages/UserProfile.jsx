@@ -26,7 +26,7 @@ export class _UserProfile extends React.Component {
         return (
             <section className="user-profile">
                 <UserHero user={user} />
-                <h3>Your Playlists:</h3>
+                <h2>Your Playlists:</h2>
                 <StationList stations={stations} />
             </section>
         )

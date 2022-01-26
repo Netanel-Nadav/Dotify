@@ -47,7 +47,9 @@ export function mediaReducer(state = initialState, action) {
         case "RESET_ALREADY_PLAYED":
             newState = { ...state, notPlayedId: [] };
             break;
-
+        // case "UPDATE_SONGS_ORDER":
+        //     newState = { ...state, currSongList: action.songs }
+        //     break;
         default:
             break;
     }

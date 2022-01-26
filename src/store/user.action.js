@@ -38,6 +38,20 @@ export function signup(newUser) {
     }
 }
 
+export function unlikeSong (songId) {
+    return async (dispatch, getState) => {
+        try {
+            const action = {type: 'UNLIKE_SONG', songId}
+            dispatch(action)
+            const {user} = getState().userModule
+            console.log(user)
+            await userService.update(user)
+        } catch (err) {
+            console.log('Error at User Action unlike song', err)
+
+        }
+    }
+}
 
 export function likeSong (song) {
     return async (dispatch, getState) => {
@@ -51,11 +65,11 @@ export function likeSong (song) {
             }
             const {user} = getState().userModule
             if(user && user.likedSongs.every(likedSong => likedSong._id !== songToLike._id)) {
-                const editedUser = {...user}
-                editedUser.likedSongs = [...editedUser.likedSongs, songToLike ]
-                const updatedUser = await userService.update(editedUser)
-                let action = { type: 'UPDATE_USER', updatedUser }
+                const action = {type: 'LIKE_SONG', song: songToLike}
                 dispatch(action)
+                const {user} = getState().userModule
+                console.log(user)
+                await userService.update(user)
             } else console.log('Please login')
         } catch (err) {
             console.log('Error at User Action like song', err)

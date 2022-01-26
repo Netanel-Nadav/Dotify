@@ -1,8 +1,11 @@
 .volume-container {
     gap: 10px;
     margin: auto;
+    flex-basis: 5%;
+    // display: none;
     
     button {
+        display: block;
         background: none;
         border: none;
         color: darken($clr6, 40%);
@@ -13,10 +16,19 @@
     .MuiSlider-root {
         color: white;
         width: 200px;
+        display: none;
     }
     
     .MuiSlider-rail {
         background-color: darken($clr6, 60%);
+    }
+
+
+    @include for-wide-layout {
+
+        .MuiSlider-root {
+            display: block;
+        }
     }
 
 }

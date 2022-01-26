@@ -2,13 +2,29 @@
     gap: 10px;
     margin: auto;
 
+
     .MuiSlider-root {
-        color: white;
-        width: 200px;
+        display: none;
+    }
+
+    .count {
+        display: none;
     }
     
     .MuiSlider-rail {
         background-color: darken($clr6, 60%);
     }
 
+    @include for-wide-layout {
+        .MuiSlider-root {
+        color: white;
+        width: 200px;
+        display: flex;
+    }
+
+        .count {
+            display: block;
+        }
+
+    }
 }

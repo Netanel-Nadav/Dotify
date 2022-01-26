@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import moment from 'moment';
 
+import { eventBusService } from '../services/event-bus.service';
 import { setSongs, setStation } from "../store/media.action";
 import { deleteSong, setDisplayedSongs } from "../store/station.action";
 import { likeSong } from "../store/user.action";
@@ -18,7 +19,8 @@ function _PlayList({ station, setSongs, deleteSong, setDisplayedSongs, displayed
 
   const onPlaySong = async (station, songId) => {
     await setSongs(station, songId);
-    player.playVideo();
+    // player.playVideo();
+    eventBusService.emit('playVideo');
   }
 
   return (

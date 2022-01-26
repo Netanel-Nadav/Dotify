@@ -17,6 +17,8 @@ export function _Header({ user, logout }) {
         this.props.history.push('/')
     }
 
+    
+
     return (
         <header className='app-header flex space-between align-center'>
             <div className='back-foword-container flex'>

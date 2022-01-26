@@ -1,18 +1,4 @@
-// import { stationService } from "../services/station.service";
 import { utilService } from "../services/util.service";
-
-export function setPlayer(player) {
-    return async (dispatch) => {
-        try {
-            console.log(player)
-            const action = { type: "SET_PLAYER", player };
-            dispatch(action);
-            // return Promise.resolve()
-        } catch (err) {
-            console.log("Got an Error in SetPlayer", err);
-        }
-    }
-}
 
 export function setStation(station) {
     return async (dispatch) => {

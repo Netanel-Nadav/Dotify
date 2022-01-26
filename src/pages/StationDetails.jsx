@@ -7,6 +7,7 @@ import { stationService } from "../services/station.service";
 
 import { PlayList } from '../cmps/PlayList';
 import { StationHero } from '../cmps/StationHero';
+import { DragDrop } from '../cmps/DragDrop';
 
 
 
@@ -24,7 +25,8 @@ function _StationDetails({ match,stations, setDisplayedSongs }) {
     return (
         <section className='station'>
             <StationHero station={station} />
-            <PlayList station={station}/>
+            <DragDrop station={station} />
+            {/* <PlayList station={station}/> */}
         </section>
     )
 }

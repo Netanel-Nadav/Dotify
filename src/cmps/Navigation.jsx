@@ -1,7 +1,9 @@
 import { NavLink, Link } from "react-router-dom";
 import { stationService } from "../services/station.service";
+import { connect } from "react-redux";
 
-export function Navigation() {
+
+function _Navigation({user}) {
   return (
     <nav className="nav-container flex column">
       <Link to="/">
@@ -40,7 +42,7 @@ export function Navigation() {
             <div className="title">Creat Playlist</div>
           </li>
         </NavLink>
-        <NavLink to="#">
+        <NavLink to={`/likedSongs/${user?._id}`}>
           <li className="link-container flex align-center">
             <div className="icon">
               <i className="fas fa-heart"></i>
@@ -52,3 +54,16 @@ export function Navigation() {
     </nav>
   );
 }
+
+
+function mapStateToProps({ userModule }) {
+  return {
+    user: userModule.user
+  };
+}
+
+const mapDispatchToProps = {
+  
+};
+
+export const Navigation = connect(mapStateToProps, mapDispatchToProps)(_Navigation);

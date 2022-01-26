@@ -31,13 +31,14 @@ class _UserHero extends React.Component {
     render() {
         const { user, isEditShown } = this.state
         if (!user) return <h1>Loading...</h1>
-        const { imgUrl, username } = user
+        const { imgUrl, username, backgroundColor } = user
+        const transperent = 'rgb(0 0 0 / 0%)'
         return (
-            <div className="hero">
+            <div className="hero" style={{backgroundImage: `linear-gradient(181deg, ${backgroundColor}, ${transperent})`}}>
                 <div className="user-info flex align-center">
-                    <div className="img-container">
+                    <div className="img-container" style={{backgroundImage: user.imgUrl ? `url(${imgUrl})` : `<i className="fas fa-user user-icon"></i>`}}>
                         <button className='edit-btn' onClick={this.onEditProfile}>Edit Profile</button>
-                        <i className="fas fa-user user-icon"></i>
+                        
                     </div>
                     <div className="user-details">
                         <small>Profile</small>

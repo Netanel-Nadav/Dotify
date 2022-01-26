@@ -152,7 +152,6 @@ async function searchYouTube(q) {
         }
     });
     const body = await response.json();
-    console.log(body);
     const searchRes = {
         songs: body.items.filter(item => item.type === 'video'),
         recommendations: body.refinements

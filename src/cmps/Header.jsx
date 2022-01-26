@@ -1,10 +1,9 @@
 import React from 'react'
 
 import { connect } from 'react-redux'
-import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
 import { UserModal } from './UserModal';
-import { login, logout, signup } from '../store/user.action'
+import { logout } from '../store/user.action'
 
 export function _Header({ user, logout }) {
 
@@ -34,8 +33,6 @@ export function _Header({ user, logout }) {
         </header>
     )
 }
-
-
 
 function mapStateToProps({ userModule }) {
     return {

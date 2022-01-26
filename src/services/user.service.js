@@ -13,6 +13,7 @@ export const userService = {
     signup,
     getLogedinUser,
     update,
+    getById
 }
 
 
@@ -41,6 +42,10 @@ async function update(user) {
     return updatedUser
 }
 
+async function getById(userId) {
+    return httpService.get(`user/${userId}`)
+}
+
 function getLogedinUser() {
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN))
 }
@@ -49,4 +54,3 @@ function _setLogedinUser(user) {
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(user))
     return user
 }
-

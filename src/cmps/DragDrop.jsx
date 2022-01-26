@@ -1,16 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { useState } from 'react';
+import { connect } from "react-redux";
+import { useParams } from 'react-router-dom';
+import { stationService } from '../services/station.service';
+import { updateStation, setDisplayedSongs, deleteSong } from '../store/station.action'
+import { likeSong } from "../store/user.action";
+import { Equalizer } from "./Equalizer";
+import moment from 'moment';
 
+export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, user }) {
+  moment().format();
 
-export function DragDrop({displayedSongs}) {
-  const [songs, setSongs] = useState(null);
+  // const [stationToRender, setStationToRender] = useState(null);
+  const [songs, setSongsToRender] = useState(null);
 
 
   useEffect(() => {
-    setSongs(displayedSongs)
-  }, [])
+    // setStationToRender(station)
+    if (station) setSongsToRender(station.songs)
+    else setSongsToRender(user.likedSongs)
+  }, [displayedSongs])
 
+
+
+  const onPlaySong = async (station, songId) => {
+    // await setSongs(station, songId);
+    console.log(station);
+    // player.playVideo();
+  }
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
@@ -19,47 +36,136 @@ export function DragDrop({displayedSongs}) {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    setSongs(items);
+    setSongsToRender(items);
+    station.songs = items
+    updateStation(station)
   }
 
-  if(!songs) return <React.Fragment></React.Fragment>
+  if (!songs) return <React.Fragment></React.Fragment>
   return (
-    <div className="drag-drop-container">
-      <h1>List Of Songs</h1>
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="song-container">
-          {(provided) => (
-            <ul className="songs-list" {...provided.droppableProps} ref={provided.innerRef}>
-              <div className='labels-container flex space-between'>
-                <span># Title</span>
-                <span>Album</span>
-                <span>Realese At</span>
-                <span><i className="fas fa-clock"></i></span>
-              </div>
-              <hr />
-              {songs.map(({ _id, name, imgUrl }, index) => {
-                return (
-                  <Draggable key={_id} draggableId={_id} index={index}>
-                    {(provided) => (
-                      <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                        <div className='drag-song-container flex'>
-                          <div className='idx-img-title flex align-center'>
-                            <small className='idx'>{index + 1}</small>
-                            <small className='play-icon'><i className="fas fa-play"></i></small>
-                            <div className='img-container'> {/* {imgUrl} */}</div>
-                            <h3>{name}</h3>
-                          </div>
-                        </div>
-                      </li>
-                    )}
-                  </Draggable>
-                );
-              })}
-              {provided.placeholder}
-            </ul>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </div>
+    <section>
+       <section className="station-song-info-title flex">
+        <div className="title-container flex">
+          <p className="song-index">#</p>
+          <p className="title">Title</p>
+        </div>
+        <section className="wrraper flex space-between">
+          <p className="date-addedAt">Date Added</p>
+          <p className="duration">
+            <i className="fas fa-clock"></i>
+          </p>
+        </section>
+      </section>
+      <hr />
+      <div className="drag-drop-container">
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="song-container">
+            {(provided) => (
+              <ul className="songs-list" {...provided.droppableProps} ref={provided.innerRef}>
+                {songs && songs.map((song, index) => {
+                  return (
+                    <Draggable key={song._id} draggableId={song._id} index={index}>
+                      {(provided) => (
+                        <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                          <section key={song._id} className={`station-song-details flex`}>
+                            <section className={`song-info flex ${song._id === currSongId ? 'playing' : ''}`}>
+                              {song._id !== currSongId ? <p className='title'>{index + 1}</p> : <Equalizer />}
+                              <span
+                                className={`play-icon ${song._id === currSongId ? 'dont-show' : ''}`}
+                                onClick={() => onPlaySong(station, song._id)}
+                              >
+                                <i
+                                  className={`fas fa-play ${song._id === currSongId ? "equalizer" : ""
+                                    }`}
+                                ></i>
+                              </span>
+                              <section
+                                className={`img-container ${song._id === currSongId ? "playing" : ""
+                                  }`}
+                              >
+                                <img src={song.imgUrl} />
+                              </section>
+                              <p className="">{song.title}</p>
+                            </section>
+                            <section className="wrraper flex space-between">
+                              <section className="song-addedAt">
+                                <p>{moment(song.addedAt).fromNow()}</p>
+                              </section>
+                              <section className="song-duration btns flex">
+                                <p>{song.duration}</p>
+                                <div className="btn-container flex">
+                                  <button className="like-btn">
+                                    <i className={user?.likedSongs.some(likedSong => likedSong._id === song._id) ? "fas fa-heart liked" : "far fa-heart"} onClick={() => likeSong(song)}></i>
+                                  </button>
+                                  <button
+                                    className="delete-btn"
+                                    onClick={() => deleteSong(station._id, song._id)}
+                                  >
+                                    <i className="fas fa-trash-alt"></i>
+                                  </button>
+                                </div>
+                              </section>
+                            </section>
+                          </section>
+                        </li>
+                      )}
+                    </Draggable>
+                  );
+                })}
+                {provided.placeholder}
+              </ul>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
+    </section>
   );
 }
+
+
+function mapStateToProps({ stationModule, mediaModule, userModule }) {
+  return {
+    stations: stationModule.displayedSongs,
+    displayedSongs: stationModule.displayedSongs,
+    currSongId: mediaModule.currSongId,
+    user: userModule.user
+  };
+}
+
+const mapDispatchToProps = {
+  updateStation,
+  setDisplayedSongs,
+  deleteSong,
+  likeSong
+};
+
+export const DragDrop = connect(mapStateToProps, mapDispatchToProps)(_DragDrop);
+
+
+
+
+
+// _id, title, imgUrl, addedAtForShow, duration 
+{/* <div className='drag-song-container flex align-center'>
+<div className='idx-img-title flex align-center'>
+  <small className='idx'>{index + 1}</small>
+  <small className='play-icon'><i className="fas fa-play"></i></small>
+  <div className='img-container'>
+    <img src={imgUrl} />
+  </div>
+  <p>{title}</p>
+</div>
+
+<div className='dateAdded-duration flex'>
+  <p>{addedAtForShow}</p>
+  <p>{duration}</p>
+</div>
+</div> */}
+
+
+
+
+
+
+
+

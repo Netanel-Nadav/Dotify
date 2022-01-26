@@ -9,12 +9,13 @@ import { Home } from "./pages/Home";
 import { CreateStation } from "./pages/CreateStation";
 import { Library } from "./pages/Library";
 import { Search } from "./pages/Search";
-import { Header } from "./cmps/Header";
-import { AudioPlayer } from "./cmps/AudioPlayer";
-import { Navigation } from "./cmps/Navigation";
 import { LoginPage } from "./pages/LoginPage";
 import { UserProfile } from "./pages/UserProfile";
 import { StationDetails } from "./pages/StationDetails";
+import { LikedSongs } from './pages/LikedSongs';
+import { Header } from "./cmps/Header";
+import { AudioPlayer } from "./cmps/AudioPlayer";
+import { Navigation } from "./cmps/Navigation";
 import { HomeScreenModal } from "./cmps/HomeScreenModal";
 
 export class _RootCmp extends React.Component {
@@ -52,6 +53,7 @@ export class _RootCmp extends React.Component {
           <Switch>
             <Route component={UserProfile} path="/user/:id" />
             <Route component={StationDetails} path="/station/:id" />
+            <Route component={LikedSongs} path="/likedSongs/:id"/>
             <Route component={LoginPage} path="/login" />
             <Route component={CreateStation} path="/newStation" />
             <Route component={Search} path="/search" />

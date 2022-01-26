@@ -2,8 +2,10 @@
     gap: 10px;
     margin: auto;
     flex-basis: 5%;
+    // display: none;
     
     button {
+        display: block;
         background: none;
         border: none;
         color: darken($clr6, 40%);
@@ -23,6 +25,7 @@
 
 
     @include for-wide-layout {
+
         .MuiSlider-root {
             display: block;
         }

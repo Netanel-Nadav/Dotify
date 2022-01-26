@@ -5,6 +5,7 @@
     height: 100%;
 
     .img-container {
+        flex-basis: 50%;
         width: 80px;
         height: 80px;
 
@@ -16,9 +17,17 @@
     }
 
     h1 {
-        font-size: rem(14px);
+        font-size: rem(10px);
         font-weight: 500;
         max-width: 50ch;
+    }
+
+    @include for-wide-layout {
+    
+    h1 {
+        font-size: rem(14px);
+    }
+    
     }
 
 }

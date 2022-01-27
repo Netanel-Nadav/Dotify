@@ -60,6 +60,17 @@
         .pushed {
             color: $clr1;
         }
+
+        .shuffle-btn,
+        .repeat-btn {
+            position: relative;    
+
+            span {
+                position: absolute;
+                top: 18%;
+                left: 43%;
+            }
+        }
     }
 
     .xxx {

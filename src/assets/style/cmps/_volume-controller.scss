@@ -23,6 +23,11 @@
         background-color: darken($clr6, 60%);
     }
 
+    .MuiSlider-track {
+        &:hover {
+            background-color: $clr1;
+        }
+    }
 
     @include for-wide-layout {
 

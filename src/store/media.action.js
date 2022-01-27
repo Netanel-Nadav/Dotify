@@ -35,8 +35,8 @@ export function setSongs(station, songId) {
             const songIdx = songs.findIndex(song => song._id === songId);
             action = { type: 'SET_CURR_SONG_IDX', songIdx }
             dispatch(action);
-            action = { type: "TOGGLE_IS_PLAYING", isPlaying: true };
-            dispatch(action);
+            // action = { type: "TOGGLE_IS_PLAYING", isPlaying: true };
+            // dispatch(action);
         } catch (err) {
             console.log("Got an Error in SetSong", err);
         }

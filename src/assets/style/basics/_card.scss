@@ -10,6 +10,7 @@
     transition: background .2s;
     position: relative;
     margin-bottom: $base-margin;
+    gap: 10px;
 
 
     .play-btn {
@@ -27,52 +28,63 @@
     }
 
     .img-container {
-        margin-bottom: $base-margin;
         display: flex;
         justify-content: center;
+        box-shadow: 0px 3px 20px rgba(0,0,0,0.5);
 
         img {
             border-radius: 5px;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
         }   
     }
 
     .info-container {
+        gap: 8px;
+
         h3 {
             font-size: rem(16px);
-            margin-bottom: 5px;
             white-space: nowrap;
             text-overflow: ellipsis;
-            width: 130px;
+            width: 220px;
             overflow: hidden;
         }
 
-    }
+        small {
+            font-size: rem(14px);
+        }
+        .likes-count-container {  
+            
+            gap: 5px;  
 
-    .wrraper {
-        gap: 15px;
-        justify-content: space-between;
-
-        .likes-count {
-            align-items: flex-end;
-
-           .heart-icon {
+            .heart-icon {
                
+                color: lighten($clr4, 40%);
+                font-size: rem(12px);
+
                 &:hover{
                      color: $clr1;
                      transform: scale(1.2);
                }
            }
+
+           small {
+               font-size: rem(12px);
+               color: lighten($clr4, 40%);
+               
+           }
         }
+
     }
 
-    &:hover {
-        background-color: $clr4;
-
-        .play-btn {
-            opacity: 1;
-            bottom: 30%;
+       
+    
+        &:hover {
+            background-color: $clr4;
+    
+            .play-btn {
+                opacity: 1;
+                bottom: 30%;
+            }
         }
+    
     }
-
-}
+    

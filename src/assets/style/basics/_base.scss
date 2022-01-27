@@ -3,7 +3,7 @@
 }
 
 html {
-    font-family: lato, sans-serif;
+    font-family: lato, heebo ,sans-serif;
     color: white;
     line-height: 1.2;
 }
@@ -26,6 +26,7 @@ img {
 
 h1,h2,h3,h4,h5,h6 {
     margin: 0 0;
+    font-family: latobold, heebobold, sans-serif;
 }
 
 a {
@@ -46,6 +47,11 @@ button {
 
 .liked {
     color: $clr1
+}
+
+.clicked {
+    transform: scale(1.2);
+    border: 2px solid white;
 }
 
 ::-webkit-scrollbar {

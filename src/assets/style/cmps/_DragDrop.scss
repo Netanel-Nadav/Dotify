@@ -43,12 +43,15 @@
             color: $clr1;
         }
 
-        .pausing,
-        .play-icon {
+        .play-pause-icon {
             position: absolute;
             opacity: 0;
             cursor: pointer;
             font-size: 12px;
+            
+            .pause {
+                font-size: 16px;
+            }
         }
 
         .delete-btn {
@@ -66,13 +69,16 @@
                 opacity: 0;
             }
             
-            .pausing,
-            .play-icon {
+            .play-pause-icon {
                 opacity: 1;
 
                 &:hover {
                     color: $clr1;
                 }
+            }
+
+            .bars-7 {
+                opacity: 0;
             }
 
             .delete-btn {
@@ -107,9 +113,9 @@
                 padding-left: 0px;
             }
 
-            .dont-show {
-                opacity: 0;
-            }   
+            // .dont-show {
+            //     opacity: 0;
+            // }   
 
         }
     

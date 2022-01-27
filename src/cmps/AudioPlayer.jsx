@@ -24,8 +24,9 @@ class _AudioPlayer extends React.Component {
   timerInterval;
 
   componentDidMount() {
-    this.unsubscribe = eventBusService.on('playVideo', () => {
-      this.state.player.playVideo();
+    this.unsubscribe = eventBusService.on('playPauseVideo', async () => {
+      await this.props.toggleIsPlaying();
+      this.onPlayPause();
     })
   }
 
@@ -56,12 +57,17 @@ class _AudioPlayer extends React.Component {
 
   onPlayPause = async () => {
     const { player } = this.state;
-    if (this.props.currSongId) {
+    if (player && this.props.currSongId) {
+      console.log('is in curr song?')
+      console.log('isPlaying', this.props.isPlaying)
       await this.props.toggleIsPlaying();
+      console.log('isPlaying', this.props.isPlaying)
       if (this.props.isPlaying) {
         player.playVideo();
+        console.log('playing');
       } else {
         player.pauseVideo();
+        console.log('paused');
       }
     }
   }
@@ -116,11 +122,16 @@ class _AudioPlayer extends React.Component {
     })
   }
 
-  onSetDuration = (ev) => {
-    const currDuration = ev.target.value;
-    this.setState({ currDuration });
-    // console.log('currDuration', currDuration);
-    this.state.player.seekTo(currDuration);
+  // onSetDuration = (ev) => {
+  //   const currDuration = ev.target.value;
+  //   this.setState({ currDuration });
+  //   // console.log('currDuration', currDuration);
+  //   this.state.player.seekTo(currDuration);
+  
+  onSetDuration = (value) => {
+    this.setState({ currDuration: value });
+    console.log('value', value);
+    this.state.player.seekTo(value);
   }
 
   onStateChange = (ev) => {

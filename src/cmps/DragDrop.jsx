@@ -9,6 +9,8 @@ import { likeSong, unlikeSong, updateUser } from "../store/user.action";
 import { Equalizer } from "./Equalizer";
 import moment from 'moment';
 import { GiPauseButton } from 'react-icons/gi';
+import { FiMoreHorizontal } from 'react-icons/fi';
+
 
 export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs, isPlaying, updateUser}) {
   moment().format();
@@ -31,9 +33,9 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
     socketService.emit('update station', updatedStation)
   }  
 
-  const onPlaySong = async (station, songId) => {
+  const onPlayPauseSong = async (station, songId) => {
     await setSongs(station, songId);
-    eventBusService.emit('playVideo')
+    eventBusService.emit('playPauseVideo');
   }
 
 
@@ -87,14 +89,11 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
                         <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                           <section key={song._id} className={`station-song-details flex`}>
                             <section className={`song-info flex ${song._id === currSongId ? 'playing' : ''}`}>
-                              {song._id !== currSongId ? <p className='title'>{index + 1}</p> : <Equalizer />}
+                              {song._id === currSongId && isPlaying ? <Equalizer className="equalizer" /> : <p className='title'>{index + 1}</p>}
                               <span
-                                className={`play-icon ${song._id === currSongId ? 'dont-show' : ''}`}
-                                onClick={() => onPlaySong(station, song._id)}
-                              >{isPlaying ? <GiPauseButton className="pausing" /> :
-                                <i className={`fas fa-play ${song._id === currSongId ? "equalizer" : ""
-                                  }`}
-                                ></i>}
+                                className="play-pause-icon" onClick={() => onPlayPauseSong(station, song._id)}>
+                                {song._id === currSongId && isPlaying ? <GiPauseButton className="pause" /> :
+                                  <i className="fas fa-play"></i>}
                               </span>
                               <section
                                 className={`img-container ${song._id === currSongId ? "playing" : ""
@@ -181,3 +180,4 @@ export const DragDrop = connect(mapStateToProps, mapDispatchToProps)(_DragDrop);
 
 
 
+// song._id !== currSongId

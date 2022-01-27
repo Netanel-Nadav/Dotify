@@ -55,7 +55,7 @@ export class EditUser extends React.Component {
 
 
     onChooseColor = (color, idx) => {
-        this.setState({colorIdx: idx})
+        this.setState({ colorIdx: idx })
         this.setState((prevState) => ({ station: { ...prevState.station, backgroundColor: color } }))
     }
 
@@ -82,7 +82,7 @@ export class EditUser extends React.Component {
     }
 
     onChooseColor = (color, idx) => {
-        this.setState({colorIdx: idx})
+        this.setState({ colorIdx: idx })
         this.setState((prevState) => ({ user: { ...prevState.user, backgroundColor: color } }))
     }
 
@@ -111,8 +111,8 @@ export class EditUser extends React.Component {
                             <label>Enter Name</label>
                             <input type="text" name="username" value={username} onChange={this.handleChange} />
                             <div className='color-container flex justify-center align-center'>
-                            {colors.map((color, idx) => (
-                                   <div key={idx} className={`color ${color.name} ${colorIdx === idx ? 'clicked' : ''}`} onClick={() => this.onChooseColor(color.value, idx)}></div>
+                                {colors.map((color, idx) => (
+                                    <div key={idx} className={`color ${color.name} ${colorIdx === idx ? 'clicked' : ''}`} onClick={() => this.onChooseColor(color.value, idx)}></div>
                                 ))}
                             </div>
                             <button>Submit</button>

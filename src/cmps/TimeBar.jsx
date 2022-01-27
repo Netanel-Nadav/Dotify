@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Slider } from '@material-ui/core'
 
-export function TimeBar({ song, player, currTime }) {
+export function TimeBar({ song, player, currTime, setDuration }) {
     let duration = 0;
 
     function formatDuration(value) {
@@ -12,18 +12,13 @@ export function TimeBar({ song, player, currTime }) {
         return `${minute}:${secondLeft <= 9 ? `0${secondLeft}` : secondLeft}`;
     }
 
-    function setDuration(value) {
-        player.seekTo(value);
-
-    }
-
-    if (song?.duration) duration = parseFloat(player.getDuration()); // seconds
+    duration = parseFloat(player?.getDuration()) || 0; // seconds
 
     return (
         <div className="time-bar flex align-center">
             <div className="count">{currTime ? formatDuration(currTime) : "0:00"}</div>
             <Slider
-                value={currTime}
+                value={currTime || 0}
                 min={0}
                 step={1}
                 max={duration} //seconds

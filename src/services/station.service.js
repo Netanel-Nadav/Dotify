@@ -2,7 +2,7 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
-import {httpService} from './http.service'
+import { httpService } from './http.service'
 
 
 const gStations = require('../data/station.json')
@@ -95,8 +95,8 @@ async function addSongToStation(station, song) {
     // editedStation.songs = [...editedStation.songs, song]
     // editedStation.totalDuration = getFullduration(editedStation)
     // const updatedStation = await update(editedStation)
-    console.log('station',station)
-    const updatedStation = await save(station,song)
+    console.log('station', station)
+    const updatedStation = await save(station, song)
     return Promise.resolve(updatedStation)
 }
 
@@ -115,7 +115,7 @@ function query() {
 }
 
 function save(station, song = null, songId = null) {
-    if(!station._id){
+    if (!station._id) {
         station.createdBy = {
             _id: userService.getLogedinUser()?._id || utilService.makeId(),
             fullname: userService.getLogedinUser()?.username || 'Guest',
@@ -124,15 +124,15 @@ function save(station, song = null, songId = null) {
         return httpService.post('station/', station)
     }
     else {
-        return httpService.put('station/', {station, song, songId})
-    } 
+        return httpService.put('station/', { station, song, songId })
+    }
 }
 
 function getById(stationId) {
     return httpService.get(`station/${stationId}`)
 }
 
-function remove(stationId){
+function remove(stationId) {
     return httpService.remove(`station/${stationId}`)
 }
 
@@ -148,7 +148,7 @@ async function searchYouTube(q) {
         "method": "GET",
         "headers": {
             "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
-            "x-rapidapi-key": '6f5320ed11msh859c70eb983b0edp158967jsnc3a93be7fd34'
+            "x-rapidapi-key": 'b96f369518msh9ee702858af51c3p17b02ajsn51c6ed765bf1'
         }
     });
     const body = await response.json();

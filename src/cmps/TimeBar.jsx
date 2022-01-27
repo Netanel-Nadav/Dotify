@@ -21,7 +21,7 @@ export function TimeBar({ song, player, currTime }) {
 
     return (
         <div className="time-bar flex align-center">
-            <div className="count">{formatDuration(currTime)}</div>
+            <div className="count">{currTime ? formatDuration(currTime) : "0:00"}</div>
             <Slider
                 value={currTime}
                 min={0}
@@ -29,7 +29,7 @@ export function TimeBar({ song, player, currTime }) {
                 max={duration} //seconds
                 onChange={(_, value) => setDuration(value)}
             />
-            <div className="count">-{formatDuration(duration)}</div>
+            <div className="count">-{duration ? formatDuration(duration) : "0:00"}</div>
         </div>
     )
 }

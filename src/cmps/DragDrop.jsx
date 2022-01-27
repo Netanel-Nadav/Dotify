@@ -3,14 +3,15 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from "react-redux";
 import { useParams } from 'react-router-dom';
 import { stationService } from '../services/station.service';
-import {eventBusService} from '../services/event-bus.service'
+import { eventBusService } from '../services/event-bus.service'
 import { updateStation, setDisplayedSongs, deleteSong } from '../store/station.action'
-import {setSongs} from "../store/media.action"
+import { setSongs } from "../store/media.action"
 import { likeSong, unlikeSong } from "../store/user.action";
 import { Equalizer } from "./Equalizer";
 import moment from 'moment';
+import { GiPauseButton } from 'react-icons/gi';
 
-export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs }) {
+export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs, isPlaying }) {
   moment().format();
 
   // const [stationToRender, setStationToRender] = useState(null);
@@ -45,7 +46,7 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
   if (!songs) return <React.Fragment></React.Fragment>
   return (
     <section>
-       <section className="station-song-info-title flex">
+      <section className="station-song-info-title flex">
         <div className="title-container flex">
           <p className="song-index">#</p>
           <p className="title">Title</p>
@@ -74,11 +75,10 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
                               <span
                                 className={`play-icon ${song._id === currSongId ? 'dont-show' : ''}`}
                                 onClick={() => onPlaySong(station, song._id)}
-                              >
-                                <i
-                                  className={`fas fa-play ${song._id === currSongId ? "equalizer" : ""
-                                    }`}
-                                ></i>
+                              >{isPlaying ? <GiPauseButton className="pausing" /> :
+                                <i className={`fas fa-play ${song._id === currSongId ? "equalizer" : ""
+                                  }`}
+                                ></i>}
                               </span>
                               <section
                                 className={`img-container ${song._id === currSongId ? "playing" : ""
@@ -95,15 +95,15 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
                               <section className="song-duration btns flex">
                                 <p>{song.duration}</p>
                                 <div className="btn-container flex">
-                                  {user?.likedSongs.some(likedSong => likedSong._id === song._id) ? 
-                                   <button className="like-btn">
-                                   <i className="fas fa-heart liked"onClick={() => unlikeSong(song._id)} ></i>
-                                 </button>
-                                : 
-                                <button className="like-btn">
-                                <i className="far fa-heart" onClick={() => likeSong(song)}></i>
-                              </button>
-                                }
+                                  {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
+                                    <button className="like-btn">
+                                      <i className="fas fa-heart liked" onClick={() => unlikeSong(song._id)} ></i>
+                                    </button>
+                                    :
+                                    <button className="like-btn">
+                                      <i className="far fa-heart" onClick={() => likeSong(song)}></i>
+                                    </button>
+                                  }
                                   {/* <button className="like-btn">
                                     <i className={user?.likedSongs.some(likedSong => likedSong._id === song._id) ? "fas fa-heart liked" : "far fa-heart"} onClick={() => likeSong(song)}></i>
                                   </button> */}
@@ -138,7 +138,8 @@ function mapStateToProps({ stationModule, mediaModule, userModule }) {
     stations: stationModule.displayedSongs,
     displayedSongs: stationModule.displayedSongs,
     currSongId: mediaModule.currSongId,
-    user: userModule.user
+    user: userModule.user,
+    isPlaying: mediaModule.isPlaying
   };
 }
 

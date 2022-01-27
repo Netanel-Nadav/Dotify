@@ -10,6 +10,10 @@
   color: $clr1;
   background-repeat: no-repeat;
   animation:b7 1s infinite linear alternate;
+
+  // &:hover {
+  //   opacity: 0;
+  // }
 }
 @keyframes b7 {
     20% {background-size:3px 20% ,3px 30% ,3px 30% }

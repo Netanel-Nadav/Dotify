@@ -43,7 +43,7 @@
             color: $clr1;
         }
 
-
+        .pausing,
         .play-icon {
             position: absolute;
             opacity: 0;
@@ -65,7 +65,8 @@
             .title {
                 opacity: 0;
             }
-
+            
+            .pausing,
             .play-icon {
                 opacity: 1;
 

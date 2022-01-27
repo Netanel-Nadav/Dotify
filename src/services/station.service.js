@@ -73,8 +73,9 @@ async function searchYouTube(q) {
         }
     });
     const body = await response.json();
+    // console.log(body)
     const searchRes = {
-        songs: body.items.filter(item => item.type === 'video'),
+        songs: body.items.filter(item => item.type === 'video' && !item.title.toLowerCase().includes('full','album')),
         recommendations: body.refinements
     }
     return searchRes

@@ -1,3 +1,4 @@
+import { socketService } from "../services/socket.service";
 import { stationService } from "../services/station.service";
 
 export function loadStations() {
@@ -37,12 +38,11 @@ export function setDisplayedSongs(station) {
   }
 }
 
+
 export function updateStation(station) {
   return async (dispatch) => {
     try {
       const updatedStation = await stationService.save(station)
-      console.log(updatedStation)
-      // const updatedStation = await stationService.save(station)
       let action = { type: 'UPDATE_STATION', updatedStation }
       dispatch(action)
     } catch (err) {
@@ -62,7 +62,8 @@ export function addSong(station, song, newStation = true) {
         action = { type: 'UPDATE_DISPLAYED_SONGS', songs: updatedStation.songs }
         dispatch(action)
       }
-      return Promise.resolve()
+      // socketService.emit('update station', station)
+      return Promise.resolve(updatedStation)
     } catch (err) {
       console.log("Couldn't add song", err)
     }
@@ -77,6 +78,7 @@ export function deleteSong(station, songId) {
       dispatch(action)
       action = { type: 'UPDATE_DISPLAYED_SONGS', songs: updatedStation.songs }
       dispatch(action)
+      // socketService.emit('update station', station)
       return Promise.resolve(updatedStation)
     } catch (err) {
       console.log("Couldn't remove song", err)
@@ -93,6 +95,17 @@ export function makeNewStation() {
       const action = { type: 'ADD_STATION', newStation }
       dispatch(action)
       return Promise.resolve(newStation)
+    } catch (err) {
+      console.log("Couldn't make new station", err)
+    }
+  }
+}
+
+export function addStationToAll(newStation) {
+  return async (dispatch) => {
+    try {
+      const action = { type: 'ADD_STATION', newStation }
+      dispatch(action)
     } catch (err) {
       console.log("Couldn't make new station", err)
     }

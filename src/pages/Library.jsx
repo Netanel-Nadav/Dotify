@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { LikedSongsPreview } from '../cmps/LikedSongsPreview';
 import { StationList } from '../cmps/StationList';
 
 

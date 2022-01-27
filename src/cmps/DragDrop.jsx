@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from "react-redux";
 import { eventBusService } from '../services/event-bus.service'
+import { socketService } from '../services/socket.service';
 import { updateStation, setDisplayedSongs, deleteSong } from '../store/station.action'
 import { setSongs } from "../store/media.action"
-import { likeSong, unlikeSong } from "../store/user.action";
+import { likeSong, unlikeSong, updateUser } from "../store/user.action";
 import { Equalizer } from "./Equalizer";
 import moment from 'moment';
 import { GiPauseButton } from 'react-icons/gi';
 
-export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs, isPlaying,}) {
+export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs, isPlaying, updateUser}) {
   moment().format();
 
   const [songs, setSongsToRender] = useState(null);
@@ -18,25 +19,23 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
   useEffect(() => {
     if (station) setSongsToRender(station.songs)
     else setSongsToRender(user.likedSongs)
-  },[])
-
-  useEffect (() => {
-    setSongsToRender(displayedSongs)
   },[displayedSongs])
 
-  useEffect(() => {
-    setSongsToRender(station.songs)
-  },[station.songs])
+
+  // useEffect(() => {
+  //   setSongsToRender(station?.songs)
+  // },[station?.songs])
+
+  const onDeleteSong = async (station, songId) => {
+    const updatedStation = await deleteSong(station, songId)
+    socketService.emit('update station', updatedStation)
+  }  
 
   const onPlaySong = async (station, songId) => {
     await setSongs(station, songId);
     eventBusService.emit('playVideo')
   }
 
-  // const onDeleteSong = async (station, songId) => {
-  //   const updatedStation = await deleteSong(station, songId)
-  //   if(deleteSongsOnNew) deleteSongsOnNew(updatedStation)
-  // }
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
@@ -46,11 +45,21 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
     items.splice(result.destination.index, 0, reorderedItem);
 
     setSongsToRender(items);
-    station.songs = items
-    updateStation(station)
+
+    if(station) {
+      station.songs = items
+      updateStation(station)
+    }else {
+      user.likedSongs = items
+      updateUser(user)
+    }
+    
+    socketService.emit('update station', station)
+
   }
 
   if (!songs) return <React.Fragment></React.Fragment>
+  if (station && station.songs !== songs) setSongsToRender(station.songs)
   return (
     <section>
       <section className="station-song-info-title flex">
@@ -71,7 +80,7 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
           <Droppable droppableId="song-container">
             {(provided) => (
               <ul className="songs-list" {...provided.droppableProps} ref={provided.innerRef}>
-                {songs && songs.map((song, index) => {
+                {songs.map((song, index) => {
                   return (
                     <Draggable key={song._id} draggableId={song._id} index={index}>
                       {(provided) => (
@@ -111,12 +120,9 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
                                       <i className="far fa-heart" onClick={() => likeSong(song)}></i>
                                     </button>
                                   }
-                                  {/* <button className="like-btn">
-                                    <i className={user?.likedSongs.some(likedSong => likedSong._id === song._id) ? "fas fa-heart liked" : "far fa-heart"} onClick={() => likeSong(song)}></i>
-                                  </button> */}
                                   <button
                                     className="delete-btn"
-                                    onClick={() => deleteSong(station, song._id)}
+                                    onClick={() => onDeleteSong(station, song._id)}
                                   >
                                     <i className="fas fa-trash-alt"></i>
                                   </button>
@@ -156,7 +162,8 @@ const mapDispatchToProps = {
   deleteSong,
   setSongs,
   likeSong,
-  unlikeSong
+  unlikeSong,
+  updateUser
 };
 
 export const DragDrop = connect(mapStateToProps, mapDispatchToProps)(_DragDrop);
@@ -165,22 +172,7 @@ export const DragDrop = connect(mapStateToProps, mapDispatchToProps)(_DragDrop);
 
 
 
-// _id, title, imgUrl, addedAtForShow, duration 
-{/* <div className='drag-song-container flex align-center'>
-<div className='idx-img-title flex align-center'>
-  <small className='idx'>{index + 1}</small>
-  <small className='play-icon'><i className="fas fa-play"></i></small>
-  <div className='img-container'>
-    <img src={imgUrl} />
-  </div>
-  <p>{title}</p>
-</div>
 
-<div className='dateAdded-duration flex'>
-  <p>{addedAtForShow}</p>
-  <p>{duration}</p>
-</div>
-</div> */}
 
 
 

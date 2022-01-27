@@ -1,0 +1,29 @@
+.stations-lists-container {
+
+    .station-list-by-genre{
+
+
+        .station-list {
+            margin-top: 0px;
+        }
+
+        .wrraper {
+            margin-top: 65px;
+            padding: 0px 20px;
+            text-transform: uppercase;
+
+            h1 {
+                font-size: rem(18px);
+            }
+
+            p {
+                font-family: latobold;
+                text-decoration: underline;
+
+                &:hover{
+                    color: $clr1;
+                }
+            }
+        }
+    }
+}

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 function _LikedSongsHero({ user }) {
 
-    console.log(user)
     if(!user) return <h1>Loading...</h1>
     const {likedSongs, backgroundColor, imgUrl} = user
     const transperent = 'rgb(0 0 0 / 0%)'

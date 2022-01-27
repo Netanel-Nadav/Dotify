@@ -1,3 +1,4 @@
+import { colors } from "@material-ui/core"
 import React from "react"
 
 
@@ -5,7 +6,30 @@ export class EditUser extends React.Component {
 
     state = {
         user: null,
-        isEditShown: false
+        isEditShown: false,
+        colorIdx: null,
+        colors: [
+            {
+                name: 'red',
+                value: '#ff0000',
+            },
+            {
+                name: 'blue',
+                value: '#0000ff',
+            },
+            {
+                name: 'green',
+                value: '#008000',
+            },
+            {
+                name: 'yellow',
+                value: '#ffff00',
+            },
+            {
+                name: 'purple',
+                value: '#800080',
+            },
+        ]
     }
 
 
@@ -30,7 +54,8 @@ export class EditUser extends React.Component {
     }
 
 
-    onChooseColor = (color) => {
+    onChooseColor = (color, idx) => {
+        this.setState({colorIdx: idx})
         this.setState((prevState) => ({ station: { ...prevState.station, backgroundColor: color } }))
     }
 
@@ -56,7 +81,8 @@ export class EditUser extends React.Component {
             .catch(err => console.error(err))
     }
 
-    onChooseColor = (color) => {
+    onChooseColor = (color, idx) => {
+        this.setState({colorIdx: idx})
         this.setState((prevState) => ({ user: { ...prevState.user, backgroundColor: color } }))
     }
 
@@ -69,8 +95,9 @@ export class EditUser extends React.Component {
 
     render() {
 
-        const { user } = this.state
+        const { user, colors, colorIdx } = this.state
         if (!user) return <React.Fragment></React.Fragment>
+        if (!colors) return <React.Fragment></React.Fragment>
         const { username, imgUrl } = user
         return (
             <section className='edit-user flex justify-center align-center'>
@@ -84,11 +111,9 @@ export class EditUser extends React.Component {
                             <label>Enter Name</label>
                             <input type="text" name="username" value={username} onChange={this.handleChange} />
                             <div className='color-container flex justify-center align-center'>
-                                <div className={`color red`} onClick={() => this.onChooseColor('#ff0000')}></div>
-                                <div className={`color blue`} onClick={() => this.onChooseColor('#0000ff')}></div>
-                                <div className={`color green`} onClick={() => this.onChooseColor('#008000')}></div>
-                                <div className={`color yellow`} onClick={() => this.onChooseColor('#ffff00')}></div>
-                                <div className={`color purple`} onClick={() => this.onChooseColor('#800080')}></div>
+                            {colors.map((color, idx) => (
+                                   <div key={idx} className={`color ${color.name} ${colorIdx === idx ? 'clicked' : ''}`} onClick={() => this.onChooseColor(color.value, idx)}></div>
+                                ))}
                             </div>
                             <button>Submit</button>
                         </div>

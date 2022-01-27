@@ -14,30 +14,31 @@ function _StationPreview({ station, setStation }) {
                     <img src={station.imgUrl ? station.imgUrl : station.songs[0].imgUrl} />
                 </div>
                 <button className='play-btn' ><i className="fas fa-play-circle"></i></button>
-                <div className='wrraper flex'>
-                    <div className='info-container'>
-                        <h3>{station.name}</h3>
-                        <small>{station.createdBy.fullname}</small>
+
+                <div className='info-container flex column'>
+                    <h3>{station.name}</h3>
+                    <small>{station.createdBy.fullname}</small>
+
+                    <div className="likes-count-container flex align-center">
+                        <i className="fas fa-heart heart-icon"></i>
+                        <small><em>{station.likesCount}</em></small>
                     </div>
-                    <div className='likes-count flex column align-center space-between'>
-                        <small>{station.likesCount}</small>
-                    <i className="fas fa-heart heart-icon"></i>
-                    </div>
+
                 </div>
             </section>
         </Link>
     )
 }
 
-function mapStateToProps({}) {
-  return {};
+function mapStateToProps({ }) {
+    return {};
 }
 
 const mapDispatchToProps = {
-  setStation
+    setStation
 };
 
 export const StationPreview = connect(
-  mapStateToProps,
-  mapDispatchToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(_StationPreview);

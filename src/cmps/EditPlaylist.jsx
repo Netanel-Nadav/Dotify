@@ -5,9 +5,30 @@ export class EditPlaylist extends React.Component {
 
     state = {
         station: null,
-        isColorClicked: false,
+        colorIdx: null,
+        colors: [
+            {
+                name: 'red',
+                value: '#ff0000',
+            },
+            {
+                name: 'blue',
+                value: '#0000ff',
+            },
+            {
+                name: 'green',
+                value: '#008000',
+            },
+            {
+                name: 'yellow',
+                value: '#ffff00',
+            },
+            {
+                name: 'purple',
+                value: '#800080',
+            },
+        ]
     }
-
 
     componentDidMount() {
         this.setState({ station: this.props.station })
@@ -16,11 +37,11 @@ export class EditPlaylist extends React.Component {
 
 
     componentDidUpdate(prevProps, prevState) {
-      if(prevProps.station !== this.props.station) {
-        this.setState({ station: this.props.station })
-      }
+        if (prevProps.station !== this.props.station) {
+            this.setState({ station: this.props.station })
+        }
     }
-    
+
 
     handleChange = ({ target }) => {
         const field = target.name
@@ -29,13 +50,13 @@ export class EditPlaylist extends React.Component {
     }
 
 
-    onChooseColor = (color) => {
-        this.setState({isColorClicked: !this.state.isColorClicked})
+    onChooseColor = (color, idx) => {
+        this.setState({colorIdx: idx})
         this.setState((prevState) => ({ station: { ...prevState.station, backgroundColor: color } }))
     }
 
-    
-    
+
+
     uploadImg = (ev) => {
         const CLOUD_NAME = 'dvxuxsyoe'
         const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
@@ -65,26 +86,25 @@ export class EditPlaylist extends React.Component {
 
     render() {
 
-        const { station, isColorClicked } = this.state
+        const { station, colors, colorIdx } = this.state
         if (!station) return <React.Fragment></React.Fragment>
+        if (!colors) return <React.Fragment></React.Fragment>
         const { name, imgUrl, songs } = station
         return (
             <section className='edit-playlist flex justify-center align-center'>
                 <form className='edit-info flex column justify-center' onSubmit={this.handleSubmit}>
                     <button className="close-btn" onClick={() => this.props.setIsModalShown(false)}>X</button>
                     <div className='wrraper flex justify-center align-center'>
-                        <div className='img-upload' style={{backgroundImage: station.imgUrl ? `url(${imgUrl})` : `url(${songs[0].imgUrl})`}}>
+                        <div className='img-upload' style={{ backgroundImage: station.imgUrl ? `url(${imgUrl})` : `url(${songs[0].imgUrl})` }}>
                             <input type="file" onChange={this.uploadImg} />
                         </div>
                         <div className='input-container flex column'>
                             <label>Enter Playlist Name</label>
                             <input type="text" name="name" value={name} onChange={this.handleChange} />
                             <div className='color-container flex justify-center align-center'>
-                                <div className={`color red`} onClick={() => this.onChooseColor('#ff0000')}></div>
-                                <div className={`color blue`} onClick={() => this.onChooseColor('#0000ff')}></div>
-                                <div className={` color green`} onClick={() => this.onChooseColor('#008000')}></div>
-                                <div className={`${isColorClicked ? 'clicked' : ''} color yellow`} onClick={() => this.onChooseColor('#ffff00')}></div>
-                                <div className={`color purple`} onClick={() => this.onChooseColor('#800080')}></div>
+                                {colors.map((color, idx) => (
+                                   <div key={idx} className={`color ${color.name} ${colorIdx === idx ? 'clicked' : ''}`} onClick={() => this.onChooseColor(color.value, idx)}></div>
+                                ))}
                             </div>
                             <button>Submit</button>
                         </div>
@@ -95,3 +115,13 @@ export class EditPlaylist extends React.Component {
 
     }
 }
+
+
+
+
+
+{/* <div className={`color red`} onClick={() => this.onChooseColor('#ff0000')}></div>
+<div className={`color blue`} onClick={() => this.onChooseColor('#0000ff')}></div>
+<div className={` color green`} onClick={() => this.onChooseColor('#008000')}></div>
+<div className={`${isColorClicked ? 'clicked' : ''} color yellow`} onClick={() => this.onChooseColor('#ffff00')}></div>
+<div className={`color purple`} onClick={() => this.onChooseColor('#800080')}></div> */}

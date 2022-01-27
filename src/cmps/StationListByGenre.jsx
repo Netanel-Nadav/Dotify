@@ -27,10 +27,12 @@ export function StationListByGenre({ stations, genre }) {
 
     if (!stationsByGenre) return <Loader />
     return (
-        <section className='station-list-container'>
+        <section className='station-list-by-genre'>
+            <div className='wrraper flex space-between align-center'>
                 <h1>{genre}</h1>
                 <Link to={`/genre/${genre}`}><p>See all</p></Link>
-            <section className='station-list flex column' >
+            </div>
+            <section className='station-list'>
                 {stationsByGenre.slice(0, 8).map(station => <StationPreview key={station._id} station={station} />)}
             </section>
         </section>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export function HomeScreenModal({ onToggleHomeModal }) {
+export function HomeScreenModal() {
 
 
   const [isModalShown, setIsModalShown] = useState(false)

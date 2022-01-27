@@ -11,7 +11,6 @@ export function _Header({ user, logout }) {
 
     const [isUserModalShown, setIsUserModalOpen] = useState(false);
     const history = useHistory()
-    console.log(history);
 
     const toggleUserModal = () => {
         setIsUserModalOpen(!isUserModalShown)

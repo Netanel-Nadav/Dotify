@@ -2,17 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import { Loader } from '../cmps/Loader';
 import { StationList } from '../cmps/StationList';
-import { loadStations } from '../store/station.action';
+import { StationListByGenre } from '../cmps/StationListByGenre';
+import { stationService } from '../services/station.service';
+import { loadStations, getGenres } from '../store/station.action';
 
 
-function _Home({ stations }) {
+function _Home({ stations, getGenres }) {
 
+    const [genres, setGenres] = useState(null)
+
+    useEffect ( async () => {
+        const allGenres = await getGenres()
+        setGenres(allGenres)
+    },[])
+
+    if(!genres) return <Loader/>
     return (
         <section className='stations-lists-container'>
             {stations ?
                 <section >
-                    <StationList stations={stations} />
-                    {/* stations lists by labels */}
+                    {genres.map(genre => <StationListByGenre key={genre.name} stations={stations} genre={genre.name} />)}
                 </section> : <Loader />}
         </section>
     )
@@ -26,7 +35,8 @@ function mapStateToProps({ stationModule }) {
 }
 
 const mapDispatchToProps = {
-    loadStations
+    loadStations,
+    getGenres
 }
 
 

@@ -17,7 +17,7 @@ function _StationPreview({ station, setStation }) {
 
                 <div className='info-container flex column'>
                     <h3>{station.name}</h3>
-                    <small>{station.createdBy.fullname}</small>
+                    {/* <small>{station.createdBy.fullname}</small> */}
 
                     <div className="likes-count-container flex align-center">
                         <i className="fas fa-heart heart-icon"></i>

@@ -33,10 +33,6 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
     eventBusService.emit('playVideo')
   }
 
-  // const onDeleteSong = async (station, songId) => {
-  //   const updatedStation = await deleteSong(station, songId)
-  //   if(deleteSongsOnNew) deleteSongsOnNew(updatedStation)
-  // }
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;

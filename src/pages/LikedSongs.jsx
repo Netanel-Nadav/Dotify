@@ -4,7 +4,6 @@ import { LikedSongsHero } from "../cmps/LikedSongsHero";
 
 export function LikedSongs({user}) {
 
-    console.log(user)
     return (
         <section>
             <LikedSongsHero/>

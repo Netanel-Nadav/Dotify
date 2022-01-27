@@ -44,7 +44,6 @@ export function unlikeSong (songId) {
             const action = {type: 'UNLIKE_SONG', songId}
             dispatch(action)
             const {user} = getState().userModule
-            console.log(user)
             await userService.update(user)
         } catch (err) {
             console.log('Error at User Action unlike song', err)

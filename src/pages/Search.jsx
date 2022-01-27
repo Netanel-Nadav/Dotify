@@ -6,6 +6,8 @@ import { Recommendations } from '../cmps/Recommendations';
 import { likeSong } from "../store/user.action";
 import { stationService } from '../services/station.service';
 import {setSongs} from '../store/media.action'
+import { Link } from "react-router-dom";
+
 
 function _Search({setSongs, likeSong, user}) {
 
@@ -78,10 +80,10 @@ function _Search({setSongs, likeSong, user}) {
                 <section className='stations-by-genre flex justify-center'>
                     {genres.map(genre => {
                         return (
-                            <section key={genre.name} className='genre' style={{ backgroundColor: genre.backgroundColor }}>
+                            <Link to={`/genre/${genre.name}`}><section key={genre.name} className='genre' style={{ backgroundColor: genre.backgroundColor }}>
                                 <h1>{genre.name}</h1>
                                 {/* <img src={genre.imgUrl} /> */}
-                            </section>
+                            </section></Link>
                         )
                     })}
                 </section>

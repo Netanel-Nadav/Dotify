@@ -13,6 +13,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { UserProfile } from "./pages/UserProfile";
 import { StationDetails } from "./pages/StationDetails";
 import { LikedSongs } from './pages/LikedSongs';
+import { GenreStations } from './pages/GenreStations';
 import { Header } from "./cmps/Header";
 import { AudioPlayer } from "./cmps/AudioPlayer";
 import { Navigation } from "./cmps/Navigation";
@@ -52,6 +53,7 @@ export class _RootCmp extends React.Component {
         {isFirstEntry !== 'notFirst' && <HomeScreenModal onToggleHomeModal={this.onToggleHomeModal} />}
         <main>
           <Switch>
+            <Route component={GenreStations} path="/genre/:name"/>
             <Route component={UserProfile} path="/user/:id" />
             <Route component={StationDetails} path="/station/:id" />
             <Route component={LikedSongs} path="/likedSongs/:id"/>

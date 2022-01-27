@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { stationService } from "../services/station.service";
 import { utilService } from "../services/util.service";
 import { StationHero } from "../cmps/StationHero";
-import { PlayList } from "../cmps/PlayList";
+import { DragDrop } from "../cmps/DragDrop";
 import { Recommendations } from "../cmps/Recommendations";
 
 import { makeNewStation, addSong } from "../store/station.action";
@@ -18,21 +18,12 @@ class _CreateStation extends React.Component {
     list: null
   };
 
-
-
-  // onSearch(ev) {
-  //     ev.preventDefault()
-  //     const search = utilService.debounce(this.search, 2000)
-  //     search(ev)
-  // }
-
-  // search = async (ev) => {
-  //     ev.preventDefault()
-  //     this.setState({ query: ev.target.value }, async () => {
-  //         const list = await stationService.searchYouTube(this.state.query)
-  //         this.setState({ list })
-  //     })
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.stations !== this.props.stations && this.state.newStation._id) {
+      const station = this.props.stations.find(station => this.state.newStation._id === station._id)
+      this.setState({newStation: station})
+    }
+  }
 
   setQuery = (ev) => {
     this.setState({ query: ev.target.value });
@@ -52,9 +43,13 @@ class _CreateStation extends React.Component {
   onAddSong = async (song) => {
     if (!this.state.newStation._id) await this.onMakeNewStation();
     const { newStation } = this.state;
-    const savedStation = await this.props.addSong(newStation, song);
-    this.setState({ newStation: savedStation });
+    await this.props.addSong(newStation, song);
+    // this.setState({ newStation: savedStation });
   };
+
+  // deleteSongsOnNew = (updatedStation) => {
+  //   this.setState({newStation: updatedStation})
+  // }
 
   onMakeNewStation = async () => {
     const newStation = await this.props.makeNewStation();
@@ -68,7 +63,7 @@ class _CreateStation extends React.Component {
       <section className="new-station">
         <StationHero station={newStation} />
 
-        {newStation.songs && <PlayList station={newStation} />}
+        {newStation.songs && <DragDrop station={newStation} />}
 
         <section className="new-station-search">
           <div className="form-container flex column align-center">
@@ -127,8 +122,10 @@ class _CreateStation extends React.Component {
   }
 }
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps({stationModule}) {
+  return {
+    stations: stationModule.stations
+  };
 }
 
 const mapDispatchToProps = {

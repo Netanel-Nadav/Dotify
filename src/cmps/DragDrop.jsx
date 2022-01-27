@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from "react-redux";
-import { useParams } from 'react-router-dom';
-import { stationService } from '../services/station.service';
 import { eventBusService } from '../services/event-bus.service'
 import { updateStation, setDisplayedSongs, deleteSong } from '../store/station.action'
 import { setSongs } from "../store/media.action"
@@ -11,27 +9,36 @@ import { Equalizer } from "./Equalizer";
 import moment from 'moment';
 import { GiPauseButton } from 'react-icons/gi';
 
-export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs, isPlaying }) {
+export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs, isPlaying,}) {
   moment().format();
 
-  // const [stationToRender, setStationToRender] = useState(null);
   const [songs, setSongsToRender] = useState(null);
 
 
   useEffect(() => {
-    // setStationToRender(station)
     if (station) setSongsToRender(station.songs)
     else setSongsToRender(user.likedSongs)
-  }, [displayedSongs])
+  },[])
 
+  useEffect (() => {
+    setSongsToRender(displayedSongs)
+  },[displayedSongs])
 
+  useEffect(() => {
+    setSongsToRender(station.songs)
+  },[station.songs])
 
   const onPlaySong = async (station, songId) => {
     await setSongs(station, songId);
     eventBusService.emit('playVideo')
   }
 
-  function handleOnDragEnd(result) {
+  // const onDeleteSong = async (station, songId) => {
+  //   const updatedStation = await deleteSong(station, songId)
+  //   if(deleteSongsOnNew) deleteSongsOnNew(updatedStation)
+  // }
+
+  const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
     const items = Array.from(songs);

@@ -37,9 +37,7 @@ export class _RootCmp extends React.Component {
   }
 
 
-  componentDidUpdate(prevProps, prevState) {
-    
-  }
+  
   
 
   render() {
@@ -50,7 +48,7 @@ export class _RootCmp extends React.Component {
       <div className="App main-container">
         <Header />
         <Navigation />
-        {isFirstEntry !== 'notFirst' && <HomeScreenModal onToggleHomeModal={this.onToggleHomeModal} />}
+        {isFirstEntry !== 'notFirst' && <HomeScreenModal />}
         <main>
           <Switch>
             <Route component={GenreStations} path="/genre/:name"/>

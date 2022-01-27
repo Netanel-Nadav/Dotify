@@ -3,10 +3,8 @@ import { connect } from "react-redux";
 
 function _LikedSongsHero({ user }) {
 
-    console.log(user)
-    if (!user) return <h1>Loading...</h1>
-    const { likedSongs } = user
-    const backgroundColor = 'rgb(80, 56, 160)'
+    if(!user) return <h1>Loading...</h1>
+    const {likedSongs, backgroundColor, imgUrl} = user
     const transperent = 'rgb(0 0 0 / 0%)'
     return (
         <section className="like-hero" style={{ backgroundImage: `linear-gradient(181deg, ${backgroundColor}, ${transperent})` }}>

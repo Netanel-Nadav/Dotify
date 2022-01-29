@@ -13,7 +13,9 @@ export function StationListByGenre({ stations, genre }) {
 
     useEffect(() => {
         setStationByGenre()
-    }, [])
+    }, [stations])
+
+
 
 
     const setStationByGenre = async () => {

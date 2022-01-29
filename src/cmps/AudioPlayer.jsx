@@ -6,8 +6,9 @@ import { VolumeController } from "./VolumeController"
 import { TimeBar } from "./TimeBar.jsx"
 import { SongData } from "./SongData"
 
-import { changeSong, setRandomSong, resetAlreadyPlayed, toggleIsPlaying, setShuffleState } from '../store/media.action';
+import { changeSong, setRandomSong, resetAlreadyPlayed, toggleIsPlaying, setShuffleState, setSongs } from '../store/media.action';
 import { eventBusService } from "../services/event-bus.service"
+import { socketService } from "../services/socket.service"
 
 class _AudioPlayer extends React.Component {
   state = {
@@ -25,9 +26,14 @@ class _AudioPlayer extends React.Component {
 
   componentDidMount() {
     this.unsubscribe = eventBusService.on('playPauseVideo', async () => {
-      await this.props.toggleIsPlaying();
+      if (this.props.isPlaying && this.props.prevSongId !== this.props.currSongId) {
+        await this.props.toggleIsPlaying();
+      }
       this.onPlayPause();
     })
+    // this.unsubscribe = eventBusService.on('toggle shared play',  async () => {
+    //   this.onSharedPlayPause();
+    // })
   }
 
   componentWillUnmount() {
@@ -55,22 +61,33 @@ class _AudioPlayer extends React.Component {
     });
   };
 
+  
+
   onPlayPause = async () => {
     const { player } = this.state;
     if (player && this.props.currSongId) {
-      console.log('is in curr song?')
-      console.log('isPlaying', this.props.isPlaying)
+      console.log('on play',this.props.currSongId)
+      // socketService.emit('toggle play', this.props.currStation._id, this.props.currSongId)
       await this.props.toggleIsPlaying();
-      console.log('isPlaying', this.props.isPlaying)
       if (this.props.isPlaying) {
         player.playVideo();
-        console.log('playing');
       } else {
         player.pauseVideo();
-        console.log('paused');
       }
     }
   }
+
+  // onSharedPlayPause = async () => {
+  //   const { player } = this.state;
+  //   console.log('on share play',this.props.currSongId)
+  //   await this.props.setSongs(this.props.currStation, this.props.currSongId)
+  //   await this.props.toggleIsPlaying();
+  //   if (this.props.isPlaying) {
+  //     player.playVideo();
+  //   } else {
+  //     player.pauseVideo();
+  //   }
+  // }
 
   onNextSong = () => {
     if (this.state.isRepeatOn) {
@@ -127,7 +144,7 @@ class _AudioPlayer extends React.Component {
   //   this.setState({ currDuration });
   //   // console.log('currDuration', currDuration);
   //   this.state.player.seekTo(currDuration);
-  
+
   onSetDuration = (value) => {
     this.setState({ currDuration: value });
     console.log('value', value);
@@ -206,7 +223,8 @@ function mapStateToProps({ mediaModule }) {
     currSongList: mediaModule.currSongList,
     currSongIdx: mediaModule.currSongIdx,
     currSongId: mediaModule.currSongId,
-    isPlaying: mediaModule.isPlaying
+    isPlaying: mediaModule.isPlaying,
+    prevSongId: mediaModule.prevSongId
   }
 }
 
@@ -215,7 +233,8 @@ const mapDispatchToProps = {
   setRandomSong,
   resetAlreadyPlayed,
   toggleIsPlaying,
-  setShuffleState
+  setShuffleState,
+  setSongs
 }
 
 export const AudioPlayer = connect(mapStateToProps, mapDispatchToProps)(_AudioPlayer)

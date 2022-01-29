@@ -23,6 +23,15 @@ export function userReducer(state = initialState, action) {
         case 'UNLIKE_SONG': 
             newState = {...state, user: {...state.user, likedSongs: state.user.likedSongs.filter(song => song._id !== action.songId)}}
             break;
+        case 'LIKE_STATION': 
+            newState = {...state, user: {...state.user, likedStations: [...state.user.likedStations, action.stationId]}}
+            break;
+        case 'UNLIKE_STATION': 
+            newState = {...state, user: {...state.user, likedStations: state.user.likedStations.filter(station => station !== action.stationId)}}
+            break;
+        case 'TOGGLE_SHARED_LISTENING': 
+            newState = {...state, user: {...state.user, isSharedListening: action.isShare}}
+            break;
         default:
             break;
 

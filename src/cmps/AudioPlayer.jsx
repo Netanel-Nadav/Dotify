@@ -25,7 +25,10 @@ class _AudioPlayer extends React.Component {
 
   componentDidMount() {
     this.unsubscribe = eventBusService.on('playPauseVideo', async () => {
-      await this.props.toggleIsPlaying();
+      if (this.props.isPlaying && this.props.prevSongId !== this.props.currSongId) {
+        await this.props.toggleIsPlaying();
+        // console.log('isPlaying in emit', this.props.isPlaying)
+      }
       this.onPlayPause();
     })
   }
@@ -58,16 +61,11 @@ class _AudioPlayer extends React.Component {
   onPlayPause = async () => {
     const { player } = this.state;
     if (player && this.props.currSongId) {
-      console.log('is in curr song?')
-      console.log('isPlaying', this.props.isPlaying)
       await this.props.toggleIsPlaying();
-      console.log('isPlaying', this.props.isPlaying)
       if (this.props.isPlaying) {
         player.playVideo();
-        console.log('playing');
       } else {
         player.pauseVideo();
-        console.log('paused');
       }
     }
   }
@@ -200,7 +198,8 @@ function mapStateToProps({ mediaModule }) {
     currSongList: mediaModule.currSongList,
     currSongIdx: mediaModule.currSongIdx,
     currSongId: mediaModule.currSongId,
-    isPlaying: mediaModule.isPlaying
+    isPlaying: mediaModule.isPlaying,
+    prevSongId: mediaModule.prevSongId
   }
 }
 

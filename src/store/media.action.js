@@ -30,6 +30,8 @@ export function setSongs(station, songId) {
             const songs = station.songs;
             let action = { type: "SET_SONGS", songs };
             dispatch(action);
+            action = { type: 'SET_PREV_SONG_ID', songId };
+            dispatch(action);
             action = { type: 'SET_CURR_SONG_ID', songId };
             dispatch(action);
             const songIdx = songs.findIndex(song => song._id === songId);

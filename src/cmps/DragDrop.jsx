@@ -2,33 +2,35 @@ import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from "react-redux";
 import { eventBusService } from '../services/event-bus.service'
-import { updateStation, setDisplayedSongs, deleteSong } from '../store/station.action'
+import { addSong, updateStation, setDisplayedSongs, deleteSong } from '../store/station.action'
 import { setSongs } from "../store/media.action"
 import { likeSong, unlikeSong } from "../store/user.action";
 import { Equalizer } from "./Equalizer";
 import moment from 'moment';
 import { GiPauseButton } from 'react-icons/gi';
 import { FiMoreHorizontal } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 
-export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs, isPlaying,}) {
+export function _DragDrop({ station, stations, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs, isPlaying, addSong }) {
   moment().format();
 
   const [songs, setSongsToRender] = useState(null);
-
+  const [showModal, setModal] = useState(false);
+  const [showOpts, setOpts] = useState(false);
 
   useEffect(() => {
     if (station) setSongsToRender(station.songs)
     else setSongsToRender(user.likedSongs)
-  },[])
+  }, [])
 
-  useEffect (() => {
+  useEffect(() => {
     setSongsToRender(displayedSongs)
-  },[displayedSongs])
+  }, [displayedSongs])
 
   useEffect(() => {
     setSongsToRender(station.songs)
-  },[station.songs])
+  }, [station.songs])
 
   const onPlayPauseSong = async (station, songId) => {
     await setSongs(station, songId);
@@ -50,6 +52,21 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
     setSongsToRender(items);
     station.songs = items
     updateStation(station)
+  }
+
+  const toggleMoreOpts = () => {
+    setOpts(!showOpts);
+  }
+
+  const openAddModal = () => {
+    setModal(!showModal);
+  }
+
+  const addSongToPlaylist = async (station, song) => {
+    console.log('station', station);
+    console.log('song', song);
+    await addSong(station, song, false);
+    console.log(`song ${song._id} added`)
   }
 
   if (!songs) return <React.Fragment></React.Fragment>
@@ -108,23 +125,40 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
                                     :
                                     <button className="like-btn">
                                       <i className="far fa-heart" onClick={() => likeSong(song)}></i>
-                                    </button>
-                                  }
+                                    </button>}
                                   {/* <button className="like-btn">
                                     <i className={user?.likedSongs.some(likedSong => likedSong._id === song._id) ? "fas fa-heart liked" : "far fa-heart"} onClick={() => likeSong(song)}></i>
                                   </button> */}
-                                  <button
-                                    className="delete-btn"
-                                    onClick={() => deleteSong(station, song._id)}
-                                  >
-                                    <i className="fas fa-trash-alt"></i>
-                                  </button>
+                                  <button className="more-btn" onClick={toggleMoreOpts}><FiMoreHorizontal /></button>
+                                  {showOpts && <div className={`opts flex column`}>
+                                    <button className="like-btn">
+                                      {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
+                                        <p className="" onClick={() => unlikeSong(song._id)} >Remove from your Liked Songs</p>
+                                        :
+                                        <p className="empty heart" onClick={() => likeSong(song)}>Save to your Liked Songs</p>
+                                      }
+                                    </button>
+                                    <button className="delete-btn" onClick={() => deleteSong(station, song._id)}>
+                                      Remove from this playlist</button>
+                                    <button className={`addTo-btn`} onClick={openAddModal}>Add to playlist</button>
+                                  </div>}
+                                  <div className={`choose-playlist flex column ${showModal ? "" : "hidden"}`}>
+                                    <Link to={"/newStation"}>Add to new playlist</Link>
+                                    {user && stations.filter(station => user._id === station.createdBy._id).map(station => {
+                                      return <button onClick={() => addSongToPlaylist(station, song)}>{station.name}</button>
+                                    })}
+                                  </div>
                                 </div>
+
                               </section>
+
                             </section>
+
                           </section>
+
                         </li>
-                      )}
+                      )
+                      }
                     </Draggable>
                   );
                 })}
@@ -134,14 +168,14 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
           </Droppable>
         </DragDropContext>
       </div>
-    </section>
+    </section >
   );
 }
 
 
 function mapStateToProps({ stationModule, mediaModule, userModule }) {
   return {
-    stations: stationModule.displayedSongs,
+    stations: stationModule.stations,
     displayedSongs: stationModule.displayedSongs,
     currSongId: mediaModule.currSongId,
     user: userModule.user,
@@ -155,7 +189,8 @@ const mapDispatchToProps = {
   deleteSong,
   setSongs,
   likeSong,
-  unlikeSong
+  unlikeSong,
+  addSong
 };
 
 export const DragDrop = connect(mapStateToProps, mapDispatchToProps)(_DragDrop);
@@ -180,12 +215,3 @@ export const DragDrop = connect(mapStateToProps, mapDispatchToProps)(_DragDrop);
   <p>{duration}</p>
 </div>
 </div> */}
-
-
-
-
-
-
-
-
-// song._id !== currSongId

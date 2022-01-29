@@ -5,6 +5,7 @@ const initialState = {
     notPlayedId: [],
     currSongIdx: 0,
     currSongId: null,
+    prevSongId: 'starting'
 }
 
 export function mediaReducer(state = initialState, action) {
@@ -26,6 +27,10 @@ export function mediaReducer(state = initialState, action) {
 
         case "SET_CURR_SONG_ID":
             newState = { ...state, currSongId: action.songId };
+            break;
+
+        case "SET_PREV_SONG_ID":
+            newState = { ...state, prevSongId: newState.currSongId };
             break;
 
         case "SET_CURR_SONG_IDX":

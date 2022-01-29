@@ -1,12 +1,14 @@
 .stations-lists-container {
 
     .station-list-by-genre{
-
-        max-height: 400px;
+        max-height: 350px;
         overflow: hidden;
-
+        
         .station-list {
+            grid-template-columns: repeat(auto-fill, minmax(160px, auto));
             margin-top: 0px;
+            gap: 10px;
+            justify-content: space-around;
         }
 
         .wrraper {
@@ -15,7 +17,7 @@
             text-transform: uppercase;
 
             h1 {
-                font-size: rem(18px);
+                font-size: rem(20px);
             }
 
             p {
@@ -28,4 +30,55 @@
             }
         }
     }
+}
+
+
+
+
+@include for-normal-layout {
+    .stations-lists-container {
+        .station-list-by-genre{
+            max-height: 370px;
+        
+            .station-list {
+                grid-template-columns: repeat(auto-fill, minmax(170px, 190px));
+                gap: 5px;
+            }
+            .wrraper {    
+                h1 {
+                    font-size: rem(18px);
+                }
+            }
+        }
+    }
+
+}
+
+
+@include for-wide-layout {
+
+.stations-lists-container {
+
+    .station-list-by-genre{
+        max-height: 400px;
+        
+        .station-list {
+            grid-template-columns: repeat(auto-fill, minmax(210px, 220px));
+
+            .info-container {
+
+                h3 {
+                    font-size: rem(18px);
+                }
+            }
+        }
+
+        .wrraper {
+
+            h1 {
+                font-size: rem(18px);
+            }
+        }
+    }
+}
 }

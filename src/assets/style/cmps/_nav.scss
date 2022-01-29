@@ -2,14 +2,19 @@
 
 .nav-container {
    
-    .active {
-        color: $clr1;
-    }
-
     background-color: $clr5;
     padding: 0.750rem;
     border-right: 1px solid $clr4;
     
+    a {
+        gap: 10px;
+    }
+
+      .active {
+            color: $clr1;
+        }
+    
+
     .logo-container {
         margin-bottom: 2rem;
         padding: 0 16px;
@@ -24,8 +29,10 @@
 
     ul li {
         padding: 0px 16px;
-        height: 40px;
+        height: 45px;
         gap: 10px;
+        
+    
     }
 
     .link-container {

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { connect } from 'react-redux'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UserModal } from './UserModal';
 import { logout } from '../store/user.action'
 import { useHistory } from 'react-router-dom';
@@ -23,6 +23,7 @@ export function _Header({ user, logout }) {
     const onGoForward = () => {
         history.goForward()
     }
+
 
     return (
         <header className='app-header flex space-between align-center'>

@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 
 function _LikedSongsHero({ user }) {
 
-    if(!user) return <h1>Loading...</h1>
-    const {likedSongs, backgroundColor, imgUrl} = user
+    if (!user) return <h1>Loading...</h1>
+    const { likedSongs } = user
+    const backgroundColor = 'rgb(80, 56, 160)'
     const transperent = 'rgb(0 0 0 / 0%)'
     return (
         <section className="like-hero" style={{ backgroundImage: `linear-gradient(181deg, ${backgroundColor}, ${transperent})` }}>
@@ -14,8 +15,8 @@ function _LikedSongsHero({ user }) {
                 </div>
                 <div className="user-details flex column">
                     <small>Playlist</small>
-                    <h1>{user?.username}liked songs</h1>
-                    <h3>{user?.likedSongs.length}Songs</h3>
+                    <h1>{user?.username} liked songs</h1>
+                    <h3>{user?.likedSongs.length} Songs</h3>
                 </div>
             </div>
         </section>

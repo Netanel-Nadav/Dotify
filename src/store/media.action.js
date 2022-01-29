@@ -45,6 +45,18 @@ export function setSongs(station, songId) {
     };
 }
 
+export function setSongsAfterDnd(station) {
+    return async (dispatch) => {
+        try {
+            const songs = station.songs;
+            let action = { type: "SET_SONGS", songs };
+            dispatch(action);
+        } catch (err) {
+
+        }
+    }
+}
+
 // export function updateSongsOrder(songs) {
 //     return async (dispatch, getState) => {
 //         try {

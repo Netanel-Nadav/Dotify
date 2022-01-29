@@ -1,39 +1,48 @@
-.volume-container {
-    gap: 10px;
-    margin: auto;
-    flex-basis: 5%;
-    // display: none;
-    
-    button {
-        display: block;
-        background: none;
-        border: none;
-        color: darken($clr6, 40%);
-        font-size: rem(16px);
-        cursor: pointer;
-    }
+.player {
 
-    .MuiSlider-root {
-        color: white;
-        width: 200px;
+
+    .volume-container {
         display: none;
-    }
     
-    .MuiSlider-rail {
-        background-color: darken($clr6, 60%);
-    }
-
-    .MuiSlider-track {
-        &:hover {
-            background-color: $clr1;
+        button {
+            display: block;
+            background: none;
+            border: none;
+            color: darken($clr6, 40%);
+            font-size: rem(16px);
+            cursor: pointer;
         }
-    }
-
-    @include for-wide-layout {
 
         .MuiSlider-root {
-            display: block;
+            display: none;
         }
-    }
+    
+        .MuiSlider-rail {
+            background-color: darken($clr6, 60%);
+        }
 
+        .MuiSlider-track {
+            &:hover {
+                background-color: $clr1;
+            }
+            }
+        }
+    
+    @include for-wide-layout {
+
+    .volume-container {
+        justify-content: center;
+        gap: 10px;
+        margin: auto;
+        flex-basis: 25%;
+        display: flex;
+    
+
+    .MuiSlider-root {
+        color: $clr1;
+        width: 200px;
+        display: block;
+    }
+    }
+    }
 }

@@ -7,22 +7,27 @@ import { stationService } from '../services/station.service';
 import { loadStations, getGenres } from '../store/station.action';
 
 
+
 function _Home({ stations, getGenres }) {
 
     const [genres, setGenres] = useState(null)
+    const [stationsToRender, setStationsToRender] = useState(null)
 
-    useEffect ( async () => {
+    useEffect(async () => {
         const allGenres = await getGenres()
         setGenres(allGenres)
-    },[])
+    }, [])
 
-    if(!genres) return <Loader/>
+    useEffect(() => {
+        setStationsToRender(stations)
+    },[stations])
+
+    if (!genres || !stationsToRender) return <Loader />
     return (
         <section className='stations-lists-container'>
-            {stations ?
-                <section >
-                    {genres.map(genre => <StationListByGenre key={genre.name} stations={stations} genre={genre.name} />)}
-                </section> : <Loader />}
+            <section >
+                {genres.map(genre => <StationListByGenre key={genre.name} stations={stationsToRender} genre={genre.name} />)}
+            </section>
         </section>
     )
 }

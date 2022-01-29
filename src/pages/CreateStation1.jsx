@@ -32,7 +32,6 @@ function _CreateStation1({ addSong, makeNewStation }) {
             const station = await makeNewStation();
             setNewStation(newStation => station)
         }
-        console.log('on cmp',newStation)
         const savedStation = await addSong(newStation, song);
         setNewStation(savedStation)
     };

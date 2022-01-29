@@ -44,7 +44,6 @@ export function unlikeSong (songId) {
             const action = {type: 'UNLIKE_SONG', songId}
             dispatch(action)
             const {user} = getState().userModule
-            console.log(user)
             await userService.update(user)
         } catch (err) {
             console.log('Error at User Action unlike song', err)
@@ -68,11 +67,43 @@ export function likeSong (song) {
                 const action = {type: 'LIKE_SONG', song: songToLike}
                 dispatch(action)
                 const {user} = getState().userModule
-                console.log(user)
                 await userService.update(user)
             } else console.log('Please login')
         } catch (err) {
             console.log('Error at User Action like song', err)
+        }
+    }
+}
+
+export function unLikeStation(stationId) {
+    return async (dispatch,getState) => {
+        try {
+            const action = {type: 'UNLIKE_STATION', stationId}
+            dispatch(action)
+            const {user} = getState().userModule
+            await userService.update(user)
+        } catch (err) {}
+    }
+
+}
+
+export function likeStation (stationId) {
+    return async (dispatch, getState) => {
+        try {
+            const {user} = getState().userModule
+            if(user && user.likedStations.every(likedStation => likedStation !== stationId)){
+                const action = {type: 'LIKE_STATION', stationId}
+                dispatch(action)
+                const {user} = getState().userModule
+                await userService.update(user)
+                // return Promise.resolve()
+            }else {
+                console.log('Please Login')
+                // return Promise.reject()
+            }
+
+        } catch (err) {
+
         }
     }
 }
@@ -86,6 +117,19 @@ export function updateUser(user) {
             dispatch(action)
         } catch (err) {
             console.log('Had an Error in updateStation', err);
+        }
+    }
+}
+
+
+export function toggleSharedListening() {
+    return async (dispatch,getState) => {
+            const {user} = getState().userModule
+        try {
+            const action = {type: 'TOGGLE_SHARED_LISTENING', isShare: !user.isSharedListening}
+            dispatch(action)
+        } catch (err) {
+
         }
     }
 }

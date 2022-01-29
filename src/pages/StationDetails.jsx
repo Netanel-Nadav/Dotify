@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 
-import {setDisplayedSongs} from '../store/station.action'
+import { setDisplayedSongs } from '../store/station.action'
+import {setStation} from '../store/media.action'
 
 import { stationService } from "../services/station.service";
 
@@ -12,14 +13,15 @@ import { Loader } from '../cmps/Loader';
 
 
 
-function _StationDetails({ match,stations, setDisplayedSongs }) {
-    const [station, setStation] = useState(null)
+function _StationDetails({ match, stations, setDisplayedSongs, setStation }) {
+    const [station, setStationToRender] = useState(null)
 
     useEffect(async () => {
         const stationId = match.params.id
-        const reqStation = stations.filter (station => station._id === stationId)[0]
-        // setDisplayedSongs(reqStation)
+        const reqStation = stations.filter(station => station._id === stationId)[0]
         setStation(reqStation)
+        setStationToRender(reqStation)
+
     }, [stations])
 
     if (!station) return <Loader />
@@ -35,12 +37,13 @@ function _StationDetails({ match,stations, setDisplayedSongs }) {
 
 function mapStateToProps({ stationModule }) {
     return {
-       stations: stationModule.stations
+        stations: stationModule.stations
     }
 }
 
 const mapDispatchToProps = {
-    setDisplayedSongs
+    setDisplayedSongs,
+    setStation
 }
 
 

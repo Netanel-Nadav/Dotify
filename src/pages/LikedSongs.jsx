@@ -2,9 +2,8 @@ import { DragDrop } from "../cmps/DragDrop";
 import { LikedSongsHero } from "../cmps/LikedSongsHero";
 
 
-export function LikedSongs({user}) {
+export function LikedSongs() {
 
-    console.log(user)
     return (
         <section>
             <LikedSongsHero/>

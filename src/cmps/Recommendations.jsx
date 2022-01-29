@@ -20,7 +20,7 @@ export function Recommendations({ list, setQueryOnSearch, onSetQuery }) {
                     return (
                         <section key={idx} className='recommendation' onClick={setQueryOnSearch ? () => setQueryOnSearch(item.q) : () => onSetQuery(item.q)}>
                             <section className='img-container square-ratio'>
-                                <img src={item.bestThumbnail.url} />
+                                <img src={item?.bestThumbnail.url} />
                             </section>
                             <p>{item.q}</p>
                         </section>

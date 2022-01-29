@@ -3,8 +3,9 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from "react-redux";
 import { eventBusService } from '../services/event-bus.service'
 import { addSong, updateStation, setDisplayedSongs, deleteSong } from '../store/station.action'
-import { setSongs } from "../store/media.action"
-import { likeSong, unlikeSong } from "../store/user.action";
+import { socketService } from '../services/socket.service';
+import { setSongs, setSongsAfterDnd } from "../store/media.action"
+import { likeSong, unlikeSong, updateUser } from "../store/user.action";
 import { Equalizer } from "./Equalizer";
 import moment from 'moment';
 import { GiPauseButton } from 'react-icons/gi';
@@ -12,7 +13,7 @@ import { FiMoreHorizontal } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 
-export function _DragDrop({ station, stations, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs, isPlaying, addSong }) {
+export function _DragDrop({ station, stations, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs, isPlaying, addSong, updateUser, setSongsAfterDnd }) {
   moment().format();
 
   const [songs, setSongsToRender] = useState(null);
@@ -22,25 +23,17 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
   useEffect(() => {
     if (station) setSongsToRender(station.songs)
     else setSongsToRender(user.likedSongs)
-  }, [])
-
-  useEffect(() => {
-    setSongsToRender(displayedSongs)
   }, [displayedSongs])
 
-  useEffect(() => {
-    setSongsToRender(station.songs)
-  }, [station.songs])
+  const onDeleteSong = async (station, songId) => {
+    const updatedStation = await deleteSong(station, songId)
+    socketService.emit('update station', updatedStation)
+  }
 
   const onPlayPauseSong = async (station, songId) => {
     await setSongs(station, songId);
     eventBusService.emit('playPauseVideo');
   }
-
-  // const onDeleteSong = async (station, songId) => {
-  //   const updatedStation = await deleteSong(station, songId)
-  //   if(deleteSongsOnNew) deleteSongsOnNew(updatedStation)
-  // }
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
@@ -50,8 +43,18 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
     items.splice(result.destination.index, 0, reorderedItem);
 
     setSongsToRender(items);
-    station.songs = items
-    updateStation(station)
+
+    if (station) {
+      station.songs = items
+      updateStation(station)
+      setSongsAfterDnd(station)
+    } else {
+      user.likedSongs = items
+      updateUser(user)
+    }
+
+    socketService.emit('update station', station)
+
   }
 
   const toggleMoreOpts = () => {
@@ -70,6 +73,7 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
   }
 
   if (!songs) return <React.Fragment></React.Fragment>
+  if (station && station.songs !== songs) setSongsToRender(station.songs)
   return (
     <section>
       <section className="station-song-info-title flex">
@@ -90,7 +94,7 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
           <Droppable droppableId="song-container">
             {(provided) => (
               <ul className="songs-list" {...provided.droppableProps} ref={provided.innerRef}>
-                {songs && songs.map((song, index) => {
+                {songs.map((song, index) => {
                   return (
                     <Draggable key={song._id} draggableId={song._id} index={index}>
                       {(provided) => (
@@ -125,49 +129,48 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                     :
                                     <button className="like-btn">
                                       <i className="far fa-heart" onClick={() => likeSong(song)}></i>
-                                    </button>}
-                                  {/* <button className="like-btn">
-                                    <i className={user?.likedSongs.some(likedSong => likedSong._id === song._id) ? "fas fa-heart liked" : "far fa-heart"} onClick={() => likeSong(song)}></i>
-                                  </button> */}
+                                    </button >}
                                   <button className="more-btn" onClick={toggleMoreOpts}><FiMoreHorizontal /></button>
-                                  {showOpts && <div className={`opts flex column`}>
-                                    <button className="like-btn">
-                                      {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
-                                        <p className="" onClick={() => unlikeSong(song._id)} >Remove from your Liked Songs</p>
-                                        :
-                                        <p className="empty heart" onClick={() => likeSong(song)}>Save to your Liked Songs</p>
-                                      }
-                                    </button>
-                                    <button className="delete-btn" onClick={() => deleteSong(station, song._id)}>
-                                      Remove from this playlist</button>
-                                    <button className={`addTo-btn`} onClick={openAddModal}>Add to playlist</button>
-                                  </div>}
+                                  {
+                                    showOpts && <div className={`opts flex column`}>
+                                      <button className="like-btn">
+                                        {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
+                                          <p className="" onClick={() => unlikeSong(song._id)} >Remove from your Liked Songs</p>
+                                          :
+                                          <p className="empty heart" onClick={() => likeSong(song)}>Save to your Liked Songs</p>
+                                        }
+                                      </button>
+                                      <button className="delete-btn" onClick={() => deleteSong(station, song._id)}>
+                                        Remove from this playlist</button>
+                                      <button className={`addTo-btn`} onClick={openAddModal}>Add to playlist</button>
+                                    </div>
+                                  }
                                   <div className={`choose-playlist flex column ${showModal ? "" : "hidden"}`}>
                                     <Link to={"/newStation"}>Add to new playlist</Link>
                                     {user && stations.filter(station => user._id === station.createdBy._id).map(station => {
                                       return <button onClick={() => addSongToPlaylist(station, song)}>{station.name}</button>
                                     })}
                                   </div>
-                                </div>
+                                </div >
 
-                              </section>
+                              </section >
 
-                            </section>
+                            </section >
 
-                          </section>
+                          </section >
 
-                        </li>
+                        </li >
                       )
                       }
-                    </Draggable>
+                    </Draggable >
                   );
                 })}
                 {provided.placeholder}
-              </ul>
+              </ul >
             )}
-          </Droppable>
-        </DragDropContext>
-      </div>
+          </Droppable >
+        </DragDropContext >
+      </div >
     </section >
   );
 }
@@ -190,28 +193,9 @@ const mapDispatchToProps = {
   setSongs,
   likeSong,
   unlikeSong,
-  addSong
+  addSong,
+  updateUser,
+  setSongsAfterDnd
 };
 
 export const DragDrop = connect(mapStateToProps, mapDispatchToProps)(_DragDrop);
-
-
-
-
-
-// _id, title, imgUrl, addedAtForShow, duration 
-{/* <div className='drag-song-container flex align-center'>
-<div className='idx-img-title flex align-center'>
-  <small className='idx'>{index + 1}</small>
-  <small className='play-icon'><i className="fas fa-play"></i></small>
-  <div className='img-container'>
-    <img src={imgUrl} />
-  </div>
-  <p>{title}</p>
-</div>
-
-<div className='dateAdded-duration flex'>
-  <p>{addedAtForShow}</p>
-  <p>{duration}</p>
-</div>
-</div> */}

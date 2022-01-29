@@ -37,7 +37,6 @@ function debounce(func, wait) {
     let timeout
     return function (...args) {
         const later = () => {
-            console.log('debounce activeted')
             clearTimeout(timeout)
             func(...args)
         }

@@ -5,11 +5,11 @@ import { Recommendations } from '../cmps/Recommendations';
 
 import { likeSong } from "../store/user.action";
 import { stationService } from '../services/station.service';
-import {setSongs} from '../store/media.action'
+import { setSongs } from '../store/media.action'
 import { Link } from "react-router-dom";
 
 
-function _Search({setSongs, likeSong, user}) {
+function _Search({ setSongs, likeSong, user }) {
 
     const [genres, setGenres] = useState(null)
     const [query, setQuery] = useState('');
@@ -28,16 +28,16 @@ function _Search({setSongs, likeSong, user}) {
     };
 
     const onSetSongs = async (songId) => {
-        list.songs.forEach( song => {
+        list.songs.forEach(song => {
             song._id = song.id
             delete song.id
         })
-        setSongs(list,songId)
+        setSongs(list, songId)
     }
 
     const setQueryOnSearch = (query) => {
         setQuery(query)
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
     }
 
     return (
@@ -72,7 +72,7 @@ function _Search({setSongs, likeSong, user}) {
                     <hr />
                 </section>
                 }
-                {list.recommendations && <Recommendations list={list.recommendations} setQueryOnSearch={setQueryOnSearch}/>}
+                {list.recommendations && <Recommendations list={list.recommendations} setQueryOnSearch={setQueryOnSearch} />}
             </section>
 
             {
@@ -82,7 +82,9 @@ function _Search({setSongs, likeSong, user}) {
                         return (
                             <Link to={`/genre/${genre.name}`}><section key={genre.name} className='genre' style={{ backgroundColor: genre.backgroundColor }}>
                                 <h1>{genre.name}</h1>
-                                {/* <img src={genre.imgUrl} /> */}
+                                <section className='img-container square-ratio'>
+                                    <img src={genre.imgUrl} />
+                                </section>
                             </section></Link>
                         )
                     })}

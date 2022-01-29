@@ -57,6 +57,10 @@
 
         .user-info {
             text-align: center;
+
+            P {
+                max-width: 290px;
+            }
         }
 
         small {

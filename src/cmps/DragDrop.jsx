@@ -79,7 +79,7 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
   if (!songs) return <React.Fragment></React.Fragment>
   if (station && station.songs !== songs) setSongsToRender(station.songs)
   return (
-    <section>
+    <section className='station-details-container'>
       <section className="station-song-info-title flex">
         <div className="title-container flex">
           <p className="song-index">#</p>

@@ -5,7 +5,7 @@ import { LikedSongsHero } from "../cmps/LikedSongsHero";
 export function LikedSongs() {
 
     return (
-        <section>
+        <section className="like-page">
             <LikedSongsHero/>
             <DragDrop />
         </section>

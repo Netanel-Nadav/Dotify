@@ -12,7 +12,17 @@ export class _UserProfile extends React.Component {
     }
 
     componentDidMount = async () => {
-        const stations = await stationService.query()
+        this.loadStations()
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.user.likedStations !== this.props.user.likedStations) {
+            this.loadStations()
+        }
+    }
+
+    loadStations = () => {
+        const stations = this.props.stations.filter(station => this.props.user.likedStations.includes(station._id))
         this.setState({ stations })
     }
 
@@ -25,8 +35,11 @@ export class _UserProfile extends React.Component {
         return (
             <section className="user-profile">
                 <UserHero user={user} />
-                <h2>Your Playlists:</h2>
-                <StationList stations={stations} />
+                {user.likedStations.length > 0 ? 
+                <section>
+                    <h2>Your Liked Stations:</h2>
+                    <StationList stations={stations} />
+                </section> : <h2>No Liked Stations</h2>}
             </section>
         )
     }
@@ -34,9 +47,10 @@ export class _UserProfile extends React.Component {
 
 
 
-function mapStateToProps({ userModule }) {
+function mapStateToProps({ userModule, stationModule }) {
     return {
-        user: userModule.user
+        user: userModule.user,
+        stations: stationModule.stations
 
     }
 }

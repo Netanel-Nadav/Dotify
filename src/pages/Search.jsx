@@ -57,7 +57,7 @@ function _Search({setSongs, likeSong, user}) {
                                     <p className='song-idx'>{idx + 1}</p>
                                     <span className="play-icon" onClick={() => onSetSongs(item.id)}><i className="fas fa-play"></i></span>
                                     <section className='song-img-container'>
-                                        <img src={item.bestThumbnail.url} />
+                                        <img src={item.bestThumbnail.url}  />
                                     </section>
                                     <p>{item.title}</p>
                                 </section>
@@ -82,7 +82,7 @@ function _Search({setSongs, likeSong, user}) {
                         return (
                             <Link to={`/genre/${genre.name}`}><section key={genre.name} className='genre' style={{ backgroundColor: genre.backgroundColor }}>
                                 <h1>{genre.name}</h1>
-                                {/* <img src={genre.imgUrl} /> */}
+                                <img src={genre.imgUrl}  />
                             </section></Link>
                         )
                     })}

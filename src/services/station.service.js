@@ -31,7 +31,7 @@ async function addSongToStation(station, song) {
 }
 
 
-function query() {
+async function query() {
     return httpService.get('station/')
 }
 
@@ -39,7 +39,7 @@ function save(station, song = null, songId = null) {
     if (!station._id) {
         station.createdBy = {
             _id: userService.getLogedinUser()?._id || utilService.makeId(),
-            fullname: userService.getLogedinUser()?.username || 'Guest',
+            fullname: userService.getLogedinUser()?.fullname || 'Guest',
             imgUrl: '#'
         }
         return httpService.post('station/', station)
@@ -85,7 +85,7 @@ async function searchYouTube(q) {
 async function getStationByGenre(stations, genre) {
     if (!stations) return
     let stationsByGenre = stations.filter(station => station.tags.includes(genre))
-    stationsByGenre = _shuffleStations(stationsByGenre)
+    // stationsByGenre = _shuffleStations(stationsByGenre)
     return stationsByGenre
 }
 

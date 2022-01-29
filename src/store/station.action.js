@@ -1,4 +1,4 @@
-import { socketService } from "../services/socket.service";
+
 import { stationService } from "../services/station.service";
 
 export function loadStations() {
@@ -89,8 +89,6 @@ export function deleteSong(station, songId) {
 export function makeNewStation() {
   return async (dispatch) => {
     try {
-      // const newStation = await stationService.makeNewStation()
-      
       const newStation = await stationService.save({})
       const action = { type: 'ADD_STATION', newStation }
       dispatch(action)
@@ -104,6 +102,7 @@ export function makeNewStation() {
 export function addStationToAll(newStation) {
   return async (dispatch) => {
     try {
+      console.log(newStation)
       const action = { type: 'ADD_STATION', newStation }
       dispatch(action)
     } catch (err) {

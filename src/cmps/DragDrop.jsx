@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { eventBusService } from '../services/event-bus.service'
 import { socketService } from '../services/socket.service';
 import { updateStation, setDisplayedSongs, deleteSong } from '../store/station.action'
-import { setSongs } from "../store/media.action"
+import { setSongs, setSongsAfterDnd } from "../store/media.action"
 import { likeSong, unlikeSong, updateUser } from "../store/user.action";
 import { Equalizer } from "./Equalizer";
 import moment from 'moment';
@@ -12,7 +12,7 @@ import { GiPauseButton } from 'react-icons/gi';
 import { FiMoreHorizontal } from 'react-icons/fi';
 
 
-export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs, isPlaying, updateUser}) {
+export function _DragDrop({ station, updateStation, currSongId, deleteSong, displayedSongs, likeSong, unlikeSong, user, setSongs, isPlaying, updateUser, setSongsAfterDnd}) {
   moment().format();
 
   const [songs, setSongsToRender] = useState(null);
@@ -51,6 +51,7 @@ export function _DragDrop({ station, updateStation, currSongId, deleteSong, disp
     if(station) {
       station.songs = items
       updateStation(station)
+      setSongsAfterDnd(station)
     }else {
       user.likedSongs = items
       updateUser(user)
@@ -162,7 +163,8 @@ const mapDispatchToProps = {
   setSongs,
   likeSong,
   unlikeSong,
-  updateUser
+  updateUser,
+  setSongsAfterDnd
 };
 
 export const DragDrop = connect(mapStateToProps, mapDispatchToProps)(_DragDrop);

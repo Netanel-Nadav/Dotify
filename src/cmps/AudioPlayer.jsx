@@ -181,7 +181,7 @@ class _AudioPlayer extends React.Component {
 
     return (
       <section className="player flex align-center">
-        <SongData song={currSongList[currSongIdx]} />
+         <SongData song={currSongList[currSongIdx]} />
         <div className="xxx">
           <YouTube
             videoId={currSongId}

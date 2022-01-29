@@ -36,7 +36,6 @@
     .station-song-details {
         align-items: center;
         border-radius: 10px;
-        padding: 0px 20px;
         gap: 15px;
 
         .playing {
@@ -161,5 +160,12 @@
 
     }
 
+    @include for-wide-layout {
+
+        .station-song-details {
+            padding: 0px 20px;
+        }
+
+    }
 
 }

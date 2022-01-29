@@ -45,6 +45,7 @@ export function updateStation(station) {
       const updatedStation = await stationService.save(station)
       let action = { type: 'UPDATE_STATION', updatedStation }
       dispatch(action)
+      return updatedStation
     } catch (err) {
       console.log('Had an Error in updateStation', err);
     }

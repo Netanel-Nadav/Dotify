@@ -5,17 +5,10 @@
         overflow: hidden;
         
         .station-list {
-            grid-template-columns: repeat(auto-fill, minmax(150px, auto));
+            grid-template-columns: repeat(auto-fill, minmax(160px, auto));
             margin-top: 0px;
             gap: 10px;
             justify-content: space-around;
-
-            .info-container {
-
-                h3 {
-                    font-size: rem(14px);
-                }
-            }
         }
 
         .wrraper {
@@ -50,11 +43,6 @@
             .station-list {
                 grid-template-columns: repeat(auto-fill, minmax(170px, 190px));
                 gap: 5px;
-                .info-container {
-                    h3 {
-                        font-size: rem(16px);
-                    }
-                }
             }
             .wrraper {    
                 h1 {
@@ -75,7 +63,7 @@
         max-height: 400px;
         
         .station-list {
-            grid-template-columns: repeat(auto-fill, minmax(200px, 220px));
+            grid-template-columns: repeat(auto-fill, minmax(210px, 220px));
 
             .info-container {
 

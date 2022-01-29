@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 
 
-
 export function LikedSongsPreview({ user }) {
 
-    const {fullname} = user
+    const { fullname } = user
     return (
         <section className="like-card">
             <Link to={`/likedSongs/${user._id}`}>

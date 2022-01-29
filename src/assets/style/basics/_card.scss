@@ -41,11 +41,11 @@
         gap: 8px;
 
         h3 {
-            font-size: rem(16px);
+            font-size: rem(12px);
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-            width: 200px;
+            width: 150px;
         }
 
         small {
@@ -86,5 +86,15 @@
             }
         }
     
-    }
+
+        @include for-normal-layout {
+            .info-container{
+                h3{
+                    font-size: rem(15px);
+                    width: 210px;
+                }
+            }
+        }
+
+ }
     

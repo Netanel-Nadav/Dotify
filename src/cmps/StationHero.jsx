@@ -23,7 +23,7 @@ export function _StationHero({ station, updateStation, user, toggleSharedListeni
   const {imgUrl, backgroundColor, songs} = station
   const transperent = 'rgb(0 0 0 / 0%)'
   return (
-    <section className="station-header flex justify-center align-center" style={{backgroundImage: `linear-gradient(181deg, ${backgroundColor}, ${transperent})`}}>
+    <section className="station-header flex justify-center align-center" style={{backgroundImage: station._id ? `linear-gradient(181deg, ${backgroundColor}, ${transperent})` : `linear-gradient(181deg, rgb(192, 232, 216), ${transperent})`}}>
       <div className="hero-container flex align-center">
         <div className="img-container" style={{backgroundImage: station.imgUrl ? `url(${imgUrl})` : `url(${songs[0]?.imgUrl})`}}>
           {station._id && <div className="edit-container">
@@ -36,7 +36,7 @@ export function _StationHero({ station, updateStation, user, toggleSharedListeni
         <div className="user-info">
           <small>Playlist</small>
 
-          <h1>{station?.name}</h1>
+          {station.name ? <h1>{station.name}</h1> : <h1>New Playlist</h1>}
           {station._id && <p>
             {station?.createdBy?.fullname} &nbsp; &#8226; &nbsp;
             {station?.likesCount} likes &nbsp; &#8226; &nbsp;

@@ -123,9 +123,20 @@
         gap: 20px;
 
         .genre {
+            position: relative;
             width: 200px;
             height: 200px;
             border-radius: 5px;
+            overflow: hidden;
+
+            .img-container {
+                width: 120px;
+                position: absolute;
+                right: 0%;
+                bottom: 0%;
+                transform: rotate(25deg) translate(15%);
+
+            }
 
             &:hover {
                 cursor: pointer;

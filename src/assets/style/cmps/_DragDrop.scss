@@ -52,10 +52,6 @@
                 font-size: 16px;
             }
         }
-
-        .delete-btn {
-            opacity: 0;
-        }
         
         .like-btn {
             opacity: 0;
@@ -130,6 +126,11 @@
 
             .btn-container {
                 gap: 2px;
+                position: relative;
+
+                .more-btn {
+                    z-index: 5;
+                }
 
                 button {
                     background: none;
@@ -145,6 +146,50 @@
                 .hidden {
                     opacity: 0;
                 }
+
+                .choose-playlist{
+                    background-color: $clr4;
+                    padding: 10px;
+                    border-radius: 5px;
+                    position: absolute;
+                    top: 140px;
+                    right: 171px;
+                    width: 200px;
+                    box-shadow: 0px 5px 15px rgba(0,0,0,0.5);
+                    gap: 10px;
+
+                    a {
+                        text-align: center;
+                        font-family: latobold;
+                        text-decoration: underline;
+                        text-transform: capitalize;
+                        margin-bottom: 10px;
+                    }
+                }
+
+                .opts {
+                    width: 150px;
+                    height: 150px;
+                    position: absolute;
+                    background-color: $clr4;
+                    border-radius: 5px;
+                    box-shadow: 0px 5px 15px rgba(0,0,0,0.5);
+                    padding: 10px;
+                    top: 40px;
+                    right: 20px;
+                    z-index: 10;
+
+
+                    p {
+                        margin: 0;
+                    }
+
+                    .like-btn {
+                        opacity: 1;
+                    }
+
+                }
+
             }
         }
     }
@@ -164,6 +209,7 @@
 
         .station-song-details {
             padding: 0px 20px;
+            
         }
 
     }

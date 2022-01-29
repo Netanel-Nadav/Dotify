@@ -129,10 +129,10 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                     :
                                     <button className="like-btn">
                                       <i className="far fa-heart" onClick={() => likeSong(song)}></i>
-                                    </button >}
+                                    </button>}
                                   <button className="more-btn" onClick={toggleMoreOpts}><FiMoreHorizontal /></button>
                                   {
-                                    showOpts && <div className={`opts flex column`}>
+                                    showOpts && <div className={`opts flex column space-between`}>
                                       <button className="like-btn">
                                         {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
                                           <p className="" onClick={() => unlikeSong(song._id)} >Remove from your Liked Songs</p>
@@ -140,9 +140,9 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                           <p className="empty heart" onClick={() => likeSong(song)}>Save to your Liked Songs</p>
                                         }
                                       </button>
-                                      <button className="delete-btn" onClick={() => deleteSong(station, song._id)}>
+                                      <button className="delete-btn" onClick={() => onDeleteSong(station, song._id)}>
                                         Remove from this playlist</button>
-                                      <button className={`addTo-btn`} onClick={openAddModal}>Add to playlist</button>
+                                      <button className={`addTo-btn`} onMouseOver={openAddModal}>Add to playlist</button>
                                     </div>
                                   }
                                   <div className={`choose-playlist flex column ${showModal ? "" : "hidden"}`}>
@@ -151,27 +151,27 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                       return <button onClick={() => addSongToPlaylist(station, song)}>{station.name}</button>
                                     })}
                                   </div>
-                                </div >
+                                </div>
 
-                              </section >
+                              </section>
 
-                            </section >
+                            </section>
 
-                          </section >
+                          </section>
 
-                        </li >
+                        </li>
                       )
                       }
-                    </Draggable >
+                    </Draggable>
                   );
                 })}
                 {provided.placeholder}
-              </ul >
+              </ul>
             )}
-          </Droppable >
-        </DragDropContext >
-      </div >
-    </section >
+          </Droppable>
+        </DragDropContext>
+      </div>
+    </section>
   );
 }
 

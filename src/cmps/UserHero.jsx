@@ -37,9 +37,8 @@ class _UserHero extends React.Component {
         return (
             <div className="hero" style={{backgroundImage: `linear-gradient(181deg, ${backgroundColor}, ${transperent})`}}>
                 <div className="user-info flex align-center">
-                    <div className="img-container" style={{backgroundImage: user.imgUrl ? `url(${imgUrl})` : `<i className="fas fa-user user-icon"></i>`}}>
+                    <div className="img-container" style={{backgroundImage: user.imgUrl ? `url(${imgUrl})` : `url('../assets/img/edit-icon.png')`}}>
                         <button className='edit-btn' onClick={this.onEditProfile}>Edit Profile</button>
-                        
                     </div>
                     <div className="user-details">
                         <small>Profile</small>

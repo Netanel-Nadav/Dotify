@@ -3,53 +3,50 @@ import { stationService } from "../services/station.service";
 import { connect } from "react-redux";
 
 
-function _Navigation({user}) {
+function _Navigation({ user }) {
   return (
     <nav className="nav-container flex column">
+      
+      
       <Link to="/">
         <div className="logo-container">
           Dotify<span>.</span>
         </div>
       </Link>
+
+
       <ul className="clean-list flex">
-        <NavLink to="/">
-          <li className="link-container flex align-center">
-            <div className="icon">
-              <i className="fas fa-home"></i>
-            </div>
-            <div className="title">Home</div>
-          </li>
-        </NavLink>
-        <NavLink to="/search">
-          <li className="link-container flex align-center">
-            <div className="icon">
-              <i className="fas fa-search"></i>
-            </div>
-            <div className="title">Search</div>
-          </li>
-        </NavLink>
-        <NavLink to="/library">
-          <li className="link-container flex align-center">
+        <li className="link-container flex align-center">
+            <NavLink exact to="/" className="flex align-center">
+                <i className="fas fa-home icon"></i>
+              <p className="title">Home</p>
+            </NavLink>
+     
+        </li>
+        <li className="link-container flex align-center">
+          <NavLink to="/search" className="flex align-center">
+              <i className="fas fa-search icon"></i>
+            <p className="title">Search</p>
+          </NavLink>
+        </li>
+        <li className="link-container flex align-center">
+          <NavLink to="/library" className="flex align-center">
             <div className="icon">||\</div>
-            <div className="title">Your Library</div>
-          </li>
-        </NavLink>
-        <NavLink to="/newStation">
-          <li className="link-container flex align-center">
-            <div className="icon">
-              <i className="fas fa-plus-square"></i>
-            </div>
-            <div className="title">Creat Playlist</div>
-          </li>
-        </NavLink>
-        <NavLink to={`/likedSongs/${user?._id}`}>
-          <li className="link-container flex align-center">
-            <div className="icon">
-              <i className="fas fa-heart"></i>
-            </div>
-            <div className="title">Liked Songs</div>
-          </li>
-        </NavLink>
+            <p className="title">Your Library</p>
+          </NavLink>
+        </li>
+        <li className="link-container flex align-center">
+          <NavLink to="/newStation" className="flex align-center">
+              <i className="fas fa-plus-square icon"></i>
+            <p className="title">Creat Playlist</p>
+          </NavLink>
+        </li>
+        <li className="link-container flex align-center">
+          {user && <NavLink to={`/likedSongs/${user?._id}`} className="flex align-center">
+              <i className="fas fa-heart icon"></i>
+            <p className="title">Liked Songs</p>
+          </NavLink>}
+        </li>
       </ul>
     </nav>
   );
@@ -63,7 +60,7 @@ function mapStateToProps({ userModule }) {
 }
 
 const mapDispatchToProps = {
-  
+
 };
 
 export const Navigation = connect(mapStateToProps, mapDispatchToProps)(_Navigation);

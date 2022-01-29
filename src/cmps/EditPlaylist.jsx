@@ -9,24 +9,24 @@ export class EditPlaylist extends React.Component {
         colorIdx: null,
         colors: [
             {
-                name: 'red',
-                value: '#ff0000',
+                name: 'cyan',
+                value: '#49B6FF',
             },
             {
                 name: 'blue',
-                value: '#0000ff',
+                value: '#779BE7',
+            },
+            {
+                name: 'magenta',
+                value: '#D264B6',
             },
             {
                 name: 'green',
-                value: '#008000',
+                value: '#4FB477',
             },
             {
-                name: 'yellow',
-                value: '#ffff00',
-            },
-            {
-                name: 'purple',
-                value: '#800080',
+                name: 'sand',
+                value: '#EDCBB1',
             },
         ]
     }

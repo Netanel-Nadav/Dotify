@@ -33,6 +33,10 @@
 
     padding: 0px 20px;
     
+    .chosen {
+        background-color: $clr3;
+    }
+    
     .station-song-details {
         align-items: center;
         border-radius: 10px;
@@ -147,6 +151,8 @@
                 }
             }
         }
+
+        
     }
 
 

@@ -180,36 +180,38 @@ class _AudioPlayer extends React.Component {
     const { currSongList, currSongIdx, currSongId, isPlaying } = this.props;
 
     return (
-      <section className="player flex align-center">
-        <SongData song={currSongList[currSongIdx]} />
-        <div className="xxx">
-          <YouTube
-            videoId={currSongId}
-            opts={opts}
-            onReady={this.onReady}
-            onEnd={this.onNextSong}
-            onStateChange={this.onStateChange}
+      <section className="player-container">
+        <div className="player flex align-center">
+          <SongData song={currSongList[currSongIdx]} />
+          <div className="xxx">
+            <YouTube
+              videoId={currSongId}
+              opts={opts}
+              onReady={this.onReady}
+              onEnd={this.onNextSong}
+              onStateChange={this.onStateChange}
+            />
+          </div>
+          <div className="player-center flex column ">
+            <AudioControllers
+              isPlaying={isPlaying}
+              isShuffleOn={isShuffleOn}
+              isRepeatOn={isRepeatOn}
+              onPlayPause={this.onPlayPause}
+              onNextSong={this.onNextSong}
+              onPrevSong={this.onPrevSong}
+              onToggleShuffle={this.onToggleShuffle}
+              onToggleRepeat={this.onToggleRepeat}
+            />
+            <TimeBar song={currSongList[currSongIdx]} player={player} currTime={currTime} setDuration={this.onSetDuration} />
+          </div>
+          <VolumeController
+            onSetVolume={this.onSetVolume}
+            onSetMute={this.onSetMute}
+            volume={volume}
+            isMuteOn={isMuteOn}
           />
         </div>
-        <div className="player-center flex column ">
-          <AudioControllers
-            isPlaying={isPlaying}
-            isShuffleOn={isShuffleOn}
-            isRepeatOn={isRepeatOn}
-            onPlayPause={this.onPlayPause}
-            onNextSong={this.onNextSong}
-            onPrevSong={this.onPrevSong}
-            onToggleShuffle={this.onToggleShuffle}
-            onToggleRepeat={this.onToggleRepeat}
-          />
-          <TimeBar song={currSongList[currSongIdx]} player={player} currTime={currTime} setDuration={this.onSetDuration} />
-        </div>
-        <VolumeController
-          onSetVolume={this.onSetVolume}
-          onSetMute={this.onSetMute}
-          volume={volume}
-          isMuteOn={isMuteOn}
-        />
       </section>
     );
   }

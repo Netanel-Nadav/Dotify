@@ -79,7 +79,7 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
   if (!songs) return <React.Fragment></React.Fragment>
   if (station && station.songs !== songs) setSongsToRender(station.songs)
   return (
-    <section>
+    <section className='station-details-container'>
       <section className="station-song-info-title flex">
         <div className="title-container flex">
           <p className="song-index">#</p>
@@ -133,10 +133,10 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                     :
                                     <button className="like-btn">
                                       <i className="far fa-heart" onClick={() => likeSong(song)}></i>
-                                    </button >}
+                                    </button>}
                                   <button className="more-btn" onClick={() => toggleMoreOpts(song._id)}><FiMoreHorizontal /></button>
                                   {
-                                    showOpts && currSong === song._id && <div className={`opts flex column`}>
+                                    showOpts && currSong === song._id && <div className={`opts flex column space-between`}>
                                       <button className="like-btn">
                                         {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
                                           <p className="" onClick={() => unlikeSong(song._id)} >Remove from your Liked Songs</p>
@@ -146,7 +146,7 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                       </button>
                                       <button className="delete-btn" onClick={() => onDeleteSong(station, song._id)}>
                                         Remove from this playlist</button>
-                                      <button className={`addTo-btn`} onClick={openAddModal}>Add to playlist</button>
+                                      <button className={`addTo-btn`} onMouseOver={openAddModal}>Add to playlist</button>
                                     </div>
                                   }
                                   {showModal && currSong === song._id && <div className={`choose-playlist flex column ${showModal ? "" : "hidden"}`}>
@@ -155,27 +155,27 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                       return <button onClick={() => addSongToPlaylist(station, song)}>{station.name}</button>
                                     })}
                                   </div>}
-                                </div >
+                                </div>
 
-                              </section >
+                              </section>
 
-                            </section >
+                            </section>
 
-                          </section >
+                          </section>
 
-                        </li >
+                        </li>
                       )
                       }
-                    </Draggable >
+                    </Draggable>
                   );
                 })}
                 {provided.placeholder}
-              </ul >
+              </ul>
             )}
-          </Droppable >
-        </DragDropContext >
-      </div >
-    </section >
+          </Droppable>
+        </DragDropContext>
+      </div>
+    </section>
   );
 }
 

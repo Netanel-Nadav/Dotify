@@ -1,7 +1,7 @@
 
 .user-msg {
-    position: sticky;
-    bottom: 1%;
+    position: fixed;
+    bottom: 20%;
     left: 50%;
     transform: translateX(-50%);
     width: fit-content;
@@ -13,7 +13,7 @@
 
 @include for-wide-layout {
     .user-msg {
+        position: sticky;
         bottom: 1%;
-        left: 50%;
     }
 }

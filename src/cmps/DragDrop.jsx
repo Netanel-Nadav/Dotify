@@ -60,12 +60,12 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
 
   const toggleMoreOpts = (songId) => {
     setCurrSong(songId)
-    if(showOpts && showModal) setModal(false)
+    if (showOpts && showModal) setModal(false)
     setOpts(!showOpts);
   }
 
   const openAddModal = () => {
-    
+
     setModal(!showModal);
   }
 
@@ -105,19 +105,21 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                         <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                           <section key={song._id} className={`station-song-details flex ${showOpts && currSong === song._id ? 'chosen' : ''}`}>
                             <section className={`song-info flex ${song._id === currSongId ? 'playing' : ''}`}>
-                              {song._id === currSongId && isPlaying ? <Equalizer className="equalizer" /> : <p className='title'>{index + 1}</p>}
-                              <span
-                                className="play-pause-icon" onClick={() => onPlayPauseSong(station, song._id)}>
-                                {song._id === currSongId && isPlaying ? <GiPauseButton className="pause" /> :
-                                  <i className="fas fa-play"></i>}
-                              </span>
-                              <section
-                                className={`img-container ${song._id === currSongId ? "playing" : ""
-                                  }`}
-                              >
-                                <img src={song.imgUrl} />
-                              </section>
-                              <p className="">{song.title}</p>
+                              <div className='icons-container flex justify-contet align-center'>
+                                {song._id === currSongId && isPlaying ? <Equalizer className="equalizer" /> : <p className='title'>{index + 1}</p>}
+                                <span
+                                  className="play-pause-icon" onClick={() => onPlayPauseSong(station, song._id)}>
+                                  {song._id === currSongId && isPlaying ? <GiPauseButton className="pause" /> :
+                                    <i className="fas fa-play"></i>}
+                                </span>
+                              </div>
+                                <section
+                                  className={`img-container ${song._id === currSongId ? "playing" : ""
+                                    }`}
+                                >
+                                  <img src={song.imgUrl} />
+                                </section>
+                                <p className="">{song.title}</p>
                             </section>
                             <section className="wrraper flex space-between">
                               <section className="song-addedAt">
@@ -175,7 +177,7 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
           </Droppable>
         </DragDropContext>
       </div>
-    </section>
+    </section >
   );
 }
 

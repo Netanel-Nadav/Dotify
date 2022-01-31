@@ -4,8 +4,10 @@
     top: 0;
     background-color: transparent;
     z-index: 10;
+    
     .back-foword-container {
         gap: 10px;
+        margin-inline-start: $base-margin;
     }
 
     .login-btn {

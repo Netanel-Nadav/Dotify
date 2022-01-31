@@ -5,9 +5,8 @@
         overflow: hidden;
         
         .station-list {
-            grid-template-columns: repeat(auto-fill, minmax(160px, auto));
+            grid-template-columns: repeat(auto-fill, minmax(180px, auto));
             margin-top: 0px;
-            gap: 10px;
             justify-content: space-around;
         }
 
@@ -64,13 +63,6 @@
         
         .station-list {
             grid-template-columns: repeat(auto-fill, minmax(210px, 220px));
-
-            .info-container {
-
-                h3 {
-                    font-size: rem(18px);
-                }
-            }
         }
 
         .wrraper {

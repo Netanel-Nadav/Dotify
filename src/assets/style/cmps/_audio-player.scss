@@ -86,6 +86,7 @@
           .repeat-btn {
             display: block;
             position: relative;
+            top: 3px;
 
             span {
               position: absolute;
@@ -97,8 +98,8 @@
           .play-container {
             background-color: white;
             border-radius: 50%;
-            height: 35px;
-            width: 35px;
+            height: 40px;
+            width: 40px;
             position: relative;
           }
 
@@ -109,15 +110,15 @@
             // left: 0;
 
             &.play {
-              top: 58%;
-              left: 53%;
+              top: 55%;
+              left: 55%;
               transform: translate(-50%, -50%);
             }
 
             &.pause {
-              font-size: rem(16px);
-              top: 57%;
-              left: 50%;
+              font-size: rem(17px);
+              top: 55%;
+              left: 51%;
               transform: translate(-50%, -50%);
             }
           }

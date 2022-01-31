@@ -8,7 +8,7 @@ import { MdMusicNote } from 'react-icons/md';
 export function _LikedSongs({ user }) {
     console.log(user);
     return (
-        <section>
+        <section className='like-page'>
             <LikedSongsHero />
             {user.likedSongs.length ? <DragDrop /> :
                 <div className="no-liked-songs flex column align-center">

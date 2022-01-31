@@ -5,7 +5,7 @@
         overflow: hidden;
         
         .station-list {
-            grid-template-columns: repeat(auto-fill, minmax(180px, auto));
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             margin-top: 0px;
             justify-content: space-around;
         }

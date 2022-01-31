@@ -3,10 +3,10 @@ import { stationService } from "../services/station.service";
 import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 
-import {setLoginMsg} from "../store/user.action"
+import { setLoginMsg } from "../store/user.action"
 
 
-function _Navigation({ user, stations, setLoginMsg}) {
+function _Navigation({ user, stations, setLoginMsg }) {
 
   const [userStations, setUserStations] = useState(null)
 
@@ -15,7 +15,7 @@ function _Navigation({ user, stations, setLoginMsg}) {
       const reqStations = stations.filter(station => station.createdBy._id === user._id).sort((a, b) => b.createdAt - a.createdAt)
       setUserStations(reqStations)
     }
-  }, [stations])
+  }, [stations,user])
 
   return (
     <nav className="nav-container flex column">
@@ -69,9 +69,11 @@ function _Navigation({ user, stations, setLoginMsg}) {
           <hr className="nav-hr" />
           {userStations.map(station => {
             return (
-              <NavLink exact to={`/station/${station._id}`}><div>
-                {station.name}
-              </div></NavLink>
+              <NavLink exact to={`/station/${station._id}`} key={station._id}>
+                <div className="station-name">
+                  {station.name}
+                </div>
+              </NavLink>
             )
           })}
         </section>}

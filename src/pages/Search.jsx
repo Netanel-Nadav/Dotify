@@ -24,7 +24,6 @@ function _Search({ setSongs, likeSong, user }) {
         ev.preventDefault();
         const searchRes = await stationService.searchYouTube(query)
         setList(searchRes)
-
     };
 
     const onSetSongs = async (songId) => {
@@ -57,7 +56,10 @@ function _Search({ setSongs, likeSong, user }) {
                                     <p className='song-idx'>{idx + 1}</p>
                                     <span className="play-icon" onClick={() => onSetSongs(item.id)}><i className="fas fa-play"></i></span>
                                     <section className='song-img-container'>
-                                        <img src={item.bestThumbnail.url} />
+                                        <img src={item.bestThumbnail.url} onError={({ currentTarget }) => {
+                                            currentTarget.onerror = null;
+                                            currentTarget.src = 'https://res.cloudinary.com/dvxuxsyoe/image/upload/v1643626113/l4almbflgdazzlmyzmq6.jpg'
+                                        }} />
                                     </section>
                                     <p>{item.title}</p>
                                 </section>
@@ -80,12 +82,17 @@ function _Search({ setSongs, likeSong, user }) {
                 <section className='stations-by-genre flex justify-center'>
                     {genres.map(genre => {
                         return (
-                            <Link to={`/genre/${genre.name}`}><section key={genre.name} className='genre' style={{ backgroundColor: genre.backgroundColor }}>
-                                <h1>{genre.name}</h1>
-                                <section className='img-container square-ratio'>
-                                    <img src={genre.imgUrl} />
+                            <Link to={`/genre/${genre.name}`} key={genre.name}>
+                                <section className='genre' style={{ backgroundColor: genre.backgroundColor }}>
+                                    <h1>{genre.name}</h1>
+                                    <section className='img-container square-ratio'>
+                                        <img src={genre.imgUrl} onError={({ currentTarget }) => {
+                                            currentTarget.onerror = null;
+                                            currentTarget.src = 'https://res.cloudinary.com/dvxuxsyoe/image/upload/v1643626113/l4almbflgdazzlmyzmq6.jpg'
+                                        }} />
+                                    </section>
                                 </section>
-                            </section></Link>
+                            </Link>
                         )
                     })}
                 </section>

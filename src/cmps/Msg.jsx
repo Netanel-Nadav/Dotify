@@ -4,25 +4,30 @@ import {clearUserMsg} from "../store/user.action"
 
 
 
-function _Msg({ msg, clearUserMsg }) {
+class _Msg extends React.Component{
 
 
-    let timeoutId;
+   timeoutId;
     
-    useEffect(() => {
-        if (timeoutId) clearTimeout(timeoutId)
-        timeoutId = setTimeout(() => {
-            clearUserMsg()
-        }, 2000)
-    }, [msg])
+    componentDidUpdate(prevProps,prevState) {
+        if(prevProps.msg !== this.props.msg) {
+            if (this.timeoutId) clearTimeout(this.timeoutId)
+                this.timeoutId = setTimeout(() => {
+                    this.props.clearUserMsg()
+                }, 2000)
+        }
+    }
 
 
-    if(!msg) return <React.Fragment></React.Fragment>
-    return (
-        <section className={`user-msg`}  style={{ backgroundColor: msg.type === 'error' ? '#cf000f' : '#2e77d0' }}>
-            {msg.txt}
-        </section>
-    )
+    render() {
+        const {msg} = this.props
+        if(!msg) return <React.Fragment></React.Fragment>
+        return (
+            <section className={`user-msg`}  style={{ backgroundColor: msg.type === 'error' ? '#cf000f' : '#2e77d0' }}>
+                {msg.txt}
+            </section>
+        )
+    }
 }
 
 

@@ -20,7 +20,10 @@ export function Recommendations({ list, setQueryOnSearch, onSetQuery }) {
                     return (
                         <section key={idx} className='recommendation' onClick={setQueryOnSearch ? () => setQueryOnSearch(item.q) : () => onSetQuery(item.q)}>
                             <section className='img-container square-ratio'>
-                                <img src={item?.bestThumbnail.url} />
+                                <img src={item?.bestThumbnail.url} onError={({ currentTarget }) => {
+                                        currentTarget.onerror = null; 
+                                        currentTarget.src = 'https://res.cloudinary.com/dvxuxsyoe/image/upload/v1643626113/l4almbflgdazzlmyzmq6.jpg'
+                                    }}  />
                             </section>
                             <p>{item.q}</p>
                         </section>

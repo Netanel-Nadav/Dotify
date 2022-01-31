@@ -61,6 +61,7 @@
 
     @include for-wide-layout {
         .link-container{
+            cursor: pointer;
             .icon {
                 font-size: rem(18px);
             }

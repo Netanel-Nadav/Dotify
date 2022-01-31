@@ -159,8 +159,8 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                   }
                                   {showModal && currSong === song._id && <div className={`choose-playlist flex column ${showModal ? "" : "hidden"}`}>
                                     <Link to={"/newStation"}>Add to new playlist</Link>
-                                    {user && stations.filter(station => user._id === station.createdBy._id).map(station => {
-                                      return <button onClick={() => addSongToPlaylist(station, song)}>{station.name}</button>
+                                    {user && stations.filter(station => user._id === station.createdBy._id).map((station,idx) => {
+                                      return <button key={idx} onClick={() => addSongToPlaylist(station, song)}>{station.name}</button>
                                     })}
                                   </div>}
                                 </div>

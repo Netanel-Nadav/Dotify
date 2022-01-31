@@ -5,11 +5,11 @@ import { Recommendations } from '../cmps/Recommendations';
 
 import { likeSong } from "../store/user.action";
 import { stationService } from '../services/station.service';
-import { setSongs } from '../store/media.action'
+import { setSongs, toggleIsPlaying } from '../store/media.action'
 import { Link } from "react-router-dom";
 
 
-function _Search({ setSongs, likeSong, user }) {
+function _Search({ setSongs, likeSong, user, toggleIsPlaying }) {
 
     const [genres, setGenres] = useState(null)
     const [query, setQuery] = useState('');
@@ -32,6 +32,7 @@ function _Search({ setSongs, likeSong, user }) {
             delete song.id
         })
         setSongs(list, songId)
+       toggleIsPlaying()
     }
 
     const setQueryOnSearch = (query) => {
@@ -101,13 +102,14 @@ function _Search({ setSongs, likeSong, user }) {
 
 function mapStateToProps({ userModule }) {
     return {
-        user: userModule.user
+        user: userModule.user,
     }
 }
 
 const mapDispatchToProps = {
     setSongs,
-    likeSong
+    likeSong,
+    toggleIsPlaying
 }
 
 

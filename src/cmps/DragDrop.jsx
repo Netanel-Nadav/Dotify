@@ -23,8 +23,8 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
 
   useEffect(() => {
     if (station) setSongsToRender(station.songs)
-    else setSongsToRender(user.likedSongs)
-  }, [displayedSongs,user.likedSongs])
+    else setSongsToRender(user?.likedSongs)
+  }, [displayedSongs,user?.likedSongs])
 
   const onDeleteSong = async (station, songId) => {
     const updatedStation = await deleteSong(station, songId)
@@ -56,7 +56,7 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
       updateStation(station)
       setSongsAfterDnd(station)
     } else {
-      user.likedSongs = items
+      user?.likedSongs = items
       updateUser(user)
     }
 

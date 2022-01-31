@@ -3,79 +3,79 @@
 
     .search-by-text {
         margin-top: 30px  ;
+        padding: 0px 20px;
+
+        .form-container {
+            margin-bottom: $base-margin;
+            
+        }
 
         input {
-            width: 350px;
             height: 40px;
             padding: 8px 36px;
             border-radius: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(255,255,255,.1);
+            color: rgba(255,255,255,.7);
             border: none;
-
+    
             &:focus {
                 outline: none;
             }
         }
 
-        .list-container {
-            margin-top: 30px;
+        .search-results{
+            gap: 20px;
             
-            button {
-                background: none;
-                border: 1px solid $clr3;
-                padding: 10px 40px;
-                text-transform: uppercase;
-                color: $clr6;
-                border-radius: 500px;
-                cursor: pointer;
-                transition: transform .2s;
-        
-                &:hover {
-                    border: 1px solid $clr6;
-                    transform: scale(1.05);
-                }
-            }
-
-            h1 {
-                font-size: rem(20px);
-                margin-bottom: 10px;
-            }
-
-            .song{
-                justify-content: space-between;
-                width: 100%;
-                border-radius: 5px;
-                padding: 0px 20px;
-
-
-                .song-info{
+           
+            .song-container {
+                align-items: center;
+                
+                .song-info {
                     align-items: center;
                     gap: 15px;
                     flex-basis: 65%;
-                    max-width: 40ch;
-                    position: relative;
                 }
-
                 
-                .duration {
-                    flex-basis: 15%;
+                .img-container{
+    
+                    img {
+                        width: 40px;
+                        height: 40px;
+                        object-fit: cover;
+                        border-radius: 5px;
+                    }
                 }
-
-                .add-song-btn {
-                    flex-basis: 15%;
-
+    
+                .title {
+                    max-width: 40ch;
                 }
-            
-               
-            }
-
-            .song-img-container {
-                img { 
-                    border-radius: 5px;
-                    width: 40px;
-                    height: 40px;
-                    object-fit: cover;
+    
+                .wrraper {
+                    flex-basis: 35%;
+                    align-items: center;
+    
+                    .duration {
+                        width: 80px;
+                    }
+                    
+                    .add-song-btn {
+    
+                        button {
+                            background: none;
+                            border: 1px solid $clr3;
+                            padding: 10px 40px;
+                            text-transform: uppercase;
+                            color: $clr6;
+                            border-radius: 500px;
+                            cursor: pointer;
+                            transition: transform .2s;
+                    
+                            &:hover {
+                                border: 1px solid $clr6;
+                                transform: scale(1.05);
+                            }
+                        }
+                    }
                 }
             }
         }

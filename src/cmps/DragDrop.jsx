@@ -31,6 +31,12 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
     socketService.emit('update station', updatedStation)
   }
 
+  const onHandleLikeSong = async (songId) => {
+    if (user?.likedSongs.some(likedSong => likedSong._id === songId)) unlikeSong(songId)
+    else likeSong(songId)
+    setOpts(false)
+  }
+
   const onPlayPauseSong = async (station, songId) => {
     await setSongs(station, songId);
     eventBusService.emit('playPauseVideo');
@@ -69,10 +75,10 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
     setModal(!showModal);
   }
 
-  const addSongToPlaylist = async (station, song) => {
+  const addSongToPlaylist = (station, song) => {
     console.log('station', station);
     console.log('song', song);
-    await addSong(station, song, false);
+    addSong(station, song, false);
     console.log(`song ${song._id} added`)
   }
 
@@ -105,17 +111,22 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                         <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                           <section key={song._id} className={`station-song-details flex ${showOpts && currSong === song._id ? 'chosen' : ''}`}>
                             <section className={`song-info flex ${song._id === currSongId ? 'playing' : ''}`}>
-                              {song._id === currSongId && isPlaying ? <Equalizer className="equalizer" /> : <p className='title'>{index + 1}</p>}
-                              <span
-                                className="play-pause-icon" onClick={() => onPlayPauseSong(station, song._id)}>
-                                {song._id === currSongId && isPlaying ? <GiPauseButton className="pause" /> :
-                                  <i className="fas fa-play"></i>}
-                              </span>
+                              <div className='icons-container flex justify-contet align-center'>
+                                {song._id === currSongId && isPlaying ? <Equalizer className="equalizer" /> : <p className='title'>{index + 1}</p>}
+                                <span
+                                  className="play-pause-icon" onClick={() => onPlayPauseSong(station, song._id)}>
+                                  {song._id === currSongId && isPlaying ? <GiPauseButton className="pause" /> :
+                                    <i className="fas fa-play"></i>}
+                                </span>
+                              </div>
                               <section
                                 className={`img-container ${song._id === currSongId ? "playing" : ""
                                   }`}
                               >
-                                <img src={song.imgUrl} />
+                                <img src={song.imgUrl} onError={({ currentTarget }) => {
+                                  currentTarget.onerror = null;
+                                  currentTarget.src = 'https://res.cloudinary.com/dvxuxsyoe/image/upload/v1643626113/l4almbflgdazzlmyzmq6.jpg'
+                                }} />
                               </section>
                               <p className="">{song.title}</p>
                             </section>
@@ -127,21 +138,21 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                 <p>{song.duration}</p>
                                 <div className="btn-container flex">
                                   {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
-                                    <button className="like-btn">
-                                      <i className="fas fa-heart liked" onClick={() => unlikeSong(song._id)} ></i>
+                                    <button className="like-btn heart liked">
+                                      <i className="fas fa-heart liked" onClick={() => onHandleLikeSong(song._id)} ></i>
                                     </button>
                                     :
-                                    <button className="like-btn not-liked">
-                                      <i className="far fa-heart" onClick={() => likeSong(song)}></i>
+                                    <button className="like-btn heart ">
+                                      <i className="far fa-heart" onClick={() => onHandleLikeSong(song)}></i>
                                     </button>}
                                   <button className="more-btn" onClick={() => toggleMoreOpts(song._id)}><FiMoreHorizontal /></button>
                                   {
                                     showOpts && currSong === song._id && <div className={`opts flex column space-between`}>
-                                      <button className="like-btn">
+                                      <button className="like-btn text">
                                         {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
-                                          <p className="" onClick={() => unlikeSong(song._id)} >Remove from your Liked Songs</p>
+                                          <p className="" onClick={() => onHandleLikeSong(song._id)} >Remove from your Liked Songs</p>
                                           :
-                                          <p className="empty heart" onClick={() => likeSong(song)}>Save to your Liked Songs</p>
+                                          <p className="empty heart" onClick={() => onHandleLikeSong(song)}>Save to your Liked Songs</p>
                                         }
                                       </button>
                                       <button className="delete-btn" onClick={() => onDeleteSong(station, song._id)}>
@@ -175,7 +186,7 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
           </Droppable>
         </DragDropContext>
       </div>
-    </section>
+    </section >
   );
 }
 

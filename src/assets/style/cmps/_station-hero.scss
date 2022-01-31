@@ -9,6 +9,7 @@
     .hero-container {
         flex-direction: column;
         gap: 20px;
+        align-items: center;
         
         .img-container {
             width: 200px;
@@ -86,15 +87,22 @@
         flex-direction: row;
         gap: 20px;
         position: absolute;
-        bottom: 0;
+        bottom: 15px;
         left: $base-margin;
         padding-bottom: $base-margin;
+        align-items: flex-end;
         
         .user-info {
             text-align: left;
             
             h1 {
                 font-size: rem(65px);
+                margin: 15px 0px;
+            }
+
+            p {
+                margin: 0;
+                max-width: 100%;
             }
         }
 

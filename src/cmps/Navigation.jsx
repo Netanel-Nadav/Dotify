@@ -3,13 +3,23 @@ import { stationService } from "../services/station.service";
 import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 
+import { setLoginMsg } from "../store/user.action"
 
-function _Navigation({ user }) {
-    
+
+function _Navigation({ user, stations, setLoginMsg }) {
+
+  const [userStations, setUserStations] = useState(null)
+
+  useEffect(() => {
+    if (user) {
+      const reqStations = stations.filter(station => station.createdBy._id === user._id).sort((a, b) => b.createdAt - a.createdAt)
+      setUserStations(reqStations)
+    }
+  }, [stations,user])
+
   return (
     <nav className="nav-container flex column">
-      
-      
+
       <Link to="/">
         <div className="logo-container">
           Dotify<span>.</span>
@@ -19,15 +29,15 @@ function _Navigation({ user }) {
 
       <ul className="clean-list flex">
         <li className="link-container flex align-center">
-            <NavLink exact to="/" className="flex align-center">
-                <i className="fas fa-home icon"></i>
-              <p className="title">Home</p>
-            </NavLink>
-     
+          <NavLink exact to="/" className="flex align-center">
+            <i className="fas fa-home icon"></i>
+            <p className="title">Home</p>
+          </NavLink>
+
         </li>
         <li className="link-container flex align-center">
           <NavLink to="/search" className="flex align-center">
-              <i className="fas fa-search icon"></i>
+            <i className="fas fa-search icon"></i>
             <p className="title">Search</p>
           </NavLink>
         </li>
@@ -39,30 +49,49 @@ function _Navigation({ user }) {
         </li>
         <li className="link-container flex align-center">
           <NavLink to="/newStation" className="flex align-center">
-              <i className="fas fa-plus-square icon"></i>
-            <p className="title">Creat Playlist</p>
+            <i className="fas fa-plus-square icon"></i>
+            <p className="title">Create Playlist</p>
           </NavLink>
         </li>
         <li className="link-container flex align-center">
-          {user && <NavLink to={`/likedSongs/${user?._id}`} className="flex align-center">
-              <i className="fas fa-heart icon"></i>
+          {user ? <NavLink to={`/likedSongs/${user?._id}`} className="flex align-center">
+            <i className="fas fa-heart icon"></i>
             <p className="title">Liked Songs</p>
-          </NavLink>}
+          </NavLink> :
+            <div onClick={setLoginMsg} className="link-container flex align-center">
+              <i className="fas fa-heart icon"></i>
+              <p className="title">Liked Songs</p>
+            </div>}
         </li>
       </ul>
+      {user && userStations &&
+        <section className="user-created-stations flex column">
+          <hr className="nav-hr" />
+          {userStations.map(station => {
+            return (
+              <NavLink exact to={`/station/${station._id}`} key={station._id}>
+                <div className="station-name">
+                  {station.name}
+                </div>
+              </NavLink>
+            )
+          })}
+        </section>}
     </nav>
+
   );
 }
 
 
-function mapStateToProps({ userModule }) {
+function mapStateToProps({ userModule, stationModule }) {
   return {
-    user: userModule.user
+    user: userModule.user,
+    stations: stationModule.stations
   };
 }
 
 const mapDispatchToProps = {
-
+  setLoginMsg
 };
 
 export const Navigation = connect(mapStateToProps, mapDispatchToProps)(_Navigation);

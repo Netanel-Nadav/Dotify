@@ -1,0 +1,19 @@
+
+.user-msg {
+    position: sticky;
+    bottom: 1%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.8);
+    transition: all 1s;
+}
+
+@include for-wide-layout {
+    .user-msg {
+        bottom: 1%;
+        left: 50%;
+    }
+}

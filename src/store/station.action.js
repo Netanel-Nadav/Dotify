@@ -9,7 +9,9 @@ export function loadStations() {
       dispatch(action)
       return Promise.resolve()
     } catch (err) {
-      console.log("Couldn't get stations", err)
+      console.error('Error while loading stations:', err)
+      const action = { type: 'SET_MSG', msg: { txt: 'Had error while loading stations', type: 'error' } }
+      dispatch(action)
     }
   }
 }
@@ -20,9 +22,11 @@ export function getGenres() {
     try {
       const genres = await stationService.getStationsGenre()
       return Promise.resolve(genres)
-     } catch (err) {
-       console.log("Couldn't get genres", err)
-     }
+    } catch (err) {
+      console.error('Error while loading stations genres:', err)
+      const action = { type: 'SET_MSG', msg: { txt: 'Had error while loading stations genres', type: 'error' } }
+      dispatch(action)
+    }
   }
 }
 
@@ -33,7 +37,9 @@ export function setDisplayedSongs(station) {
       const action = { type: 'SET_DISPLAYED_SONGS', songs }
       dispatch(action)
     } catch (err) {
-      console.log("Couldn't set songs", err)
+      console.error('Error settings displayed songs:', err)
+      const action = { type: 'SET_MSG', msg: { txt: 'Had error while setting songs to displays', type: 'error' } }
+      dispatch(action)
     }
   }
 }
@@ -47,7 +53,9 @@ export function updateStation(station) {
       dispatch(action)
       return updatedStation
     } catch (err) {
-      console.log('Had an Error in updateStation', err);
+      console.error('Error while updating station:', err)
+      const action = { type: 'SET_MSG', msg: { txt: 'Had error while updating station', type: 'error' } }
+      dispatch(action)
     }
   }
 }
@@ -59,14 +67,16 @@ export function addSong(station, song, newStation = true) {
       // const updatedStation = await stationService.save(station, song)
       let action = { type: 'UPDATE_STATION', updatedStation }
       dispatch(action)
-      if(newStation) {
+      if (newStation) {
         action = { type: 'UPDATE_DISPLAYED_SONGS', songs: updatedStation.songs }
         dispatch(action)
       }
       // socketService.emit('update station', station)
       return Promise.resolve(updatedStation)
     } catch (err) {
-      console.log("Couldn't add song", err)
+      console.error('Error while adding song:', err)
+      const action = { type: 'SET_MSG', msg: { txt: 'Had error while adding a song to the station', type: 'error' } }
+      dispatch(action)
     }
   }
 }
@@ -74,7 +84,7 @@ export function addSong(station, song, newStation = true) {
 export function deleteSong(station, songId) {
   return async (dispatch) => {
     try {
-      const updatedStation = await stationService.save(station, null,songId)
+      const updatedStation = await stationService.save(station, null, songId)
       let action = { type: 'UPDATE_STATION', updatedStation }
       dispatch(action)
       action = { type: 'UPDATE_DISPLAYED_SONGS', songs: updatedStation.songs }
@@ -82,7 +92,9 @@ export function deleteSong(station, songId) {
       // socketService.emit('update station', station)
       return Promise.resolve(updatedStation)
     } catch (err) {
-      console.log("Couldn't remove song", err)
+      console.error('Error while deleting song:', err)
+      const action = { type: 'SET_MSG', msg: { txt: 'Had error while removing a song from station', type: 'error' } }
+      dispatch(action)
     }
   }
 }
@@ -91,11 +103,15 @@ export function makeNewStation() {
   return async (dispatch) => {
     try {
       const newStation = await stationService.save({})
-      const action = { type: 'ADD_STATION', newStation }
+      let action = { type: 'ADD_STATION', newStation }
+      dispatch(action)
+      action = {type: 'SET_MSG', msg: { txt: 'New station created', type: 'success'}}
       dispatch(action)
       return Promise.resolve(newStation)
     } catch (err) {
-      console.log("Couldn't make new station", err)
+      console.error('Error while making stations:', err)
+      const action = { type: 'SET_MSG', msg: { txt: 'Had error while making a new stations', type: 'error' } }
+      dispatch(action)
     }
   }
 }
@@ -107,7 +123,7 @@ export function addStationToAll(newStation) {
       const action = { type: 'ADD_STATION', newStation }
       dispatch(action)
     } catch (err) {
-      console.log("Couldn't make new station", err)
+      console.error("Error while trying to add station to other users", err)
     }
   }
 }

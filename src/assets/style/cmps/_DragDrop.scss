@@ -1,38 +1,245 @@
 .station-details-container {
+  .station-song-info-title {
+    justify-content: space-between;
 
-    .station-song-info-title {
-        justify-content: space-between;
+    .title-container {
+      .song-index {
+        padding-left: 20px;
+      }
 
-        .title-container {
-       
-            .song-index {
-                padding-left: 20px;
-            }
-
-            .title {
-                width: 30px;
-                flex-basis: 60%;
-                text-align: left;
-                padding-left: 20px;
-            }
-        }
-
-        .wrraper { 
-            flex-basis: 20%;
-            justify-content: flex-start;
-            .date-addedAt {
-                display: none;
-            }
-
-            .duration {
-                flex-basis: 50%;
-                padding-left: 20px;
-            }
-        }
+      .title {
+        width: 30px;
+        flex-basis: 60%;
+        text-align: left;
+        padding-left: 20px;
+      }
     }
 
+    .wrraper {
+      flex-basis: 20%;
+      justify-content: flex-start;
+      .date-addedAt {
+        display: none;
+      }
+
+      .duration {
+        flex-basis: 50%;
+        padding-left: 20px;
+      }
+    }
+  }
+
+  .drag-drop-container {
+    // padding: 0px 20px;
+
+    .chosen {
+      background-color: $clr3;
+    }
+
+    .station-song-details {
+      align-items: center;
+      border-radius: 10px;
+      gap: 15px;
+
+      .playing {
+        color: $clr1;
+      }
+
+      .play-pause-icon {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        font-size: 12px;
+
+        .pause {
+          font-size: 16px;
+        }
+      }
+
+      .like-btn {
+        display: none;
+        opacity: 0;
+      }
+
+      &:hover {
+        background-color: $clr3;
+
+        .title {
+          opacity: 0;
+        }
+
+        .play-pause-icon {
+          opacity: 1;
+
+          &:hover {
+            color: $clr1;
+          }
+        }
+
+        .bars-7 {
+          opacity: 0;
+        }
+
+        .delete-btn {
+          opacity: 1;
+        }
+
+        .like-btn {
+          opacity: 1;
+        }
+      }
+
+      .song-info {
+        position: relative;
+        align-items: center;
+        gap: 15px;
+        flex-basis: 80%;
+        padding-left: 20px;
+
+        .icons-container {
+          width: 20px;
+          p {
+            font-size: rem(14px);
+          }
+        }
+
+        .img-container {
+          img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 2px;
+          }
+        }
+        .playing {
+          padding-left: 0px;
+        }
+      }
+
+      .wrraper {
+        flex-basis: 20%;
+        justify-content: flex-end;
+
+        .song-addedAt {
+          display: none;
+        }
+
+        .song-duration {
+          gap: 10px;
+        }
+
+        .btn-container {
+          gap: 2px;
+          position: relative;
+
+          .more-btn {
+            z-index: 5;
+          }
+
+          button {
+            background: none;
+            border: none;
+            color: $clr6;
+            cursor: pointer;
+
+            &:hover {
+              color: $clr1;
+            }
+          }
+
+          .hidden {
+            opacity: 0;
+          }
+
+          .choose-playlist {
+            background-color: $clr4;
+            padding: 10px;
+            border-radius: 5px;
+            position: absolute;
+            top: 140px;
+            right: 171px;
+            width: 200px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+            gap: 10px;
+
+            a {
+              text-align: center;
+              font-family: latobold;
+              text-decoration: underline;
+              text-transform: capitalize;
+              margin-bottom: 10px;
+            }
+          }
+
+          .opts {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            background-color: $clr4;
+            border-radius: 5px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            top: 40px;
+            right: 20px;
+            z-index: 10;
+
+            p {
+              margin: 0;
+            }
+
+            .like-btn {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+
+    h1 {
+      margin-bottom: $base-margin;
+    }
+    .songs-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  @include for-normal-layout {
+    .drag-drop-container {
+      .station-song-details {
+        gap: 0px;
+        .wrraper {
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+
+  @include for-wide-layout {
+    .station-song-info-title {
+      padding: 0px 20px;
+
+      .title-container {
+        .song-index {
+          padding-left: 0;
+        }
+      }
+
+      .wrraper {
+        justify-content: space-between;
+        flex-basis: 40%;
+
+        .date-addedAt {
+          display: block;
+        }
+      }
+    }
 
     .drag-drop-container {
+      .station-song-details {
+        .song-info {
+          flex-basis: 60%;
 
         // padding: 0px 20px;
     
@@ -60,7 +267,7 @@
                 }
             }
         
-            .like-btn.not-liked {
+            .like-btn.heart {
                 display: none;
                 opacity: 0;
             }
@@ -206,16 +413,29 @@
         
         }
 
+        .wrraper {
+          flex-basis: 40%;
+          justify-content: space-between;
 
-        h1 {
-            margin-bottom: $base-margin;
+          .song-addedAt {
+            display: block;
+            flex-basis: 50%;
+          }
+
+          .song-duration {
+            flex-basis: 50%;
+
+            .btn-container {
+              .like-btn {
+                display: block;
+              }
+            }
+          }
         }
-        .songs-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
+      }
     }
+  }
+}
 
 
 
@@ -283,9 +503,17 @@
 
                         flex-basis: 50%;
 
+                        p {
+                          width: 60px;
+                        }
+                        
                         .btn-container {
-                            .like-btn {
+                            .like-btn.heart, .like-btn.text {
                                 display: block;
+
+                               &.liked {
+                                   opacity: 1;
+                               }
                             }
                         }
                     }

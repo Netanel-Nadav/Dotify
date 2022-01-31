@@ -19,7 +19,6 @@ export const stationService = {
 
 
 
-
 async function addSongToStation(station, song) {
     song.addedBy = {
         _id: userService.getLogedinUser()?._id || utilService.makeId(),
@@ -75,7 +74,7 @@ async function searchYouTube(q) {
     const body = await response.json();
     // console.log(body)
     const searchRes = {
-        songs: body.items.filter(item => item.type === 'video' && !item.title.toLowerCase().includes('full', 'album')),
+        songs: body.items.filter(item => item.type === 'video'),
         recommendations: body.refinements
     }
     return searchRes

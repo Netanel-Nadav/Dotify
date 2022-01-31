@@ -6,7 +6,7 @@ export function setStation(station) {
             const action = { type: "SET_STATION", station };
             dispatch(action);
         } catch (err) {
-            console.log("Got an Error in SetStation", err);
+            console.error('Error while setting station on player:', err)
         }
     };
 }
@@ -18,7 +18,7 @@ export function toggleIsPlaying() {
             const action = { type: "TOGGLE_IS_PLAYING", isPlaying: !isPlaying };
             dispatch(action)
         } catch (err) {
-            console.log("Couldnt toggle isPlaying", err)
+            console.error('Error while toggling play/pause')
         }
     }
 }
@@ -40,7 +40,7 @@ export function setSongs(station, songId) {
             // action = { type: "TOGGLE_IS_PLAYING", isPlaying: true };
             // dispatch(action);
         } catch (err) {
-            console.log("Got an Error in SetSong", err);
+            console.error('Error while setting songs on player')
         }
     };
 }
@@ -52,7 +52,9 @@ export function setSongsAfterDnd(station) {
             let action = { type: "SET_SONGS", songs };
             dispatch(action);
         } catch (err) {
-
+            console.error('Error while reordering song list', err)
+            const action = { type: 'SET_MSG', msg: { txt: 'Had error while reordering song list', type: 'error' } }
+            dispatch(action)
         }
     }
 }
@@ -85,7 +87,9 @@ export function changeSong(diff) {
             // action = { type: 'SET_ALREADY_PLAYED', songId: currSongList[newSongIdx]._id }
             // dispatch(action)
         } catch (err) {
-            console.log("Couldn't change song", err)
+            console.error('Error while changing song', err)
+            const action = { type: 'SET_MSG', msg: { txt: 'Had error while changing song list', type: 'error' } }
+            dispatch(action)
         }
     }
 }
@@ -100,7 +104,7 @@ export function setShuffleState(songPlayingId) {
             let action = { type: 'SET_ALREADY_PLAYED', playlist: currSongList.filter(song => song._id !== songPlayingId) };
             dispatch(action);
         } catch (err) {
-            console.log("Couldn't set shuffle", err)
+            console.error("Couldn't set shuffle", err)
         }
     }
 }
@@ -123,7 +127,7 @@ export function setRandomSong() {
             // if (!notPlayedId.length) resetAlreadyPlayed() what to do when playlist ends
 
         } catch (err) {
-            console.log("Couldn't get random song", err)
+            console.error("Couldn't set random", err)
         }
     }
 }

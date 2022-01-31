@@ -1,4 +1,5 @@
 import React from "react"
+
 import { socketService } from "../services/socket.service"
 
 
@@ -79,10 +80,10 @@ export class EditPlaylist extends React.Component {
     }
 
 
-    handleSubmit = (ev) => {
+    handleSubmit = async (ev) => {
         ev.preventDefault()
-        this.props.updateStation(this.state.station)
         this.props.setIsModalShown(false)
+        await this.props.updateStation(this.state.station)
         socketService.emit('update station', this.state.station)
     }
 

@@ -22,6 +22,7 @@ import { AudioPlayer } from "./cmps/AudioPlayer";
 import { Navigation } from "./cmps/Navigation";
 import { HomeScreenModal } from "./cmps/HomeScreenModal";
 import { Loader } from './cmps/Loader';
+import {Msg} from './cmps/Msg'
 
 export class _RootCmp extends React.Component {
 
@@ -33,7 +34,6 @@ export class _RootCmp extends React.Component {
 
 
   componentDidMount (){
-    
     this.props.loadStations().then (() => {
       this.setState({isAppLoaded: true})
     })
@@ -79,6 +79,7 @@ export class _RootCmp extends React.Component {
             <Route component={Library} path="/library" />
             <Route component={Home} path="/" />
           </Switch>
+        <Msg/>
         </main>
         <AudioPlayer />
       </div>

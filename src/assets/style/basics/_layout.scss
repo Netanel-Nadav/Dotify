@@ -5,6 +5,7 @@
     height: 100vh;
 
         main {
+            position: relative;
             grid-row: 2 / 3;
             overflow-y: auto;
         }

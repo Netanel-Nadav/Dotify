@@ -28,8 +28,8 @@ export function _Header({ user, logout }) {
     return (
         <header className='app-header flex space-between align-center'>
             <div className='back-foword-container flex'>
-                <button onClick={onGoBack} className='back-btn'>&lt;</button>
-                <button onClick={onGoForward} className='back-btn'>&gt;</button>
+                <button onClick={onGoBack} className='back-btn'><i className="fas fa-arrow-left"></i></button>
+                <button onClick={onGoForward} className='back-btn'><i className="fas fa-arrow-right"></i></button>
             </div>
             <div className='user-login-container'>
                 <button onClick={toggleUserModal} className='login-btn flex align-center'>

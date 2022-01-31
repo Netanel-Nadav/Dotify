@@ -46,7 +46,7 @@ function _StationDetails({ match, stations, setDisplayedSongs, setStation, addSo
                 <div className="form-container flex column align-center">
                     <p>Let's find something for your playlist</p>
                     <form onSubmit={search} className='flex justify-center'>
-                        <input autoFocus value={query} placeholder='Enter song or artist name'
+                        <input value={query} placeholder='Enter song or artist name'
                             onChange={e => setQuery(e.target.value)} />
                     </form>
                 </div>

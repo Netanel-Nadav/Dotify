@@ -48,13 +48,17 @@
             }
 
             .title {
+                font-size: rem(14px);
                 max-width: 40ch;
             }
 
             .wrraper {
+                gap: 5px;
                 flex-basis: 35%;
+                align-items: center;
 
                 .duration {
+                    display: none;
                     width: 80px;
                 }
                 
@@ -74,6 +78,22 @@
                             border: 1px solid $clr6;
                             transform: scale(1.05);
                         }
+                    }
+                }
+            }
+        }
+
+    }
+    @include for-normal-layout {
+        .search-results {
+            .song-container{
+                .title {
+                    font-size: rem(16px);
+                }
+                .wrraper{
+                    gap: unset;
+                    .duration{
+                        display: block;
                     }
                 }
             }

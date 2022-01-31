@@ -9,7 +9,7 @@ export function Recommendations({ list, setQueryOnSearch, onSetQuery }) {
 
 
 
-    const previewList = list.slice(0, 5)
+    const previewList = list.slice(0, 6)
     const listToRender = showAll ? list : previewList
     return (
         <section className='recommendations-container'>

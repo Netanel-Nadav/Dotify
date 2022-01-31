@@ -54,7 +54,7 @@ function _StationPreview({ station, setStation, user, likeStation, unLikeStation
                             <i className="fas fa-heart liked" onClick={onHandleLikeStation}></i>
                             :
                             <i className="far fa-heart heart-icon" onClick={onHandleLikeStation} ></i>}
-                        <small><em>{stationToRender.likesCount}</em></small>
+                        <small><em>{stationToRender.likesCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</em></small>
                     </div>
 
                 </div>

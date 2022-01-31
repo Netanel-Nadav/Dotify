@@ -39,7 +39,7 @@ export function _StationHero({ station, updateStation, user, toggleSharedListeni
           {station.name ? <h1>{station.name}</h1> : <h1>New Playlist</h1>}
           {station._id && <p>
             {station?.createdBy?.fullname} &nbsp; &#8226; &nbsp;
-            {station?.likesCount} likes &nbsp; &#8226; &nbsp;
+            {station?.likesCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} likes &nbsp; &#8226; &nbsp;
             {station?.songs.length} songs &nbsp; &#8226; &nbsp;
             {station?.totalDuration}
           </p>}

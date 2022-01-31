@@ -50,6 +50,18 @@
         }
     }
 
+    .nav-hr {
+        opacity: 0.4;
+    }
+
+    .user-created-stations {
+        padding: 10px;
+        gap: 10px;
+        max-height: 650px;
+        overflow-y: scroll;
+        color: $clr3;
+    }
+
 
     @include for-wide-layout {
         .link-container{

@@ -60,7 +60,7 @@
                 }
             }
         
-            .like-btn {
+            .like-btn.heart {
                 display: none;
                 opacity: 0;
             }
@@ -282,8 +282,12 @@
                         flex-basis: 50%;
 
                         .btn-container {
-                            .like-btn {
+                            .like-btn.heart, .like-btn.text {
                                 display: block;
+
+                               &.liked {
+                                   opacity: 1;
+                               }
                             }
                         }
                     }

@@ -86,10 +86,10 @@ export class EditUser extends React.Component {
         this.setState((prevState) => ({ user: { ...prevState.user, backgroundColor: color } }))
     }
 
-    handleSubmit = (ev) => {
+    handleSubmit =  async (ev) => {
         ev.preventDefault()
         const updatedUser = this.state.user
-        this.props.updateUser(updatedUser)
+        await this.props.updateUser(updatedUser)
         this.props.onEditProfile()
     }
 

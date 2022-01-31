@@ -69,13 +69,13 @@ async function searchYouTube(q) {
         "method": "GET",
         "headers": {
             "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
-            "x-rapidapi-key": '3d77a8bd3emshf7258f48359dd20p15faabjsn751051979d88'
+            "x-rapidapi-key": '45b8fe1454msh8ced5fc6319b729p107c5bjsne585d331b323'
         }
     });
     const body = await response.json();
     // console.log(body)
     const searchRes = {
-        songs: body.items.filter(item => item.type === 'video' && !item.title.toLowerCase().includes('full','album')),
+        songs: body.items.filter(item => item.type === 'video'),
         recommendations: body.refinements
     }
     return searchRes

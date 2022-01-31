@@ -5,7 +5,7 @@ import { eventBusService } from '../services/event-bus.service'
 import { addSong, updateStation, setDisplayedSongs, deleteSong } from '../store/station.action'
 import { socketService } from '../services/socket.service';
 import { setSongs, setSongsAfterDnd } from "../store/media.action"
-import { likeSong, unlikeSong, updateUser } from "../store/user.action";
+import { likeSong, unlikeSong, updateUser} from "../store/user.action";
 import { Equalizer } from "./Equalizer";
 import moment from 'moment';
 import { GiPauseButton } from 'react-icons/gi';
@@ -29,6 +29,12 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
   const onDeleteSong = async (station, songId) => {
     const updatedStation = await deleteSong(station, songId)
     socketService.emit('update station', updatedStation)
+  }
+
+  const onHandleLikeSong = async (songId) => {
+    if(user?.likedSongs.some(likedSong => likedSong._id === songId)) unlikeSong(songId)
+    else likeSong(songId)
+    setOpts(false)
   }
 
   const onPlayPauseSong = async (station, songId) => {
@@ -69,10 +75,10 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
     setModal(!showModal);
   }
 
-  const addSongToPlaylist = async (station, song) => {
+  const addSongToPlaylist = (station, song) => {
     console.log('station', station);
     console.log('song', song);
-    await addSong(station, song, false);
+    addSong(station, song, false);
     console.log(`song ${song._id} added`)
   }
 
@@ -129,21 +135,21 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                 <p>{song.duration}</p>
                                 <div className="btn-container flex">
                                   {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
-                                    <button className="like-btn">
-                                      <i className="fas fa-heart liked" onClick={() => unlikeSong(song._id)} ></i>
+                                    <button className="like-btn heart liked">
+                                      <i className="fas fa-heart liked" onClick={() => onHandleLikeSong(song._id)} ></i>
                                     </button>
                                     :
-                                    <button className="like-btn">
-                                      <i className="far fa-heart" onClick={() => likeSong(song)}></i>
+                                    <button className="like-btn heart ">
+                                      <i className="far fa-heart" onClick={() => onHandleLikeSong(song)}></i>
                                     </button>}
                                   <button className="more-btn" onClick={() => toggleMoreOpts(song._id)}><FiMoreHorizontal /></button>
                                   {
                                     showOpts && currSong === song._id && <div className={`opts flex column space-between`}>
-                                      <button className="like-btn">
+                                      <button className="like-btn text">
                                         {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
-                                          <p className="" onClick={() => unlikeSong(song._id)} >Remove from your Liked Songs</p>
+                                          <p className="" onClick={() => onHandleLikeSong(song._id)} >Remove from your Liked Songs</p>
                                           :
-                                          <p className="empty heart" onClick={() => likeSong(song)}>Save to your Liked Songs</p>
+                                          <p className="empty heart" onClick={() => onHandleLikeSong(song)}>Save to your Liked Songs</p>
                                         }
                                       </button>
                                       <button className="delete-btn" onClick={() => onDeleteSong(station, song._id)}>

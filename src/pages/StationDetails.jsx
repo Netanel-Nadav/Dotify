@@ -24,7 +24,7 @@ function _StationDetails({ match, stations, setDisplayedSongs, setStation, addSo
         const reqStation = stations.filter(station => station._id === stationId)[0]
         setStation(reqStation)
         setStationToRender(reqStation)
-    }, [stations])
+    }, [stations, match.params.id])
 
 
     const search = async (ev) => {
@@ -44,31 +44,36 @@ function _StationDetails({ match, stations, setDisplayedSongs, setStation, addSo
             <StationHero station={station} />
             <DragDrop station={station} />
             <section className='search-by-text'>
-                <form onSubmit={search} className='flex justify-center'>
-                    <input autoFocus value={query} placeholder='Enter song or artist name'
-                        onChange={e => setQuery(e.target.value)} />
-                </form>
-                {list.songs.length > 0 && <section className='list-container flex column'>
-                    <h1>Search Results</h1>
+                <div className="form-container flex column align-center">
+                    <p>Let's find something for your playlist</p>
+                    <form onSubmit={search} className='flex justify-center'>
+                        <input autoFocus value={query} placeholder='Enter song or artist name'
+                            onChange={e => setQuery(e.target.value)} />
+                    </form>
+                </div>
+                {list.songs.length > 0 && <section className='search-results flex column'>
                     {list.songs.map((item, idx) => {
-                        if( station.songs.every((currSong) => currSong._id !== item.id)){
+                        if (station.songs.every((currSong) => currSong._id !== item.id)) {
                             return (
-                                <section key={item.id} className='song flex'>
+                                <section key={idx} className='song-container flex'>
                                     <section className='song-info flex'>
-                                        <section className='song-img-container'>
+                                        <section className='img-container'>
                                             <img src={item.bestThumbnail.url} />
                                         </section>
-                                        <p>{item.title}</p>
+                                        <p className='title'>{item.title}</p>
                                     </section>
-                                    <section className='duration'>
-                                        <p className='duration'>{item.duration}</p>
+
+                                    <section className="wrraper flex space-around">
+                                        <section className="song-duration">
+                                            <p className="duration">{item.duration}</p>
+                                        </section>
+                                        <section className="add-song-btn">
+                                            <button onClick={() => onAddSong(item)}>
+                                                Add
+                                            </button>
+                                        </section>
                                     </section>
-                                    <section className="add-song-btn">
-                                        <button onClick={() => onAddSong(item)}>
-                                            Add
-                                        </button>
-                                    </section>
-    
+
                                 </section>
                             )
                         }

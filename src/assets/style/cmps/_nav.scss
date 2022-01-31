@@ -38,6 +38,7 @@
     .link-container {
         color: rgba($color: $clr6, $alpha: .6);
         transition: color .3s;
+        gap: 10px;
 
         .icon {
             width: 20px;
@@ -48,6 +49,18 @@
         &:hover {
             color: $clr6;
         }
+    }
+
+    .nav-hr {
+        opacity: 0.4;
+    }
+
+    .user-created-stations {
+        padding: 10px;
+        gap: 10px;
+        max-height: 650px;
+        overflow-y: scroll;
+        color: $clr3;
     }
 
 

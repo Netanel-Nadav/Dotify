@@ -15,7 +15,7 @@ function _LikedSongsHero({ user }) {
                 </div>
                 <div className="user-details flex column">
                     <small>Playlist</small>
-                    <h1>{user?.username} liked songs</h1>
+                    <h1>{user?.fullname.split(' ')[0]} liked songs</h1>
                     <h3>{user?.likedSongs.length} Songs</h3>
                 </div>
             </div>

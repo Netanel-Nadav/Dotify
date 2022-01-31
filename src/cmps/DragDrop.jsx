@@ -60,12 +60,12 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
 
   const toggleMoreOpts = (songId) => {
     setCurrSong(songId)
-    if(showOpts && showModal) setModal(false)
+    if (showOpts && showModal) setModal(false)
     setOpts(!showOpts);
   }
 
   const openAddModal = () => {
-    
+
     setModal(!showModal);
   }
 
@@ -131,7 +131,7 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                       <i className="fas fa-heart liked" onClick={() => unlikeSong(song._id)} ></i>
                                     </button>
                                     :
-                                    <button className="like-btn">
+                                    <button className="like-btn not-liked">
                                       <i className="far fa-heart" onClick={() => likeSong(song)}></i>
                                     </button>}
                                   <button className="more-btn" onClick={() => toggleMoreOpts(song._id)}><FiMoreHorizontal /></button>

@@ -76,10 +76,7 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
   }
 
   const addSongToPlaylist = (station, song) => {
-    console.log('station', station);
-    console.log('song', song);
     addSong(station, song, false);
-    console.log(`song ${song._id} added`)
   }
 
   if (!songs) return <React.Fragment></React.Fragment>
@@ -135,7 +132,7 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                 <p>{moment(song.addedAt).fromNow()}</p>
                               </section>
                               <section className="song-duration btns flex">
-                                <p>{song.duration}</p>
+                                <p className='p'>{song.duration}</p>
                                 <div className="btn-container flex">
                                   {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
                                     <button className="like-btn heart liked">

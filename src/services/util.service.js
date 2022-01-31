@@ -52,3 +52,13 @@ function formatTime() {
 
     return `${day}/${month}/${year}`
 }
+
+function _shuffleStations(stations) {
+    const shuffledStations = stations.slice()
+    for (let i = shuffledStations.length - 1; i > 0; i--) {
+        const rand = Math.floor(Math.random() * (i + 1));
+        [shuffledStations[i], shuffledStations[rand]] = [shuffledStations[rand], shuffledStations[i]];
+    }
+    return shuffledStations
+};
+

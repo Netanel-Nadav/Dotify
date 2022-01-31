@@ -1,24 +1,18 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 
-import { socketService } from "../services/socket.service";
 
 import { EditPlaylist } from "./EditPlaylist"
 import {toggleSharedListening} from '../store/user.action'
 import { updateStation } from "../store/station.action"
 
-export function _StationHero({ station, updateStation, user, toggleSharedListening }) {
+export function _StationHero({ station, updateStation }) {
 
 
   const [isModalShown, setIsModalShown] = useState(false)
 
 
-  // const onToggleSharedListening = (stationId) => {
-  //     if(!user.isSharedListening) {
-  //       socketService.emit('join',stationId)
-  //     } else socketService.emit('leave',stationId)
-  //     toggleSharedListening()
-  // }
+  
 
   const {imgUrl, backgroundColor, songs} = station
   const transperent = 'rgb(0 0 0 / 0%)'
@@ -31,7 +25,6 @@ export function _StationHero({ station, updateStation, user, toggleSharedListeni
               <i className="fas fa-edit"></i>
             </button>
           </div>}
-          {/* <i className="fas fa-user user-icon"></i> */}
         </div>
         <div className="user-info">
           <small>Playlist</small>
@@ -44,7 +37,6 @@ export function _StationHero({ station, updateStation, user, toggleSharedListeni
             {station?.totalDuration}
           </p>}
         </div>
-        {/* {user && <button onClick={() => onToggleSharedListening(station._id)}>Play Together</button>} */}
       </div>
       {isModalShown &&
         <EditPlaylist station={station} updateStation={updateStation} setIsModalShown={setIsModalShown} />}

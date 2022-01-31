@@ -6,7 +6,6 @@ import { setStation } from '../store/media.action'
 
 import { stationService } from "../services/station.service";
 
-import { PlayList } from '../cmps/PlayList';
 import { StationHero } from '../cmps/StationHero';
 import { DragDrop } from '../cmps/DragDrop';
 import { Loader } from '../cmps/Loader';

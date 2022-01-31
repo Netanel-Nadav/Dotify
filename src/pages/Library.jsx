@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { connect } from 'react-redux'
+
 import { StationList } from '../cmps/StationList';
-import { setStation } from "../store/media.action";
 import { Loader } from '../cmps/Loader';
 
 

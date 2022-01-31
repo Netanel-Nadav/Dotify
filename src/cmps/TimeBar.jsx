@@ -29,15 +29,4 @@ export function TimeBar({ song, player, currTime, setDuration }) {
     )
 }
 
-    // if (duration) {
-    //     var i = 0;
-    //     const durArr = duration.split(':');
-    //     const hours = 0;
-    //     if (durArr.length === 3) {
-    //         hours = parseInt(durArr[i]);
-    //         i++;
-    //     }
-    //     const minutes = parseInt(durArr[i++]);
-    //     const seconds = parseInt(durArr[i]);
-    //     sumOfSec = hours * 3600 + minutes * 60 + seconds;
-    // }
+    

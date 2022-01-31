@@ -45,7 +45,6 @@ function _Search({ setSongs, likeSong, user }) {
                 <form onSubmit={search} className='flex justify-center'>
                     <input autoFocus value={query} placeholder='Enter song or artist name'
                         onChange={e => setQuery(e.target.value)} />
-                    {/* <button>search</button> */}
                 </form>
                 {list.songs.length > 0 && <section className='list-container flex column'>
                     <h1>Search Results</h1>
@@ -66,7 +65,6 @@ function _Search({ setSongs, likeSong, user }) {
                                 <section className='btns-and-like flex'>
                                     <button><i className={user?.likedSongs.some(likedSong => likedSong._id === item.id) ? "fas fa-heart liked" : "far fa-heart"} onClick={() => likeSong(item)}></i></button>
                                     <p className='duration'>{item.duration}</p>
-                                    <button><i className="fas fa-plus"></i></button>
                                 </section>
                             </section>
                         )

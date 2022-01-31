@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
+
 import { Loader } from '../cmps/Loader';
-import { StationList } from '../cmps/StationList';
 import { StationListByGenre } from '../cmps/StationListByGenre';
-import { stationService } from '../services/station.service';
 import { loadStations, getGenres } from '../store/station.action';
 
 

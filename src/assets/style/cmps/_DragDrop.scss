@@ -30,7 +30,6 @@
   }
 
   .drag-drop-container {
-    // padding: 0px 20px;
 
     .chosen {
       background-color: $clr3;
@@ -503,7 +502,7 @@
 
                         flex-basis: 50%;
 
-                        p {
+                        .p {
                           width: 60px;
                         }
                         

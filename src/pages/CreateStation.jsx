@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { stationService } from "../services/station.service";
-import { utilService } from "../services/util.service";
 import { socketService } from "../services/socket.service";
+
 import { StationHero } from "../cmps/StationHero";
 import { DragDrop } from "../cmps/DragDrop";
 import { Recommendations } from "../cmps/Recommendations";
@@ -46,12 +46,8 @@ class _CreateStation extends React.Component {
     const { newStation } = this.state;
     const updatedStation = await this.props.addSong(newStation, song);
     socketService.emit('update station', updatedStation)
-    // this.setState({ newStation: savedStation });
   };
 
-  // deleteSongsOnNew = (updatedStation) => {
-  //   this.setState({newStation: updatedStation})
-  // }
 
   onMakeNewStation = async () => {
     const newStation = await this.props.makeNewStation();
@@ -79,7 +75,6 @@ class _CreateStation extends React.Component {
                 onChange={this.setQuery}
                 placeholder="Enter song or artist name"
               />
-              {/* <button className="search-btn">Search</button> */}
             </form>
           </div>
 
@@ -140,7 +135,4 @@ const mapDispatchToProps = {
   addSong,
 };
 
-export const CreateStation = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(_CreateStation);
+export const CreateStation = connect(mapStateToProps,mapDispatchToProps)(_CreateStation);

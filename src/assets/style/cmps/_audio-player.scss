@@ -1,6 +1,5 @@
 .player-container {
   .player {
-    // position: fixed;
     bottom: 0;
     width: 100%;
     height: 100%;
@@ -107,7 +106,6 @@
             font-size: rem(25px);
             color: black;
             position: absolute;
-            // left: 0;
 
             &.play {
               top: 55%;

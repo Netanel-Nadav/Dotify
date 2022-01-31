@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 function _LikedSongsHero({ user }) {
 
     if (!user) return <h1>Loading...</h1>
-    const { likedSongs } = user
     const backgroundColor = 'rgb(80, 56, 160)'
     const transperent = 'rgb(0 0 0 / 0%)'
     return (

@@ -72,7 +72,6 @@ async function searchYouTube(q) {
         }
     });
     const body = await response.json();
-    // console.log(body)
     const searchRes = {
         songs: body.items.filter(item => item.type === 'video'),
         recommendations: body.refinements
@@ -84,18 +83,9 @@ async function searchYouTube(q) {
 async function getStationByGenre(stations, genre) {
     if (!stations) return
     let stationsByGenre = stations.filter(station => station.tags.includes(genre))
-    // stationsByGenre = _shuffleStations(stationsByGenre)
     return stationsByGenre
 }
 
-function _shuffleStations(stations) {
-    const shuffledStations = stations.slice()
-    for (let i = shuffledStations.length - 1; i > 0; i--) {
-        const rand = Math.floor(Math.random() * (i + 1));
-        [shuffledStations[i], shuffledStations[rand]] = [shuffledStations[rand], shuffledStations[i]];
-    }
-    return shuffledStations
-};
 
 
 

@@ -1,10 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router'
 import { connect } from "react-redux";
-// import routes from './routes'
 
 import { socketService } from './services/socket.service';
-import { eventBusService } from './services/event-bus.service';
 
 import {loadStations, updateStation, setDisplayedSongs, addStationToAll} from './store/station.action'
 
@@ -44,9 +42,6 @@ export class _RootCmp extends React.Component {
     socketService.on('add station', station => {
       this.props.addStationToAll(station)
     })
-    // socketService.on ('toggle shared play', currSongId => {
-    //   eventBusService.emit('toggle shared play', currSongId)
-    // })
   }
 
 

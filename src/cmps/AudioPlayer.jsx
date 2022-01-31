@@ -31,9 +31,6 @@ class _AudioPlayer extends React.Component {
       }
       this.onPlayPause();
     })
-    // this.unsubscribe = eventBusService.on('toggle shared play',  async () => {
-    //   this.onSharedPlayPause();
-    // })
   }
 
   componentWillUnmount() {
@@ -54,7 +51,6 @@ class _AudioPlayer extends React.Component {
 
   onSetMute = () => {
     this.setState({ isMuteOn: !this.state.isMuteOn }, () => {
-      // console.log('isMute', this.state.isMuteOn)
       if (this.state.isMuteOn && this.state.player) { //muted
         this.state.player.mute();
       } else if (this.state.player) this.state.player.unMute();
@@ -66,7 +62,6 @@ class _AudioPlayer extends React.Component {
   onPlayPause = async () => {
     const { player } = this.state;
     if (player && this.props.currSongId) {
-      // socketService.emit('toggle play', this.props.currStation._id, this.props.currSongId)
       await this.props.toggleIsPlaying();
       if (this.props.isPlaying) {
         player.playVideo();
@@ -76,27 +71,14 @@ class _AudioPlayer extends React.Component {
     }
   }
 
-  // onSharedPlayPause = async () => {
-  //   const { player } = this.state;
-  //   console.log('on share play',this.props.currSongId)
-  //   await this.props.setSongs(this.props.currStation, this.props.currSongId)
-  //   await this.props.toggleIsPlaying();
-  //   if (this.props.isPlaying) {
-  //     player.playVideo();
-  //   } else {
-  //     player.pauseVideo();
-  //   }
-  // }
 
   onNextSong = () => {
     if (this.state.isRepeatOn) {
-      // console.log('repeat on');
       this.state.player.stopVideo();
       this.state.player.playVideo();
     }
     else if (this.state.isShuffleOn) {
       this.props.setRandomSong();
-      // console.log('shuffle on');
     }
     else {
       if (this.props.currSongIdx === this.props.currSongList.length - 1) return;
@@ -106,13 +88,11 @@ class _AudioPlayer extends React.Component {
 
   onPrevSong = () => {
     if (this.state.isRepeatOn) {
-      // console.log('repeat on');
       this.state.player.stopVideo();
       this.state.player.playVideo();
     }
     else if (this.state.isShuffleOn) {
       this.props.setRandomSong();
-      // console.log('shuffle on');
     }
     else {
       if (this.props.currSongIdx === 0) return;
@@ -138,15 +118,9 @@ class _AudioPlayer extends React.Component {
     })
   }
 
-  // onSetDuration = (ev) => {
-  //   const currDuration = ev.target.value;
-  //   this.setState({ currDuration });
-  //   // console.log('currDuration', currDuration);
-  //   this.state.player.seekTo(currDuration);
 
   onSetDuration = (value) => {
     this.setState({ currDuration: value });
-    console.log('value', value);
     this.state.player.seekTo(value);
   }
 

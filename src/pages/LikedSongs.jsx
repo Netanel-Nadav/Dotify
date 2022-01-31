@@ -6,7 +6,7 @@ import { MdMusicNote } from 'react-icons/md';
 
 
 export function _LikedSongs({ user }) {
-    console.log(user);
+   
     return (
         <section className='like-page'>
             <LikedSongsHero />

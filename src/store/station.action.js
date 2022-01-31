@@ -64,14 +64,12 @@ export function addSong(station, song, newStation = true) {
   return async (dispatch) => {
     try {
       const updatedStation = await stationService.addSongToStation(station, song)
-      // const updatedStation = await stationService.save(station, song)
       let action = { type: 'UPDATE_STATION', updatedStation }
       dispatch(action)
       if (newStation) {
         action = { type: 'UPDATE_DISPLAYED_SONGS', songs: updatedStation.songs }
         dispatch(action)
       }
-      // socketService.emit('update station', station)
       return Promise.resolve(updatedStation)
     } catch (err) {
       console.error('Error while adding song:', err)
@@ -89,7 +87,6 @@ export function deleteSong(station, songId) {
       dispatch(action)
       action = { type: 'UPDATE_DISPLAYED_SONGS', songs: updatedStation.songs }
       dispatch(action)
-      // socketService.emit('update station', station)
       return Promise.resolve(updatedStation)
     } catch (err) {
       console.error('Error while deleting song:', err)
@@ -119,7 +116,6 @@ export function makeNewStation() {
 export function addStationToAll(newStation) {
   return async (dispatch) => {
     try {
-      console.log(newStation)
       const action = { type: 'ADD_STATION', newStation }
       dispatch(action)
     } catch (err) {

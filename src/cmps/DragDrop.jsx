@@ -56,7 +56,7 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
       updateStation(station)
       setSongsAfterDnd(station)
     } else {
-      user?.likedSongs = items
+      user.likedSongs = items
       updateUser(user)
     }
 

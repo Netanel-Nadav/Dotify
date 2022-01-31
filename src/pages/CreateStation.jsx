@@ -93,7 +93,10 @@ class _CreateStation extends React.Component {
                     <section key={idx} className="song-container flex">
                       <section className="song-info flex">
                         <section className="img-container">
-                          <img src={item.bestThumbnail.url} />
+                          <img src={item.bestThumbnail.url} onError={({ currentTarget }) => {
+                                        currentTarget.onerror = null; 
+                                        currentTarget.src = 'https://res.cloudinary.com/dvxuxsyoe/image/upload/v1643626113/l4almbflgdazzlmyzmq6.jpg'
+                                    }}  />
                         </section>
                         <p className="title">{item.title}</p>
                       </section>

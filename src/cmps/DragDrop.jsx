@@ -123,7 +123,10 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                   className={`img-container ${song._id === currSongId ? "playing" : ""
                                     }`}
                                 >
-                                  <img src={song.imgUrl} />
+                                  <img src={song.imgUrl} onError={({ currentTarget }) => {
+                                        currentTarget.onerror = null; 
+                                        currentTarget.src = 'https://res.cloudinary.com/dvxuxsyoe/image/upload/v1643626113/l4almbflgdazzlmyzmq6.jpg'
+                                    }}  />
                                 </section>
                                 <p className="">{song.title}</p>
                             </section>

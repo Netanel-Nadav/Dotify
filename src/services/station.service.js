@@ -19,7 +19,6 @@ export const stationService = {
 
 
 
-
 async function addSongToStation(station, song) {
     song.addedBy = {
         _id: userService.getLogedinUser()?._id || utilService.makeId(),
@@ -69,7 +68,7 @@ async function searchYouTube(q) {
         "method": "GET",
         "headers": {
             "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
-            "x-rapidapi-key": '45b8fe1454msh8ced5fc6319b729p107c5bjsne585d331b323'
+            "x-rapidapi-key": "45b8fe1454msh8ced5fc6319b729p107c5bjsne585d331b323"
         }
     });
     const body = await response.json();

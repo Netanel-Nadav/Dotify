@@ -33,7 +33,8 @@ export function _Header({ user, logout }) {
             </div>
             <div className='user-login-container'>
                 <button onClick={toggleUserModal} className='login-btn flex align-center'>
-                    <i className="fas fa-user-circle icon"></i>
+                    {user?.imgUrl ? <img src={user.imgUrl} className='user-header-img'/> : <i className="fas fa-user-circle icon"></i>}
+                    
                     {user ? <span className='user-name'>{user.username}</span> : 'Guest'}
                 </button>
             </div>

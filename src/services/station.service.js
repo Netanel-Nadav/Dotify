@@ -68,7 +68,7 @@ async function searchYouTube(q) {
         "method": "GET",
         "headers": {
             "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
-            "x-rapidapi-key": '4ce079e014msh839ad4e49fa48fcp12c449jsnd8a5fbeeba6c'
+            "x-rapidapi-key": 'b96f369518msh9ee702858af51c3p17b02ajsn51c6ed765bf1'
         }
     });
     const body = await response.json();

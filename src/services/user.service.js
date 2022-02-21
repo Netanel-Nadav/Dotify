@@ -17,9 +17,13 @@ export const userService = {
 
 
 async function login(credentials) {
-    const user = await httpService.post('auth/login', credentials)
-    _setLogedinUser(user)
-    return user
+    try {
+        const user = await httpService.post('auth/login', credentials)
+        _setLogedinUser(user)
+        return user
+    } catch(err) {
+        throw err
+    }
 }
 
 

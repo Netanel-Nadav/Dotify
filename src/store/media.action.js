@@ -26,6 +26,7 @@ export function toggleIsPlaying() {
 export function setSongs(station, songId) {
     return async (dispatch) => {
         try {
+            console.log(songId)
             const songs = station.songs;
             let action = { type: "SET_SONGS", songs };
             dispatch(action);

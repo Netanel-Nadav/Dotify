@@ -28,11 +28,11 @@ class _LoginPage extends Component {
         this.onGoBack()
     }
 
-    onLogin = (ev) => {
+    onLogin = async (ev) => {
         ev.preventDefault()
         const user = this.state.credentials
-        this.props.login(user)
-        this.onGoBack()
+        const loggedUser = await this.props.login(user)
+        if(loggedUser) this.onGoBack()
     }
 
     toggleSignup = () => {

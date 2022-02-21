@@ -42,6 +42,12 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
     eventBusService.emit('playPauseVideo');
   }
 
+  const onPlayPauseSongFromPlay = async (ev,station, songId) => {
+    ev.stopPropagation()
+    await setSongs(station, songId);
+    eventBusService.emit('playPauseVideo');
+  }
+
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
@@ -106,12 +112,12 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                     <Draggable key={song._id} draggableId={song._id} index={index}>
                       {(provided) => (
                         <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                          <section key={song._id} className={`station-song-details flex ${showOpts && currSong === song._id ? 'chosen' : ''}`}>
+                          <section key={song._id} className={`station-song-details flex ${showOpts && currSong === song._id ? 'chosen' : ''}`} onClick={() => onPlayPauseSong(station, song._id)}>
                             <section className={`song-info flex ${song._id === currSongId ? 'playing' : ''}`}>
                               <div className='icons-container flex justify-contet align-center'>
                                 {song._id === currSongId && isPlaying ? <Equalizer className="equalizer" /> : <p className='title'>{index + 1}</p>}
                                 <span
-                                  className="play-pause-icon" onClick={() => onPlayPauseSong(station, song._id)}>
+                                  className="play-pause-icon" onClick={(e) => onPlayPauseSongFromPlay(station, song._id)}>
                                   {song._id === currSongId && isPlaying ? <GiPauseButton className="pause" /> :
                                     <i className="fas fa-play"></i>}
                                 </span>

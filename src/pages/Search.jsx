@@ -5,6 +5,8 @@ import { Recommendations } from '../cmps/Recommendations';
 
 import { likeSong } from "../store/user.action";
 import { stationService } from '../services/station.service';
+import { eventBusService } from '../services/event-bus.service'
+
 import { setSongs, toggleIsPlaying } from '../store/media.action'
 import { Link } from "react-router-dom";
 
@@ -23,16 +25,16 @@ function _Search({ setSongs, likeSong, user, toggleIsPlaying }) {
     const search = async (ev) => {
         ev.preventDefault();
         const searchRes = await stationService.searchYouTube(query)
+        searchRes.songs.forEach(song => {
+            song._id = song.id
+            delete song.id
+        })
         setList(searchRes)
     };
 
     const onSetSongs = async (songId) => {
-        list.songs.forEach(song => {
-            song._id = song.id
-            delete song.id
-        })
-        setSongs(list, songId)
-       toggleIsPlaying()
+        await setSongs(list, songId)
+        eventBusService.emit('playPauseVideo');
     }
 
     const setQueryOnSearch = (query) => {
@@ -51,10 +53,10 @@ function _Search({ setSongs, likeSong, user, toggleIsPlaying }) {
                     <h1>Search Results</h1>
                     {list.songs.map((item, idx) => {
                         return (
-                            <section key={item.id} className='song flex'>
+                            <section key={item._id} className='song flex'>
                                 <section className='song-info flex'>
                                     <p className='song-idx'>{idx + 1}</p>
-                                    <span className="play-icon" onClick={() => onSetSongs(item.id)}><i className="fas fa-play"></i></span>
+                                    <span className="play-icon" onClick={() => onSetSongs(item._id)}><i className="fas fa-play"></i></span>
                                     <section className='song-img-container'>
                                         <img src={item.bestThumbnail.url} onError={({ currentTarget }) => {
                                             currentTarget.onerror = null;

@@ -7,6 +7,7 @@ export function login(credentials) {
             const user = await userService.login(credentials)
             const action = { type: 'SET_USER', user }
             dispatch(action)
+            return user
         } catch (err) {
             console.error('Error while logging in:', err)
             const action = { type: 'SET_MSG', msg: { txt: 'Had error while logging in', type: 'error' } }

@@ -26,14 +26,16 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
     else setSongsToRender(user?.likedSongs)
   }, [displayedSongs,user?.likedSongs])
 
-  const onDeleteSong = async (station, songId) => {
+  const onDeleteSong = async (ev,station, songId) => {
+    ev.stopPropagation()
     const updatedStation = await deleteSong(station, songId)
     socketService.emit('update station', updatedStation)
   }
 
-  const onHandleLikeSong = async (songId) => {
-    if (user?.likedSongs.some(likedSong => likedSong._id === songId)) unlikeSong(songId)
-    else likeSong(songId)
+  const onHandleLikeSong = async (ev,song) => {
+    ev.stopPropagation()
+    if (user?.likedSongs.some(likedSong => likedSong._id === song._id)) unlikeSong(song._id)
+    else likeSong(song)
     setOpts(false)
   }
 
@@ -70,18 +72,20 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
 
   }
 
-  const toggleMoreOpts = (songId) => {
+  const toggleMoreOpts = (ev,songId) => {
+    ev.stopPropagation()
     setCurrSong(songId)
     if (showOpts && showModal) setModal(false)
     setOpts(!showOpts);
   }
 
-  const openAddModal = () => {
-
+  const openAddModal = (ev) => {
+    ev.stopPropagation()
     setModal(!showModal);
   }
 
-  const addSongToPlaylist = (station, song) => {
+  const addSongToPlaylist = (ev,station, song) => {
+    ev.stopPropagation()
     addSong(station, song, false);
   }
 
@@ -142,31 +146,31 @@ export function _DragDrop({ station, stations, updateStation, currSongId, delete
                                 <div className="btn-container flex">
                                   {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
                                     <button className="like-btn heart liked">
-                                      <i className="fas fa-heart liked" onClick={() => onHandleLikeSong(song._id)} ></i>
+                                      <i className="fas fa-heart liked" onClick={(e) => onHandleLikeSong(e,song)} ></i>
                                     </button>
                                     :
                                     <button className="like-btn heart ">
-                                      <i className="far fa-heart" onClick={() => onHandleLikeSong(song)}></i>
+                                      <i className="far fa-heart" onClick={(e) => onHandleLikeSong(e,song)}></i>
                                     </button>}
-                                  <button className="more-btn" onClick={() => toggleMoreOpts(song._id)}><FiMoreHorizontal /></button>
+                                  <button className="more-btn" onClick={(e) => toggleMoreOpts(e,song._id)}><FiMoreHorizontal /></button>
                                   {
                                     showOpts && currSong === song._id && <div className={`opts flex column space-between`}>
                                       <button className="like-btn text">
                                         {user?.likedSongs.some(likedSong => likedSong._id === song._id) ?
-                                          <p className="" onClick={() => onHandleLikeSong(song._id)} >Remove from your Liked Songs</p>
+                                          <p className="" onClick={(e) => onHandleLikeSong(e,song)} >Remove from your Liked Songs</p>
                                           :
-                                          <p className="empty heart" onClick={() => onHandleLikeSong(song)}>Save to your Liked Songs</p>
+                                          <p className="empty heart" onClick={(e) => onHandleLikeSong(e,song)}>Save to your Liked Songs</p>
                                         }
                                       </button>
-                                      <button className="delete-btn" onClick={() => onDeleteSong(station, song._id)}>
-                                        Remove from this playlist</button>
-                                      <button className={`addTo-btn`} onMouseOver={openAddModal}>Add to playlist</button>
+                                      {(user?.isAdmin || station.createdBy._id === user?._id) && <button className="delete-btn" onClick={(e) => onDeleteSong(e,station, song._id)}>
+                                        Remove from this playlist</button>}
+                                      <button className={`addTo-btn`} onMouseOver={(e) => openAddModal(e)}>Add to playlist</button>
                                     </div>
                                   }
                                   {showModal && currSong === song._id && <div className={`choose-playlist flex column ${showModal ? "" : "hidden"}`}>
                                     <Link to={"/newStation"}>Add to new playlist</Link>
                                     {user && stations.filter(station => user._id === station.createdBy._id).map((station,idx) => {
-                                      return <button key={idx} onClick={() => addSongToPlaylist(station, song)}>{station.name}</button>
+                                      return <button key={idx} onClick={(e) => addSongToPlaylist(e,station, song)}>{station.name}</button>
                                     })}
                                   </div>}
                                 </div>

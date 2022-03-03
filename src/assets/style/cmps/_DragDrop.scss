@@ -155,11 +155,12 @@
             padding: 10px;
             border-radius: 5px;
             position: absolute;
-            top: 140px;
+            top: 170%;
             right: 171px;
             width: 200px;
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
             gap: 10px;
+            z-index: 10;
 
             a {
               text-align: center;
@@ -172,7 +173,8 @@
 
           .opts {
             width: 150px;
-            height: 150px;
+            height: fit-content;
+            gap: 15px;
             position: absolute;
             background-color: $clr4;
             border-radius: 5px;
